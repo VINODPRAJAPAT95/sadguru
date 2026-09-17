@@ -1,0 +1,37 @@
+<svg width="1600" height="1200" viewBox="0 0 1600 1200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="1200" fill="#FFFFFF"/>
+  <g fill="none" stroke="#2B2A29" stroke-opacity="0.06" stroke-width="1.5">
+    <circle cx="250" cy="550" r="120"/>
+    <circle cx="250" cy="550" r="170"/>
+    <circle cx="250" cy="550" r="220"/>
+    <circle cx="250" cy="550" r="270"/>
+    <circle cx="1250" cy="750" r="100"/>
+    <circle cx="1250" cy="750" r="150"/>
+    <circle cx="1250" cy="750" r="200"/>
+  </g>
+  <g fill="none" stroke="#EF7F1A" stroke-width="3">
+    <circle cx="1780" cy="380" r="70"/>
+    <circle cx="2320" cy="1080" r="130"/>
+    <circle cx="140" cy="540" r="14"/>
+    <circle cx="520" cy="260" r="40"/>
+    <circle cx="960" cy="820" r="90"/>
+    <circle cx="1420" cy="920" r="55"/>
+    <circle cx="60" cy="1080" r="28"/>
+    <circle cx="1080" cy="140" r="20"/>
+  </g>
+  <circle cx="140" cy="540" r="5" fill="#EF7F1A"/>
+  <circle cx="520" cy="260" r="4" fill="#EF7F1A"/>
+  <circle cx="1080" cy="140" r="3.5" fill="#EF7F1A"/>
+  <g fill="none" stroke="#EF7F1A" stroke-width="4" stroke-linecap="round">
+    <path d="M -80 900 C 120 700, 320 700, 420 900 C 500 1060, 340 1160, 260 1040 C 200 950, 300 900, 380 960" />
+    <path d="M 1100 -60 C 1300 120, 1550 60, 1650 -140 C 1740 -320, 1980 -260, 2020 -60 C 2060 140, 1880 260, 1760 120" />
+  </g>
+  <g stroke="#EF7F1A" stroke-opacity="0.5" stroke-width="2">
+    <line x1="1500" y1="0" x2="1600" y2="100"/>
+    <line x1="0" y1="1150" x2="60" y2="1200"/>
+  </g>
+  <g fill="none" stroke="#2B2A29" stroke-opacity="0.15" stroke-width="1">
+    <circle cx="700" cy="180" r="60"/>
+    <circle cx="900" cy="1000" r="45"/>
+  </g>
+</svg>

@@ -234,69 +234,72 @@ export default function Home() {
       </section>
 
       {/* SHORT ABOUT */}
-<section className="section-py">
-  <div className="container-px mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20">
+      {/* FIX: added overflow-hidden — the two decorative shapes below use negative
+          positioning (-bottom-6, -left-6, -right-5, -top-5) which pushed page width
+          past the viewport on mobile and created the right-side white space / horizontal scroll. */}
+      <section className="section-py overflow-hidden">
+        <div className="container-px mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20">
 
-    {/* IMAGE */}
-    <motion.div
-      initial={{ opacity: 0, x: -30 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.7 }}
-      className="relative order-2 lg:order-1"
-    >
-      {/* Decorative Shapes Behind Image */}
-      <div className="absolute -bottom-6 -left-6 h-32 w-32 border-2 border-orange-200/60" />
-      <div className="absolute -right-5 -top-5 h-24 w-24 bg-orange-500/10" />
+          {/* IMAGE */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="relative order-2 lg:order-1"
+          >
+            {/* Decorative Shapes Behind Image */}
+            <div className="absolute -bottom-6 -left-6 h-32 w-32 border-2 border-orange-200/60" />
+            <div className="absolute -right-5 -top-5 h-24 w-24 bg-orange-500/10" />
 
-      {/* Main Image */}
-      <div className="group relative overflow-hidden">
-        <img
-          src="https://industry-ai.com/wp-content/uploads/2025/07/FMCG-Blogs-1-Home.jpg"
-          alt="Preparing wholesome food"
-          className="relative z-10 h-[380px] w-full object-cover transition duration-700 group-hover:scale-105 sm:h-[460px]"
-        />
+            {/* Main Image */}
+            <div className="group relative overflow-hidden">
+              <img
+                src="https://industry-ai.com/wp-content/uploads/2025/07/FMCG-Blogs-1-Home.jpg"
+                alt="Preparing wholesome food"
+                className="relative z-10 h-[380px] w-full object-cover transition duration-700 group-hover:scale-105 sm:h-[460px]"
+              />
 
-        <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-      </div>
+              <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+            </div>
 
-      {/* Accent Line */}
-      <div className="absolute -bottom-3 left-8 z-20 h-1 w-24 bg-orange-500" />
-    </motion.div>
+            {/* Accent Line */}
+            <div className="absolute -bottom-3 left-8 z-20 h-1 w-24 bg-orange-500" />
+          </motion.div>
 
-    {/* CONTENT */}
-    <motion.div
-      initial={{ opacity: 0, x: 30 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.7 }}
-      className="order-1 lg:order-2"
-    >
-      <SectionTitle
-        label="Who We Are"
-        title="A Family of Food Brands Built on Trust"
-        description="Sadguru Food Processing Pvt. Ltd. produces wholesome, minimally processed foods rooted in tradition and aligned with modern nutritional needs. We believe food should nourish the body, be made with care, and maintain its flavor without extra processing or shortcuts."
-      />
+          {/* CONTENT */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="order-1 lg:order-2"
+          >
+            <SectionTitle
+              label="Who We Are"
+              title="A Family of Food Brands Built on Trust"
+              description="Sadguru Food Processing Pvt. Ltd. produces wholesome, minimally processed foods rooted in tradition and aligned with modern nutritional needs. We believe food should nourish the body, be made with care, and maintain its flavor without extra processing or shortcuts."
+            />
 
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        className="mt-8"
-      >
-        <Button
-          to="/about/our-story"
-          variant="dark"
-          className="bg-orange-500 px-7 py-3.5 font-semibold text-white transition-all duration-300 hover:bg-orange-600 hover:shadow-lg"
-        >
-          Know Our Story
-        </Button>
-      </motion.div>
-    </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mt-8"
+            >
+              <Button
+                to="/about/our-story"
+                variant="dark"
+                className="bg-orange-500 px-7 py-3.5 font-semibold text-white transition-all duration-300 hover:bg-orange-600 hover:shadow-lg"
+              >
+                Know Our Story
+              </Button>
+            </motion.div>
+          </motion.div>
 
-  </div>
-</section>
+        </div>
+      </section>
 
       {/* WHAT WE DO */}
       <section className="section-py relative overflow-hidden bg-charcoal">
@@ -440,7 +443,7 @@ export default function Home() {
       </section>
 
       {/* PHILOSOPHY — separate section, cream background, bordered cards */}
-      <section className="section-py bg-[#f6e7c9]">
+      <section className="section-py bg-[#f6e7c9] overflow-hidden">
         <div className="container-px mx-auto max-w-7xl">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -476,132 +479,133 @@ export default function Home() {
         </div>
       </section>
 
-{/* BRANDS STICKY SCROLL */}
-<section className="bg-white">
+      {/* BRANDS STICKY SCROLL */}
+      <section className="bg-white">
 
-  {/* Section Heading */}
-  <div className="section-py container-px mx-auto max-w-7xl">
+        {/* Section Heading */}
+        <div className="section-py container-px mx-auto max-w-7xl">
 
-    <SectionTitle
-      label="Our Brands"
-      title="Four Brands, Every Kitchen Covered"
-      description="Scroll to explore each brand and the story behind it."
-      align="center"
-      className="mx-auto"
-    />
-
-  </div>
-
-  {/* Horizontal Scroll */}
-  <BrandHorizontalScroll />
-
-</section>
-{/* WHY CHOOSE US */}
-<section className="relative bg-white py-24 lg:py-32">
-  <div className="container-px mx-auto max-w-7xl">
-
-    <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-24">
-
-      {/* LEFT STICKY CONTENT */}
-      <div className="lg:sticky lg:top-28 lg:h-fit">
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-        >
           <SectionTitle
-            label="Why Choose Us"
-            title="Why Choose Sadguru Food Processing Pvt. Ltd."
-            description="Every product from Sadguru Food Processing Pvt. Ltd. follows a transparent and disciplined process. From sourcing quality ingredients to delivering consistent products, we focus on trust, care, and excellence at every stage."
+            label="Our Brands"
+            title="Four Brands, Every Kitchen Covered"
+            description="Scroll to explore each brand and the story behind it."
+            align="center"
+            className="mx-auto"
           />
 
-          {/* Small Decorative Element */}
-          <div className="mt-10 flex items-center gap-3">
-            <div className="h-[2px] w-12 bg-orange-500" />
-            <span className="text-sm font-medium tracking-wide text-charcoal-400">
-              Quality • Trust • Care
-            </span>
-          </div>
-        </motion.div>
-      </div>
+        </div>
 
+        {/* Horizontal Scroll */}
+        <BrandHorizontalScroll />
 
-      {/* RIGHT STACKING CARDS */}
-      <div className="relative">
+      </section>
 
-        {whyChooseUs.map((item, i) => (
-          <motion.div
-            key={item.title}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{
-              duration: 0.7,
-              delay: i * 0.1,
-            }}
-            className="sticky"
-            style={{
-              top: `${110 + i * 20}px`,
-              zIndex: i + 1,
-            }}
-          >
-           <div
-  className="mb-8 flex min-h-[360px] flex-col justify-between rounded-[2rem] border-2 border-orange-500 bg-[#FFF9EF] p-8 shadow-[0_10px_40px_rgba(0,0,0,0.06)] transition-all duration-500 hover:shadow-[0_15px_50px_rgba(239,127,26,0.12)] sm:p-10"
->
+      {/* WHY CHOOSE US */}
+      <section className="relative bg-white py-24 lg:py-32">
+        <div className="container-px mx-auto max-w-7xl">
 
-              {/* TOP */}
-              <div>
-                <div className="mb-8 flex h-16 w-16 items-center justify-center bg-orange-500 text-white">
-                  <item.icon size={30} strokeWidth={1.8} />
+          <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-24">
+
+            {/* LEFT STICKY CONTENT */}
+            <div className="lg:sticky lg:top-28 lg:h-fit">
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7 }}
+              >
+                <SectionTitle
+                  label="Why Choose Us"
+                  title="Why Choose Sadguru Food Processing Pvt. Ltd."
+                  description="Every product from Sadguru Food Processing Pvt. Ltd. follows a transparent and disciplined process. From sourcing quality ingredients to delivering consistent products, we focus on trust, care, and excellence at every stage."
+                />
+
+                {/* Small Decorative Element */}
+                <div className="mt-10 flex items-center gap-3">
+                  <div className="h-[2px] w-12 bg-orange-500" />
+                  <span className="text-sm font-medium tracking-wide text-charcoal-400">
+                    Quality • Trust • Care
+                  </span>
                 </div>
+              </motion.div>
+            </div>
 
-                <h3 className="max-w-md font-display text-3xl font-semibold leading-tight text-[#2B1608] sm:text-4xl">
-                  {item.title}
-                </h3>
-              </div>
 
-              {/* BOTTOM */}
-              <div className="mt-10 flex items-end justify-between gap-6">
-                <p className="max-w-md text-base leading-relaxed text-charcoal-400 sm:text-lg">
-                  {item.desc}
-                </p>
+            {/* RIGHT STACKING CARDS */}
+            <div className="relative">
 
-                <span className="hidden text-5xl font-bold text-orange-500/30 sm:block">
-                  0{i + 1}
-                </span>
-              </div>
+              {whyChooseUs.map((item, i) => (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{
+                    duration: 0.7,
+                    delay: i * 0.1,
+                  }}
+                  className="sticky"
+                  style={{
+                    top: `${110 + i * 20}px`,
+                    zIndex: i + 1,
+                  }}
+                >
+                  <div
+                    className="mb-8 flex min-h-[360px] flex-col justify-between rounded-[2rem] border-2 border-orange-500 bg-[#FFF9EF] p-8 shadow-[0_10px_40px_rgba(0,0,0,0.06)] transition-all duration-500 hover:shadow-[0_15px_50px_rgba(239,127,26,0.12)] sm:p-10"
+                  >
+
+                    {/* TOP */}
+                    <div>
+                      <div className="mb-8 flex h-16 w-16 items-center justify-center bg-orange-500 text-white">
+                        <item.icon size={30} strokeWidth={1.8} />
+                      </div>
+
+                      <h3 className="max-w-md font-display text-3xl font-semibold leading-tight text-[#2B1608] sm:text-4xl">
+                        {item.title}
+                      </h3>
+                    </div>
+
+                    {/* BOTTOM */}
+                    <div className="mt-10 flex items-end justify-between gap-6">
+                      <p className="max-w-md text-base leading-relaxed text-charcoal-400 sm:text-lg">
+                        {item.desc}
+                      </p>
+
+                      <span className="hidden text-5xl font-bold text-orange-500/30 sm:block">
+                        0{i + 1}
+                      </span>
+                    </div>
+
+                  </div>
+                </motion.div>
+              ))}
 
             </div>
+
+          </div>
+
+          {/* STATS */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="mt-24 grid grid-cols-2 gap-8 border-t border-charcoal/10 pt-12 sm:grid-cols-4"
+          >
+            {STATS.map((s) => (
+              <StatCounter
+                key={s.label}
+                value={s.value}
+                suffix={s.suffix}
+                label={s.label}
+              />
+            ))}
           </motion.div>
-        ))}
 
-      </div>
+        </div>
+      </section>
 
-    </div>
-
-    {/* STATS */}
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.7 }}
-      className="mt-24 grid grid-cols-2 gap-8 border-t border-charcoal/10 pt-12 sm:grid-cols-4"
-    >
-      {STATS.map((s) => (
-        <StatCounter
-          key={s.label}
-          value={s.value}
-          suffix={s.suffix}
-          label={s.label}
-        />
-      ))}
-    </motion.div>
-
-  </div>
-</section>
-
-   {/* FAQ */}
+      {/* FAQ */}
       <section className="section-py bg-white">
         <div className="container-px mx-auto max-w-4xl">
           <SectionTitle

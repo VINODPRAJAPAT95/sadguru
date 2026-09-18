@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
   Leaf,
@@ -7,260 +8,580 @@ import {
   Clock,
   ShieldCheck,
   HeartHandshake,
-  Quote,
+  Package,
+  Eye,
+  Sprout,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import Seo from "../components/Seo";
 import Button from "../components/Button";
-import SectionTitle from "../components/SectionTitle";
 import CTASection from "../components/CTASection";
 import brands from "../data/brands";
 
+// Product images — replace the path below with wherever your product photos live
+import product1 from "../assets/products/product1.jpg";
+import product2 from "../assets/products/product2.jpg";
+import product3 from "../assets/products/product3.jpg";
+import product4 from "../assets/products/product4.jpg";
+import product5 from "../assets/products/product5.jpg";
+import product6 from "../assets/products/product6.jpg";
+import product7 from "../assets/products/product7.jpg";
+import product8 from "../assets/products/product8.jpg";
+import product9 from "../assets/products/product9.jpg";
+import product10 from "../assets/products/product10.jpg";
+import product11 from "../assets/products/product11.jpg";
+import product12 from "../assets/products/product12.jpg";
+
 const brand = brands[0];
 
-const ICONS = {
-  Leaf,
-  Sparkles,
-  Smile,
-  Clock,
-  ShieldCheck,
-  HeartHandshake,
-};
-
-// Mumma brand palette
-const PINK = "#DF1C51";
-const BLUE = "#3CA9E0";
-const YELLOW = "#FCE700";
-const NAVY = "#233B50";
-const SKY = "#F4FBFE";
-const SOFT_PINK = "#FFF1F6";
-
-const values = [
-  { title: "Nutritious", desc: "Packed with essential vitamins and minerals.", icon: Leaf },
-  { title: "Tasty", desc: "Kids love the natural taste.", icon: Smile },
-  { title: "Safe", desc: "No harmful additives or preservatives.", icon: ShieldCheck },
-  { title: "Convenient", desc: "Easy for busy parents.", icon: Clock },
-  { title: "Trusted", desc: "Loved by families across the country.", icon: HeartHandshake },
-  { title: "Growing", desc: "Supports healthy growth and development.", icon: Sparkles },
+// All 12 Mumma products — edit name/category/desc to match your real product copy
+const PRODUCTS = [
+  { name: "Ragi Cookies", category: "Cookies", image: product1, desc: "Wholesome ragi-based cookies, lightly sweetened for growing kids." },
+  { name: "Multigrain Puffs", category: "Puffs", image: product2, desc: "Crunchy multigrain puffs made with real grains, no maida." },
+  { name: "Fruit & Nut Bars", category: "Bars", image: product3, desc: "Chewy bars packed with dried fruits and nuts, no refined sugar." },
+  { name: "Veggie Crackers", category: "Crackers", image: product4, desc: "Baked, not fried — crackers made with real vegetables." },
+  { name: "Millet Bites", category: "Bites", image: product5, desc: "Bite-sized millet snacks for an energy-packed tiffin box." },
+  { name: "Protein Balls", category: "Energy Bites", image: product6, desc: "No-bake protein balls made with nuts, seeds and jaggery." },
+  { name: "Oats Cookies", category: "Cookies", image: product7, desc: "Soft-baked oats cookies with a touch of honey." },
+  { name: "Banana Chips", category: "Chips", image: product8, desc: "Baked banana chips, a wholesome alternative to fried snacks." },
+  { name: "Quinoa Puffs", category: "Puffs", image: product9, desc: "Light, airy quinoa puffs for a protein-rich crunch." },
+  { name: "Almond Bars", category: "Bars", image: product10, desc: "Roasted almond bars bound with dates, no added sugar." },
+  { name: "Sprouted Mix", category: "Trail Mix", image: product11, desc: "A crunchy mix of sprouted grains, nuts and seeds." },
+  { name: "Wholegrain Rusks", category: "Rusks", image: product12, desc: "Crisp wholegrain rusks, perfect with a glass of milk." },
 ];
 
-const audiences = [
-  { title: "Toddlers", age: "1–3 years", image: "/images/mumma/toddler.jpg" },
-  { title: "Growing Kids", age: "4–10 years", image: "/images/mumma/growing-kids.jpg" },
-  { title: "School Going", age: "10+ years", image: "/images/mumma/school-going.jpg" },
-  { title: "Health-Conscious", age: "Parents", image: "/images/mumma/parents.jpg" },
-];
+// Mumma brand palette — pulled from data
+const PRIMARY = brand.colors.primary; // #DF1C51
+const BLUE = brand.colors.blue;       // #3CA9E0
+const YELLOW = brand.colors.yellow;   // #FCE700
+const WHITE = brand.colors.white;     // #FEFEFE
+const DARK = "#233B50";
+
+const STANDS_FOR_ICONS = { Leaf, Sparkles, Smile, Clock, ShieldCheck, HeartHandshake };
+const VALUE_ICONS = [Package, Eye, Sprout];
+
+// Small decorative heart, used in place of a logo mark
+const Heart = ({ color = PRIMARY, size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
+    <path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z" />
+  </svg>
+);
+
+// Soft rounded divider between sections
+const CurveDivider = ({ fromColor, toColor }) => (
+  <div className="relative h-16 overflow-hidden" style={{ backgroundColor: toColor }}>
+    <div
+      className="absolute inset-0"
+      style={{
+        backgroundColor: fromColor,
+        borderBottomLeftRadius: "50% 100%",
+        borderBottomRightRadius: "50% 100%",
+      }}
+    />
+  </div>
+);
 
 export default function BrandOne() {
+  const [showAllProducts, setShowAllProducts] = useState(false);
+  const visibleProducts = showAllProducts ? PRODUCTS : PRODUCTS.slice(0, 4);
+  const aboutParagraphs = brand.about.split("\n\n");
+  const philosophyParagraphs = brand.philosophy.split("\n\n");
+  const whoWeServeParagraphs = brand.whoWeServe.split("\n\n");
+  const taglineParts = brand.tagline.split(". ").map((s) => s.replace(/\.$/, ""));
+
   return (
     <>
       <Seo title={`${brand.name} | ${brand.tagline}`} description={brand.description} />
 
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-[#FFF1F6]">
-        <div className="absolute -left-10 top-24 h-28 w-28 rounded-full bg-[#FCE700] sm:h-40 sm:w-40" />
-        <div className="absolute right-0 top-0 h-48 w-48 rounded-bl-[100px] bg-[#3CA9E0]/20" />
-        <div className="container-px relative mx-auto grid min-h-[680px] max-w-7xl items-center gap-8 py-28 lg:grid-cols-[0.95fr_1.05fr]">
+      {/* ── SECTION 1: HERO (shortened) ── */}
+      <section
+        className="relative overflow-hidden"
+        style={{ backgroundColor: PRIMARY, minHeight: "62vh" }}
+      >
+        <div
+          className="absolute right-0 top-0 h-full w-1/2"
+          style={{ background: `linear-gradient(135deg, transparent 40%, ${YELLOW}22 100%)` }}
+        />
+        <div
+          className="absolute bottom-0 left-0 h-48 w-64 rounded-full opacity-10"
+          style={{ background: YELLOW, transform: "translate(-30%, 30%)" }}
+        />
+
+        <div className="relative mx-auto grid max-w-7xl items-center gap-8 px-6 py-16 lg:grid-cols-2 lg:px-12 lg:py-20">
+          {/* Left text */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7 }}
-            className="relative z-10 max-w-xl"
           >
-            <p className="text-xs font-extrabold uppercase tracking-[0.18em]" style={{ color: PINK }}>
-              Nutrition for a brighter tomorrow
+            <p className="text-xs font-extrabold uppercase tracking-[0.25em] text-white opacity-70">
+              {brand.number}. {brand.name.toUpperCase()}
             </p>
-            <h1 className="mt-5 text-5xl font-extrabold leading-[0.98] sm:text-7xl" style={{ color: PINK }}>
-              Healthy Bites
-              <br />
-              <span style={{ color: BLUE }}>for Happy Kids</span>
+            <h1 className="mt-4 text-4xl font-extrabold leading-[1.05] text-white sm:text-5xl lg:text-6xl">
+              {taglineParts.map((part, i) => (
+                <span key={i}>
+                  <span style={{ color: i === taglineParts.length - 1 ? YELLOW : WHITE }}>
+                    {part}.
+                  </span>
+                  {i < taglineParts.length - 1 && <br />}
+                </span>
+              ))}
             </h1>
-            <p className="mt-7 max-w-md text-base leading-relaxed text-slate-600 sm:text-lg">
-              Nutritious, tasty and trusted — because every child deserves the best start in life.
+            <p className="mt-5 max-w-md text-base leading-relaxed text-white opacity-75">
+              {brand.description}
             </p>
-            <div className="mt-9 flex flex-wrap gap-4">
-              <Button to="/contact" variant="primary" className="!rounded-full !bg-[#3CA9E0] px-7 hover:!bg-[#258dbf]">
-                Explore Products
+            <div className="mt-7 flex flex-wrap gap-4">
+              <Button
+                to="/contact"
+                variant="primary"
+                className="!rounded-full !font-extrabold !tracking-wider hover:!opacity-90"
+                style={{ backgroundColor: YELLOW, color: DARK }}
+              >
+                DISCOVER {brand.name.toUpperCase()}
               </Button>
               <Link
                 to="/contact"
-                className="rounded-full border-2 px-7 py-3 text-sm font-bold transition hover:bg-white"
-                style={{ borderColor: PINK, color: PINK }}
+                className="rounded-full border-2 border-white px-7 py-3 text-sm font-extrabold tracking-wider text-white transition hover:bg-white"
+                style={{ color: WHITE }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = PRIMARY; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = WHITE; }}
               >
-                Contact Us
+                OUR PRODUCTS →
               </Link>
             </div>
           </motion.div>
 
+          {/* Right image */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.92 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.9 }}
-            className="relative min-h-[390px] lg:min-h-[520px]"
+            className="relative flex items-center justify-center"
           >
-            <div className="absolute right-5 top-5 h-64 w-64 rounded-full bg-[#FCE700] sm:h-80 sm:w-80" />
-            <div className="absolute bottom-5 left-0 h-36 w-36 rounded-full bg-[#3CA9E0]" />
             <img
               src={brand.heroImage}
-              alt={brand.name}
-              className="relative z-10 mx-auto h-full min-h-[390px] w-full object-contain object-center"
+              alt={`${brand.name} — mother and child`}
+              className="h-auto w-full max-h-[46vh] object-contain"
             />
-            <div className="absolute right-0 top-0 z-20 hidden h-28 w-28 rounded-full bg-[#FCE700] p-5 text-center sm:block">
-              <span className="text-4xl">☀</span>
-              <span className="block text-xs font-bold" style={{ color: PINK }}>Good Food<br />Happy Kids</span>
-            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* About */}
-      <section className="section-py bg-white">
-        <div className="container-px mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1fr_1.1fr_0.8fr]">
+      <CurveDivider fromColor={PRIMARY} toColor={WHITE} />
+
+      {/* ── SECTION 2: ABOUT MUMMA ── */}
+      <section className="bg-white py-20">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-2 lg:px-12">
+          {/* Left */}
           <div>
-            <SectionTitle label="About Mumma" title={<>The Brand Parents <span style={{ color: PINK }}>Trust</span></>} />
-            {brand.about.split("\n\n").slice(0, 1).map((para, i) => (
-              <motion.p
-                key={i}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="mt-6 leading-relaxed text-slate-500"
-              >
-                {para}
-              </motion.p>
-            ))}
-            <div className="mt-7 h-1 w-10 rounded-full bg-[#FCE700]" />
+            <h2 className="text-6xl font-extrabold leading-[1.0]" style={{ color: DARK }}>
+              Love. Care.{" "}
+              <br />
+              <span style={{ color: PRIMARY }}>Nourishment.</span>
+              <span style={{ color: YELLOW }}>—</span>
+            </h2>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="relative mt-8 overflow-hidden rounded-[2rem] shadow-xl"
+            >
+              <img
+                src={brand.cardImage}
+                alt="Wholesome nutrition ingredients"
+                className="h-[320px] w-full object-cover"
+              />
+              <div
+                className="absolute bottom-0 left-0 right-0 h-20"
+                style={{ background: `linear-gradient(to top, ${YELLOW}AA, transparent)` }}
+              />
+            </motion.div>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="overflow-hidden rounded-2xl"
-          >
-            <img src={brand.heroImage} alt="Mumma nutrition" className="h-[310px] w-full object-cover" />
-          </motion.div>
-
-          <div className="space-y-7">
-            {[
-              ["Natural Ingredients", "Pure, wholesome and carefully sourced.", Leaf, "#E8F7E9"],
-              ["Great Taste", "Because kids love what's good for them.", HeartHandshake, "#FFF0F6"],
-              ["Trusted Quality", "Safety and nutrition in every bite.", ShieldCheck, "#EAF7FF"],
-            ].map(([title, desc, Icon, bg], i) => (
-              <motion.div
-                key={title}
-                initial={{ opacity: 0, x: 15 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="flex gap-4"
-              >
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full" style={{ backgroundColor: bg, color: i === 1 ? PINK : BLUE }}>
-                  <Icon size={22} />
-                </span>
-                <div>
-                  <h3 className="font-bold" style={{ color: NAVY }}>{title}</h3>
-                  <p className="mt-1 text-sm leading-relaxed text-slate-500">{desc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Philosophy */}
-      <section className="section-py overflow-hidden bg-[#F4FBFE]">
-        <div className="container-px mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
-          <motion.div
-            initial={{ opacity: 0, x: -25 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="relative"
-          >
-            <div className="absolute left-4 top-4 h-72 w-72 rounded-full bg-[#FCE700]/70" />
-            <img src={brand.heroImage} alt="Happy child enjoying nutrition" className="relative z-10 h-[350px] w-full rounded-3xl object-cover" />
-          </motion.div>
-          <div>
-            <SectionTitle label="Our Philosophy" title={<>Every Bite Matters During <span style={{ color: BLUE }}>Childhood</span></>} />
-            {brand.philosophy.split("\n\n").map((para, i) => (
-              <p key={i} className="mt-5 leading-relaxed text-slate-600">{para}</p>
-            ))}
-            <div className="mt-7 h-1 w-10 rounded-full bg-[#FCE700]" />
-          </div>
-        </div>
-      </section>
-
-      {/* Values */}
-      <section className="section-py bg-white">
-        <div className="container-px mx-auto max-w-7xl">
-          <SectionTitle label="What Makes Mumma Special" title="Goodness in Every Bite" align="center" className="mx-auto mb-12" />
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-            {values.map(({ title, desc, icon: Icon }, i) => (
-              <motion.div
-                key={title}
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.06 }}
-                className="rounded-2xl border border-slate-100 bg-white p-5 text-center shadow-sm"
-              >
-                <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full" style={{ backgroundColor: [SOFT_PINK, "#FFF8DB", "#EAF7FF"][i % 3], color: [PINK, "#E4B600", BLUE][i % 3] }}>
-                  <Icon size={23} />
-                </span>
-                <h3 className="mt-4 font-bold" style={{ color: NAVY }}>{title}</h3>
-                <p className="mt-2 text-xs leading-relaxed text-slate-500">{desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Who we serve */}
-      <section className="section-py bg-[#FFFDF8]">
-        <div className="container-px mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[0.8fr_1.4fr]">
-          <div>
-            <SectionTitle label="Who We Serve" title={<>Made for Every Stage of <span style={{ color: PINK }}>Childhood</span></>} />
-            <p className="mt-6 leading-relaxed text-slate-500">
-              Mumma is for every parent who wants the best for their child — whether it's their first bite or their next big milestone.
+          {/* Right */}
+          <div className="border-l-4 pl-8" style={{ borderColor: YELLOW }}>
+            <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: PRIMARY }}>
+              ABOUT {brand.name.toUpperCase()}
             </p>
-          </div>
-          <div className="grid grid-cols-2 gap-5 md:grid-cols-4">
-            {audiences.map((item, i) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                className="text-center"
-              >
-                <div className="mx-auto h-28 w-28 overflow-hidden rounded-full border-4 border-white shadow-md">
-                  <img src={item.image || brand.heroImage} alt={item.title} className="h-full w-full object-cover" />
-                </div>
-                <h3 className="mt-4 text-sm font-bold" style={{ color: NAVY }}>{item.title}</h3>
-                <p className="mt-1 text-xs text-slate-500">{item.age}</p>
-              </motion.div>
+            <h3 className="mt-4 text-4xl font-extrabold leading-[1.05]" style={{ color: DARK }}>
+              Wholesome Ingredients.
+              <br />
+              Grown-Up Standards.
+            </h3>
+            {aboutParagraphs.map((p, i) => (
+              <p key={i} className="mt-4 leading-relaxed text-slate-600 first:mt-5">
+                {p}
+              </p>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Vision / CTA */}
-      <section className="relative overflow-hidden bg-[#DF1C51] py-12">
-        <div className="absolute -left-10 -top-12 h-32 w-32 rounded-full border-8 border-[#FCE700]/40" />
-        <div className="absolute right-8 top-5 text-4xl text-white">♡</div>
-        <div className="container-px relative mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 text-center md:flex-row md:text-left">
-          <div>
-            <p className="text-sm font-bold text-white/80">Healthy Kids, Brighter Futures</p>
-            <h2 className="mt-2 text-3xl font-extrabold text-white sm:text-4xl">Let's Build a Healthier<br />Tomorrow <span style={{ color: YELLOW }}>Together</span></h2>
+      {/* ── SECTION 3: OUR PHILOSOPHY ── */}
+      <section className="relative overflow-hidden py-16" style={{ backgroundColor: PRIMARY }}>
+        <div className="pointer-events-none absolute inset-0 opacity-5">
+          {[...Array(6)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute rounded-full border-2 border-white"
+              style={{
+                width: `${80 + i * 60}px`,
+                height: `${80 + i * 60}px`,
+                left: `${i * 15}%`,
+                top: "50%",
+                transform: "translateY(-50%)",
+              }}
+            />
+          ))}
+        </div>
+
+        <div className="mx-auto max-w-7xl px-6 lg:px-12">
+          <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: YELLOW }}>
+            OUR PHILOSOPHY
+          </p>
+          <h2 className="mb-6 mt-4 max-w-2xl text-3xl font-extrabold text-white sm:text-4xl">
+            Every Bite Matters.
+          </h2>
+          {philosophyParagraphs.map((p, i) => (
+            <p
+              key={i}
+              className="max-w-2xl leading-relaxed text-white opacity-75"
+              style={{ marginTop: i === 0 ? 0 : "1rem" }}
+            >
+              {p}
+            </p>
+          ))}
+        </div>
+      </section>
+
+      <CurveDivider fromColor={PRIMARY} toColor={WHITE} />
+
+      {/* ── SECTION 4: WHO WE SERVE ── */}
+      <section className="bg-white py-20">
+        <div className="mx-auto max-w-7xl px-6 lg:px-12">
+          <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: PRIMARY }}>
+            WHO WE SERVE
+          </p>
+          <div className="mt-4 grid items-center gap-12 lg:grid-cols-2">
+            <div>
+              <h2 className="text-5xl font-extrabold leading-[1.05]" style={{ color: DARK }}>
+                For Growing Kids.
+                <br />
+                For Caring Parents.
+              </h2>
+            </div>
+            <div className="rounded-2xl p-8" style={{ backgroundColor: `${PRIMARY}0A` }}>
+              {whoWeServeParagraphs.map((p, i) => (
+                <p key={i} className="leading-relaxed text-slate-600" style={{ marginTop: i === 0 ? 0 : "1rem" }}>
+                  {p}
+                </p>
+              ))}
+            </div>
           </div>
-          <Button to="/contact" variant="primary" className="!rounded-full !bg-[#FCE700] !text-[#233B50] hover:!bg-white">
-            Explore Products →
-          </Button>
+        </div>
+      </section>
+
+      {/* ── SECTION 5: HOW WE MAKE IT (flow) ── */}
+      <section className="py-20" style={{ backgroundColor: `${PRIMARY}0A` }}>
+        <div className="mx-auto max-w-7xl px-6 lg:px-12">
+          <div className="grid items-start gap-12 lg:grid-cols-2">
+            {/* Left */}
+            <div>
+              <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: YELLOW }}>
+                HOW WE MAKE IT
+              </p>
+              <h2 className="mt-4 text-4xl font-extrabold leading-[1.05]" style={{ color: DARK }}>
+                Small Batches.
+                <br />
+                Real Ingredients. No Shortcuts.
+              </h2>
+              <p className="mt-5 leading-relaxed text-slate-600">
+                Because when kids eat well, they dream bigger, learn better and grow stronger.
+              </p>
+            </div>
+
+            {/* Right process flow */}
+            <div>
+              <p className="mb-4 text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: PRIMARY }}>
+                OUR PROCESS
+              </p>
+              <div className="flex flex-col gap-2">
+                {brand.values.map((step, i) => (
+                  <motion.div
+                    key={step.title}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className="flex flex-col items-start"
+                  >
+                    <div
+                      className="w-full rounded-full px-6 py-4 text-center font-extrabold tracking-widest text-white"
+                      style={{ backgroundColor: PRIMARY }}
+                    >
+                      {step.title.toUpperCase()}
+                    </div>
+                    {i < brand.values.length - 1 && (
+                      <div className="flex w-full justify-center py-1">
+                        <span className="text-2xl font-extrabold" style={{ color: YELLOW }}>↓</span>
+                      </div>
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── SECTION 6: WHAT MAKES MUMMA DIFFERENT (no image, redesigned) ── */}
+      <section className="relative overflow-hidden py-20" style={{ backgroundColor: PRIMARY }}>
+        {/* decorative background rings instead of a photo */}
+        <div className="pointer-events-none absolute inset-0 opacity-10">
+          {[...Array(5)].map((_, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: i * 0.1 }}
+              className="absolute rounded-full border-2 border-white"
+              style={{
+                width: `${100 + i * 70}px`,
+                height: `${100 + i * 70}px`,
+                right: `${-5 + i * 4}%`,
+                top: `${10 + i * 6}%`,
+              }}
+            />
+          ))}
+        </div>
+
+        <div className="relative mx-auto max-w-7xl px-6 lg:px-12">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mx-auto max-w-2xl text-center"
+          >
+            <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: YELLOW }}>
+              OUR DIFFERENCE
+            </p>
+            <h2 className="mt-3 text-4xl font-extrabold text-white sm:text-5xl">
+              What Makes {brand.name} Different
+            </h2>
+            <div className="mx-auto mt-3 h-1 w-12 rounded-full" style={{ backgroundColor: YELLOW }} />
+            <p className="mt-5 text-white opacity-70">
+              Thoughtful nutrition, made for growing children.
+            </p>
+          </motion.div>
+
+          {/* Keyword grid */}
+          <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+            {brand.standsFor.map(({ title, icon }, i) => {
+              const styles = [
+                { bg: WHITE, color: PRIMARY },
+                { bg: "transparent", color: YELLOW, border: `2px solid ${YELLOW}` },
+                { bg: YELLOW, color: DARK },
+                { bg: "transparent", color: WHITE, border: `2px solid ${WHITE}` },
+                { bg: WHITE, color: PRIMARY },
+                { bg: YELLOW, color: DARK },
+              ];
+              const s = styles[i % styles.length];
+              const Icon = STANDS_FOR_ICONS[icon] || Leaf;
+              return (
+                <motion.div
+                  key={title}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -6, scale: 1.04 }}
+                  transition={{ delay: i * 0.08, type: "spring", stiffness: 220, damping: 18 }}
+                  className="flex flex-col items-center justify-center gap-3 rounded-2xl px-4 py-7 text-center text-xs font-extrabold tracking-widest shadow-lg"
+                  style={{
+                    backgroundColor: s.bg,
+                    color: s.color,
+                    border: s.border || "none",
+                  }}
+                >
+                  <span
+                    className="flex h-10 w-10 items-center justify-center rounded-full"
+                    style={{
+                      backgroundColor: s.color === WHITE || s.color === YELLOW ? `${s.color}22` : `${PRIMARY}14`,
+                    }}
+                  >
+                    <Icon size={20} />
+                  </span>
+                  {title.toUpperCase()}
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <CurveDivider fromColor={PRIMARY} toColor={WHITE} />
+
+      {/* ── SECTION 7: PRODUCTS ── */}
+      <section className="relative overflow-hidden bg-white py-20">
+        <div
+          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full opacity-[0.06]"
+          style={{ backgroundColor: PRIMARY }}
+        />
+        <div
+          className="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full opacity-[0.08]"
+          style={{ backgroundColor: YELLOW }}
+        />
+
+        <div className="relative mx-auto max-w-7xl px-6 lg:px-12">
+          <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+            <div>
+              <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: YELLOW }}>
+                OUR PRODUCTS
+              </p>
+              <h2 className="mt-3 text-4xl font-extrabold" style={{ color: DARK }}>
+                Snacks Kids Love. Parents Trust.
+              </h2>
+            </div>
+            <span
+              className="rounded-full px-4 py-1.5 text-xs font-extrabold tracking-widest"
+              style={{ backgroundColor: `${PRIMARY}0F`, color: PRIMARY }}
+            >
+              {PRODUCTS.length} PRODUCTS
+            </span>
+          </div>
+
+          <motion.div
+            layout
+            className="mt-12 grid grid-cols-4 gap-3 sm:gap-6"
+          >
+            <AnimatePresence initial={false}>
+              {visibleProducts.map((p, i) => (
+                <motion.div
+                  key={p.name}
+                  layout
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  whileHover={{ y: -6 }}
+                  transition={{ duration: 0.35, delay: i < 4 ? i * 0.08 : (i - 4) * 0.06 }}
+                >
+                  <img
+                    src={p.image}
+                    alt={p.name}
+                    className="w-full h-auto"
+                  />
+                  <h3 className="mt-2 text-center text-[11px] font-extrabold leading-tight sm:mt-3 sm:text-base" style={{ color: PRIMARY }}>
+                    {p.name}
+                  </h3>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+
+          {PRODUCTS.length > 4 && (
+            <div className="mt-12 flex justify-center">
+              <button
+                type="button"
+                onClick={() => setShowAllProducts((v) => !v)}
+                className="inline-flex items-center gap-2 rounded-full px-8 py-3 text-sm font-extrabold tracking-wider text-white shadow-md transition hover:opacity-90"
+                style={{ backgroundColor: PRIMARY }}
+              >
+                {showAllProducts ? (
+                  <>
+                    VIEW LESS PRODUCTS <ChevronUp size={18} />
+                  </>
+                ) : (
+                  <>
+                    VIEW MORE PRODUCTS <ChevronDown size={18} />
+                  </>
+                )}
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ── SECTION 8: VISION ── */}
+      <section className="relative overflow-hidden py-20" style={{ backgroundColor: YELLOW }}>
+        <div className="pointer-events-none absolute inset-0 opacity-10">
+          {[...Array(4)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute rounded-full border-2"
+              style={{
+                borderColor: PRIMARY,
+                width: `${120 + i * 80}px`,
+                height: `${120 + i * 80}px`,
+                right: `${5 + i * 8}%`,
+                top: "50%",
+                transform: `translateY(-50%) rotate(${i * 15}deg)`,
+              }}
+            />
+          ))}
+        </div>
+
+        <div className="relative mx-auto max-w-7xl px-6 lg:px-12">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            <div>
+              <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: PRIMARY }}>
+                OUR VISION
+              </p>
+              <h2 className="mt-4 text-4xl font-extrabold leading-[1.05] sm:text-5xl" style={{ color: PRIMARY }}>
+                A Trusted Household Name
+                <br />
+                in Children's Nutrition.
+              </h2>
+            </div>
+            <div>
+              <p className="leading-relaxed" style={{ color: PRIMARY }}>
+                {brand.vision}
+              </p>
+              <div className="mt-8">
+                <Link
+                  to="/contact"
+                  className="inline-block rounded-full px-8 py-3 text-sm font-extrabold tracking-widest text-white transition hover:opacity-90"
+                  style={{ backgroundColor: PRIMARY }}
+                >
+                  DISCOVER {brand.name.toUpperCase()} →
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── SECTION 9: MUMMA PROMISE ── */}
+      <section className="relative overflow-hidden bg-white py-20">
+        <div
+          className="absolute bottom-0 left-0 h-32 w-48 rounded-full opacity-30"
+          style={{ backgroundColor: YELLOW, transform: "translate(-30%, 30%)" }}
+        />
+        <div
+          className="absolute right-0 top-0 h-32 w-48 rounded-full opacity-15"
+          style={{ backgroundColor: PRIMARY, transform: "translate(30%, -30%)" }}
+        />
+
+        <div className="relative mx-auto max-w-7xl px-6 text-center lg:px-12">
+          <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: PRIMARY }}>
+            {brand.name.toUpperCase()} PROMISE
+          </p>
+          <h2 className="mx-auto mt-4 max-w-3xl text-4xl font-extrabold leading-[1.05] sm:text-5xl" style={{ color: DARK }}>
+            "{brand.promise}"
+          </h2>
+
+          {/* Mark, in place of a logo */}
+          <div
+            className="mx-auto mt-8 flex h-24 w-24 items-center justify-center rounded-full bg-white shadow-lg"
+            style={{ border: `3px solid ${PRIMARY}` }}
+          >
+            <Heart color={PRIMARY} size={40} />
+          </div>
         </div>
       </section>
 
       <CTASection
-        title="Discover More About Mumma"
+        title={`Discover More About ${brand.name}`}
         description="Get in touch to find a stockist near you or explore partnership opportunities."
         secondary={{ label: "All Brands", to: "/brands" }}
       />

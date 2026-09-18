@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Phone, Mail, ChevronUp } from "lucide-react";
 import { FacebookIcon, TwitterIcon, YoutubeIcon, InstagramIcon } from "./SocialIcons";
 import { COMPANY_NAME, CONTACT, SOCIAL } from "../config";
-import logo from "../assets/logo.svg";
+import logo from "../assets/logofooter.png";
 
 // Same palette as GetInTouchBar, so the two sit together as one visual family.
 const DARK = "#2A160C";

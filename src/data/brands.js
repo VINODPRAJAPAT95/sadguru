@@ -20,9 +20,9 @@ const brands = [
       yellow: "#FCE700",
     },
     heroImage:
-      "https://images.unsplash.com/photo-1600952841320-db92ec4047ca?auto=format&fit=crop&w=1600&q=80",
+      mummaLogo,
     cardImage:
-      "https://images.unsplash.com/photo-1621447504864-d8686f12c84a?auto=format&fit=crop&w=1200&q=80",
+      mummaLogo,
     description:
       "Mumma is a child-focused nutrition brand built around the bond between a mother and her child — love, care, trust, protection and nourishment, in every product.",
 
@@ -49,23 +49,13 @@ const brands = [
 
     promise: "Every bite made with the care of a Mumma.",
 
-    products: [
-      { name: "Himalayan Salt Kettle Chips", category: "Kettle Chips", image: "https://images.unsplash.com/photo-1613919113640-25732ec5e61f?auto=format&fit=crop&w=800&q=80", desc: "Thick-cut potatoes, slow-fried in small batches." },
-      { name: "Peri Peri Masala Chips", category: "Kettle Chips", image: "https://images.unsplash.com/photo-1621447504864-d8686f12c84a?auto=format&fit=crop&w=800&q=80", desc: "Bold peri peri spice on a crunchy ridge-cut chip." },
-      { name: "Classic Moong Dal Namkeen", category: "Roasted Namkeen", image: "https://images.unsplash.com/photo-1599490659213-e0b2757c5a91?auto=format&fit=crop&w=800&q=80", desc: "Lightly roasted, tempered with curry leaf and hing." },
-      { name: "Multigrain Puffs", category: "Puffed Snacks", image: "https://images.unsplash.com/photo-1600952841320-db92ec4047ca?auto=format&fit=crop&w=800&q=80", desc: "A crunchy mix of five puffed grains." },
-    ],
+    
     values: [
       { title: "Small Batches", desc: "We cook in limited runs so every batch stays fresh and consistent." },
       { title: "Visible Ingredients", desc: "If you can't picture it in your kitchen, it isn't in our snacks." },
       { title: "No Shortcuts", desc: "Traditional tempering and roasting, never rushed." },
     ],
-    gallery: [
-      "https://images.unsplash.com/photo-1621447504864-d8686f12c84a?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1613919113640-25732ec5e61f?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1599490659213-e0b2757c5a91?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1600952841320-db92ec4047ca?auto=format&fit=crop&w=900&q=80",
-    ],
+    
   },
 
   {
@@ -81,7 +71,7 @@ const brands = [
       yellow: "#FBBF09",
     },
     heroImage:
-      "https://images.unsplash.com/photo-1599490659213-e0b2757c5a91?auto=format&fit=crop&w=1600&q=80",
+      t2mLogo,
     cardImage:
       "https://images.unsplash.com/photo-1599490659213-e0b2757c5a91?auto=format&fit=crop&w=1200&q=80",
     description:
@@ -144,7 +134,7 @@ const brands = [
       white: "#FEFEFE",
     },
     heroImage:
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=1600&q=80",
+      milletvedaLogo,
     cardImage:
       "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=1200&q=80",
     description:
@@ -204,9 +194,9 @@ const brands = [
     logo: ahaarsutraLogo,
     accent: "#2B7A5B",
     heroImage:
-      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1600&q=80",
+     ahaarsutraLogo,
     cardImage:
-      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80",
+      ahaarsutraLogo,
     description:
       "Ahaarsutra is a wellness-focused food brand built around a simple idea: food should have a purpose — combining nutrition science, purposeful formulation, and mindful eating.",
 

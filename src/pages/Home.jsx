@@ -152,75 +152,75 @@ export default function Home() {
         description="A multi-brand food company crafting wholesome, minimally processed food rooted in tradition and modern nutrition."
       />
 
-      {/* HERO */}
-      <section
-        ref={heroRef}
-        className="relative flex min-h-screen items-center overflow-hidden bg-charcoal"
-      >
-        <motion.div style={{ y: bgY }} className="absolute inset-0 scale-110">
-          <img
-            src={heroBg}
-            alt="Freshly prepared wholesome snacks and food"
-            className="h-full w-full object-cover"
-            loading="eager"
-            decoding="async"
-            fetchpriority="high"
-          />
-          <div className="absolute inset-0 bg-charcoal/45" />
-        </motion.div>
+     {/* HERO */}
+<section
+  ref={heroRef}
+  className="relative flex min-h-screen items-center overflow-hidden bg-charcoal"
+>
+  <motion.div style={{ y: bgY }} className="absolute inset-0 scale-110">
+    <img
+      src={heroBg}
+      alt="Freshly prepared wholesome snacks and food"
+      className="h-full w-full object-cover"
+      loading="eager"
+      decoding="async"
+      fetchpriority="high"
+    />
+    <div className="absolute inset-0 bg-charcoal/45" />
+  </motion.div>
 
-        <motion.div
-          style={{ y: textY, opacity: textOpacity }}
-          className="container-px relative mx-auto max-w-6xl py-28 text-center"
+  <motion.div
+    style={{ y: textY, opacity: textOpacity }}
+    className="container-px relative mx-auto w-full max-w-6xl py-28 text-center"
+  >
+    <motion.span
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      className="inline-flex max-w-full flex-wrap items-center justify-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-orange-400 sm:text-sm sm:tracking-[0.35em]"
+    >
+      Premium Food Processing
+    </motion.span>
+
+    <h1 className="mx-auto mt-6 max-w-5xl text-balance break-words font-display text-4xl font-black uppercase leading-[1.1] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+      {["Wholesome Food,", "Thoughtfully Prepared", "for Healthier Living"].map((line, i) => (
+        <motion.span
+          key={line}
+          custom={i}
+          initial="hidden"
+          animate="visible"
+          variants={headlineLine}
+          className={`block ${i === 1 ? "text-orange-500" : "text-white"}`}
         >
-          <motion.span
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.35em] text-orange-400"
-          >
-            Premium Food Processing
-          </motion.span>
+          {line}
+        </motion.span>
+      ))}
+    </h1>
 
-          <h1 className="mx-auto mt-6 max-w-5xl text-balance font-display text-5xl font-black uppercase leading-[1.08] tracking-tight sm:text-6xl lg:text-7xl">
-            {["Wholesome Food,", "Thoughtfully Prepared", "for Healthier Living"].map((line, i) => (
-              <motion.span
-                key={line}
-                custom={i}
-                initial="hidden"
-                animate="visible"
-                variants={headlineLine}
-                className={`block ${i === 1 ? "text-orange-500" : "text-white"}`}
-              >
-                {line}
-              </motion.span>
-            ))}
-          </h1>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.55 }}
-            className="mt-10 flex flex-wrap items-center justify-center gap-4"
-          >
-            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-              <Button to="/brands" variant="primary" className="bg-orange-500 hover:bg-orange-600">
-                Explore Our Brands
-              </Button>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-              <Button
-                to="/about/our-story"
-                variant="outline"
-                icon={false}
-                className="border-white/40 text-white hover:border-orange-400 hover:text-orange-300"
-              >
-                Discover Our Story
-              </Button>
-            </motion.div>
-          </motion.div>
-        </motion.div>
-      </section>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, delay: 0.55 }}
+      className="mt-10 flex flex-wrap items-center justify-center gap-4"
+    >
+      <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+        <Button to="/brands" variant="primary" className="bg-orange-500 hover:bg-orange-600">
+          Explore Our Brands
+        </Button>
+      </motion.div>
+      <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+        <Button
+          to="/about/our-story"
+          variant="outline"
+          icon={false}
+          className="border-white/40 text-white hover:border-orange-400 hover:text-orange-300"
+        >
+          Discover Our Story
+        </Button>
+      </motion.div>
+    </motion.div>
+  </motion.div>
+</section>
 
       {/* SHORT ABOUT — overflow-hidden safe rakha, koi sticky/scroll animation nahi hai */}
       <section className="section-py overflow-hidden">

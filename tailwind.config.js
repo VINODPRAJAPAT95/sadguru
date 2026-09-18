@@ -33,7 +33,7 @@ export default {
         cream: "#FBF3E7",
       },
       fontFamily: {
-        display: ["Cooper Black", "Georgia", "serif"],
+        display: ["Baloo 2", "Georgia", "serif"],
         body: ["Manrope", "system-ui", "sans-serif"],
       },
       boxShadow: {

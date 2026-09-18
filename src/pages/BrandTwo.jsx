@@ -112,7 +112,7 @@ export default function BrandTwo() {
             <p className="text-xs font-extrabold uppercase tracking-[0.25em] text-white opacity-70">
               {brand.number}. {brand.name.toUpperCase()}
             </p>
-            <h1 className="mt-4 text-4xl font-extrabold leading-[1.05] text-white sm:text-5xl lg:text-6xl">
+            <h1 className="mt-4 text-3xl font-extrabold leading-[1.1] text-white sm:text-5xl lg:text-6xl lg:leading-[1.05]">
               {taglineParts.map((part, i) => (
                 <span key={i}>
                   <span style={{ color: i === 1 ? YELLOW : WHITE }}>{part}.</span>
@@ -165,11 +165,11 @@ export default function BrandTwo() {
       <CurveDivider fromColor={PRIMARY} toColor={WHITE} />
 
       {/* ── SECTION 2: ABOUT T2M ── */}
-      <section className="bg-white py-20">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-2 lg:px-12">
+      <section className="bg-white py-14 sm:py-20">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-6 lg:grid-cols-2 lg:gap-12 lg:px-12">
           {/* Left */}
           <div>
-            <h2 className="text-6xl font-extrabold leading-[1.0]" style={{ color: DARK }}>
+            <h2 className="text-3xl font-extrabold leading-[1.1] sm:text-5xl lg:text-6xl lg:leading-[1.0]" style={{ color: DARK }}>
               India Loves Its{" "}
               <br />
               <span style={{ color: PRIMARY }}>Snacks.</span>
@@ -186,7 +186,7 @@ export default function BrandTwo() {
               <motion.img
                 src={brand.cardImage}
                 alt="Indian snacks collage"
-                className="h-[320px] w-full object-cover"
+                className="h-[220px] w-full object-cover sm:h-[320px]"
                 whileHover={{ scale: 1.08 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
               />
@@ -198,11 +198,11 @@ export default function BrandTwo() {
           </div>
 
           {/* Right */}
-          <div className="border-l-4 pl-8" style={{ borderColor: YELLOW }}>
+          <div className="border-l-4 pl-6 sm:pl-8" style={{ borderColor: YELLOW }}>
             <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: YELLOW }}>
               ABOUT {brand.name.toUpperCase()}
             </p>
-            <h3 className="mt-4 text-4xl font-extrabold leading-[1.05]" style={{ color: DARK }}>
+            <h3 className="mt-4 text-2xl font-extrabold leading-[1.15] sm:text-4xl sm:leading-[1.05]" style={{ color: DARK }}>
               Familiar Flavours.
               <br />
               Modern Standards.
@@ -217,7 +217,7 @@ export default function BrandTwo() {
       </section>
 
       {/* ── SECTION 3: WHAT WE OFFER ── */}
-      <section className="relative overflow-hidden py-16" style={{ backgroundColor: PRIMARY }}>
+      <section className="relative overflow-hidden py-14 sm:py-16" style={{ backgroundColor: PRIMARY }}>
         <div className="pointer-events-none absolute inset-0 opacity-5">
           {[...Array(6)].map((_, i) => (
             <div
@@ -238,7 +238,7 @@ export default function BrandTwo() {
           <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: YELLOW }}>
             WHAT WE OFFER
           </p>
-          <h2 className="mb-6 mt-4 max-w-2xl text-3xl font-extrabold text-white sm:text-4xl">
+          <h2 className="mb-6 mt-4 max-w-2xl text-2xl font-extrabold text-white sm:text-4xl">
             Snacking Made for Everyday Life.
           </h2>
           {offerParagraphs.map((p, i) => (
@@ -252,21 +252,21 @@ export default function BrandTwo() {
       <CurveDivider fromColor={PRIMARY} toColor={WHITE} />
 
       {/* ── SECTION 4: OUR PURPOSE ── */}
-      <section className="bg-white py-20">
+      <section className="bg-white py-14 sm:py-20">
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
           <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: PRIMARY }}>
             OUR PURPOSE
           </p>
-          <div className="mt-4 grid items-center gap-12 lg:grid-cols-2">
+          <div className="mt-4 grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
             <div>
-              <h2 className="text-5xl font-extrabold leading-[1.05]" style={{ color: DARK }}>
+              <h2 className="text-3xl font-extrabold leading-[1.1] sm:text-5xl sm:leading-[1.05]" style={{ color: DARK }}>
                 Good Snacking.
                 <br />
                 Made Accessible.
               </h2>
             </div>
             <div
-              className="rounded-2xl p-8"
+              className="rounded-2xl p-6 sm:p-8"
               style={{ backgroundColor: `${PRIMARY}0A` }}
             >
               <p className="leading-relaxed text-slate-600">
@@ -278,15 +278,15 @@ export default function BrandTwo() {
       </section>
 
       {/* ── SECTION 5: MARKET FOCUS ── */}
-      <section className="py-20" style={{ backgroundColor: `${PRIMARY}0A` }}>
+      <section className="py-14 sm:py-20" style={{ backgroundColor: `${PRIMARY}0A` }}>
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
-          <div className="grid items-start gap-12 lg:grid-cols-2">
+          <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-12">
             {/* Left */}
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: YELLOW }}>
                 MARKET FOCUS
               </p>
-              <h2 className="mt-4 text-4xl font-extrabold leading-[1.05]" style={{ color: DARK }}>
+              <h2 className="mt-4 text-2xl font-extrabold leading-[1.15] sm:text-4xl sm:leading-[1.05]" style={{ color: DARK }}>
                 Built for the
                 <br />
                 Everyday Indian Market.
@@ -312,7 +312,7 @@ export default function BrandTwo() {
                     className="flex flex-col items-start"
                   >
                     <div
-                      className="w-full rounded-full px-6 py-4 text-center font-extrabold tracking-widest text-white"
+                      className="w-full rounded-full px-4 py-3 text-center text-sm font-extrabold tracking-widest text-white sm:px-6 sm:py-4 sm:text-base"
                       style={{ backgroundColor: PRIMARY }}
                     >
                       {step.toUpperCase()}
@@ -331,12 +331,12 @@ export default function BrandTwo() {
       </section>
 
       {/* ── SECTION 6: WHAT MAKES T2M DIFFERENT ── */}
-      <section className="relative overflow-hidden py-20" style={{ backgroundColor: PRIMARY }}>
+      <section className="relative overflow-hidden py-14 sm:py-20" style={{ backgroundColor: PRIMARY }}>
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
-          <div className="grid items-start gap-12 lg:grid-cols-[1fr_1.5fr]">
+          <div className="grid items-start gap-10 lg:grid-cols-[1fr_1.5fr] lg:gap-12">
             {/* Left heading */}
             <div>
-              <h2 className="text-4xl font-extrabold text-white sm:text-5xl">
+              <h2 className="text-3xl font-extrabold text-white sm:text-5xl">
                 What Makes {brand.name} Different
               </h2>
               <div className="mt-3 h-1 w-12 rounded-full" style={{ backgroundColor: YELLOW }} />
@@ -356,13 +356,13 @@ export default function BrandTwo() {
                 <img
                   src={brand.cardImage}
                   alt={`${brand.name} Snacks`}
-                  className="h-52 w-full object-cover opacity-80"
+                  className="h-40 w-full object-cover opacity-80 sm:h-52"
                 />
               </motion.div>
             </div>
 
             {/* Right keyword grid */}
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-2">
+            <div className="grid grid-cols-2 gap-3">
               {brand.differentiators.map((word, i) => {
                 const styles = [
                   { bg: WHITE, color: PRIMARY },
@@ -384,7 +384,7 @@ export default function BrandTwo() {
                     viewport={{ once: true }}
                     whileHover={{ y: -4, scale: 1.03 }}
                     transition={{ delay: i * 0.07, type: "spring", stiffness: 220, damping: 18 }}
-                    className="flex flex-col items-center justify-center gap-2 rounded-xl px-4 py-5 text-center text-xs font-extrabold tracking-widest shadow-md"
+                    className="flex flex-col items-center justify-center gap-2 rounded-xl px-3 py-4 text-center text-[10px] font-extrabold tracking-widest shadow-md sm:px-4 sm:py-5 sm:text-xs"
                     style={{
                       backgroundColor: s.bg,
                       color: s.color,
@@ -404,7 +404,7 @@ export default function BrandTwo() {
       <CurveDivider fromColor={PRIMARY} toColor={WHITE} />
 
       {/* ── SECTION 7: PRODUCTS ── */}
-      <section className="relative overflow-hidden bg-white py-20">
+      <section className="relative overflow-hidden bg-white py-14 sm:py-20">
         <div
           className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full opacity-[0.06]"
           style={{ backgroundColor: PRIMARY }}
@@ -420,7 +420,7 @@ export default function BrandTwo() {
               <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: YELLOW }}>
                 OUR PRODUCTS
               </p>
-              <h2 className="mt-3 text-4xl font-extrabold" style={{ color: DARK }}>
+              <h2 className="mt-3 text-2xl font-extrabold sm:text-4xl" style={{ color: DARK }}>
                 Snacks India Trusts, Bite After Bite.
               </h2>
             </div>
@@ -434,7 +434,7 @@ export default function BrandTwo() {
 
           <motion.div
             layout
-            className="mt-12 grid grid-cols-4 gap-3 sm:gap-6"
+            className="mt-10 grid grid-cols-2 gap-3 sm:mt-12 sm:grid-cols-4 sm:gap-6"
           >
             <AnimatePresence initial={false}>
               {visibleProducts.map((p, i) => (
@@ -452,7 +452,7 @@ export default function BrandTwo() {
                     alt={p.name}
                     className="w-full h-auto"
                   />
-                  <h3 className="mt-2 text-center text-[11px] font-extrabold leading-tight sm:mt-3 sm:text-base" style={{ color: PRIMARY }}>
+                  <h3 className="mt-2 text-center text-xs font-extrabold leading-tight sm:mt-3 sm:text-base" style={{ color: PRIMARY }}>
                     {p.name}
                   </h3>
                 </motion.div>
@@ -461,11 +461,11 @@ export default function BrandTwo() {
           </motion.div>
 
           {PRODUCTS.length > 4 && (
-            <div className="mt-12 flex justify-center">
+            <div className="mt-10 flex justify-center sm:mt-12">
               <button
                 type="button"
                 onClick={() => setShowAllProducts((v) => !v)}
-                className="inline-flex items-center gap-2 rounded-full px-8 py-3 text-sm font-extrabold tracking-wider text-white shadow-md transition hover:opacity-90"
+                className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-xs font-extrabold tracking-wider text-white shadow-md transition hover:opacity-90 sm:px-8 sm:text-sm"
                 style={{ backgroundColor: PRIMARY }}
               >
                 {showAllProducts ? (
@@ -484,7 +484,7 @@ export default function BrandTwo() {
       </section>
 
       {/* ── SECTION 8: VISION ── */}
-      <section className="relative overflow-hidden py-20" style={{ backgroundColor: YELLOW }}>
+      <section className="relative overflow-hidden py-14 sm:py-20" style={{ backgroundColor: YELLOW }}>
         <div className="pointer-events-none absolute inset-0 opacity-10">
           {[...Array(4)].map((_, i) => (
             <div
@@ -503,12 +503,12 @@ export default function BrandTwo() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-12">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: PRIMARY }}>
                 OUR VISION
               </p>
-              <h2 className="mt-4 text-4xl font-extrabold leading-[1.05] sm:text-5xl" style={{ color: PRIMARY }}>
+              <h2 className="mt-4 text-2xl font-extrabold leading-[1.15] sm:text-4xl sm:leading-[1.05] lg:text-5xl" style={{ color: PRIMARY }}>
                 Millions of Consumers.
                 <br />
                 One Trusted Snacking Brand.
@@ -533,7 +533,7 @@ export default function BrandTwo() {
       </section>
 
       {/* ── SECTION 9: T2M PROMISE (no image) ── */}
-      <section className="relative overflow-hidden bg-white py-20">
+      <section className="relative overflow-hidden bg-white py-14 sm:py-20">
         <div
           className="absolute bottom-0 left-0 h-32 w-48 rounded-full opacity-30"
           style={{ backgroundColor: YELLOW, transform: "translate(-30%, 30%)" }}
@@ -558,7 +558,7 @@ export default function BrandTwo() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="mx-auto mt-4 max-w-3xl text-4xl font-extrabold leading-[1.05] sm:text-5xl"
+            className="mx-auto mt-4 max-w-3xl text-2xl font-extrabold leading-[1.15] sm:text-4xl sm:leading-[1.05] lg:text-5xl"
             style={{ color: DARK }}
           >
             "{brand.promise}"

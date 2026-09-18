@@ -40,7 +40,7 @@ const whyChooseUs = [
   { icon: ShieldCheck, title: "Quality & Safety", desc: "A strong commitment to quality and safety across every product." },
   { icon: Target, title: "Balanced Nutrition", desc: "A focus on balanced nutrition designed for all ages." },
 ];
-// What We Do — 3 highlight cards
+
 const whatWeDoItems = [
   {
     icon: Salad,
@@ -59,7 +59,6 @@ const whatWeDoItems = [
   },
 ];
 
-// Philosophy cards — matches the "Our Philosophy" reference layout
 const philosophyItems = [
   {
     Icon: ShowerHead,
@@ -83,7 +82,6 @@ const philosophyItems = [
   },
 ];
 
-// Staggered scroll-reveal for each line of the hero headline
 const headlineLine = {
   hidden: { opacity: 0, y: 24 },
   visible: (i) => ({
@@ -93,7 +91,6 @@ const headlineLine = {
   }),
 };
 
-// What We Do card stagger
 const whatWeDoContainer = {
   hidden: {},
   visible: {
@@ -110,12 +107,6 @@ const whatWeDoCardVariant = {
   },
 };
 
-// Values / Vision / Mission: cards "emerge from behind" Values on scroll down,
-// and retreat back behind it on scroll up.
-// Key bits that make the REVERSE work reliably:
-//  - viewport.once = false  → animation is allowed to replay every time
-//  - viewport.margin        → shrinks the trigger zone so it exits/enters cleanly
-//    instead of flickering right at the edge of the screen
 const stackContainer = {
   hidden: {},
   visible: {
@@ -150,7 +141,6 @@ export default function Home() {
     offset: ["start start", "end start"],
   });
 
-  // Subtle parallax + fade as the hero scrolls out of view
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "35%"]);
   const textOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
@@ -176,7 +166,6 @@ export default function Home() {
             decoding="async"
             fetchpriority="high"
           />
-          {/* Single flat overlay only — keeps the photo crisp and HD instead of washing it out */}
           <div className="absolute inset-0 bg-charcoal/45" />
         </motion.div>
 
@@ -233,14 +222,10 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* SHORT ABOUT */}
-      {/* FIX: added overflow-hidden — the two decorative shapes below use negative
-          positioning (-bottom-6, -left-6, -right-5, -top-5) which pushed page width
-          past the viewport on mobile and created the right-side white space / horizontal scroll. */}
+      {/* SHORT ABOUT — overflow-hidden safe rakha, koi sticky/scroll animation nahi hai */}
       <section className="section-py overflow-hidden">
         <div className="container-px mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20">
 
-          {/* IMAGE */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -248,26 +233,21 @@ export default function Home() {
             transition={{ duration: 0.7 }}
             className="relative order-2 lg:order-1"
           >
-            {/* Decorative Shapes Behind Image */}
             <div className="absolute -bottom-6 -left-6 h-32 w-32 border-2 border-orange-200/60" />
             <div className="absolute -right-5 -top-5 h-24 w-24 bg-orange-500/10" />
 
-            {/* Main Image */}
             <div className="group relative overflow-hidden">
               <img
                 src="https://industry-ai.com/wp-content/uploads/2025/07/FMCG-Blogs-1-Home.jpg"
                 alt="Preparing wholesome food"
                 className="relative z-10 h-[380px] w-full object-cover transition duration-700 group-hover:scale-105 sm:h-[460px]"
               />
-
               <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
             </div>
 
-            {/* Accent Line */}
             <div className="absolute -bottom-3 left-8 z-20 h-1 w-24 bg-orange-500" />
           </motion.div>
 
-          {/* CONTENT */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -301,9 +281,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* WHAT WE DO */}
+      {/* WHAT WE DO — original overflow-hidden already tha, safe hai */}
       <section className="section-py relative overflow-hidden bg-charcoal">
-        {/* subtle orange glow accents for depth */}
         <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-orange-500/20 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-orange-500/10 blur-3xl" />
 
@@ -359,10 +338,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* VALUES / VISION / MISSION — image card + two dark cards.
-          viewport.once = false + a tuned margin makes the stacked cards slide out
-          on scroll-down and reliably retreat back behind "Values" on scroll-up,
-          every single pass — not just the first time. */}
+      {/* VALUES / VISION / MISSION — overflow-hidden safe hai, isme sticky nahi, sirf whileInView hai */}
       <section className="section-py bg-orange-50/40 overflow-hidden">
         <div className="container-px mx-auto max-w-7xl">
           <SectionTitle
@@ -380,7 +356,6 @@ export default function Home() {
             viewport={{ once: false, amount: 0.35, margin: "0px 0px -10% 0px" }}
             className="grid grid-cols-1 gap-8 lg:grid-cols-5 lg:items-stretch"
           >
-            {/* VALUES — photo background card, wider (3/5 columns) */}
             <motion.div
               variants={valuesCardVariant}
               className="relative z-30 min-h-[300px] overflow-hidden rounded-3xl shadow-soft lg:col-span-3"
@@ -407,7 +382,6 @@ export default function Home() {
               </div>
             </motion.div>
 
-            {/* VISION — dark card, narrower (1/5 columns), slides out from behind Values */}
             <motion.div
               variants={stackedCardVariant}
               whileHover={{ y: -6 }}
@@ -423,7 +397,6 @@ export default function Home() {
               </p>
             </motion.div>
 
-            {/* MISSION — dark card, narrower (1/5 columns), slides out last, further right */}
             <motion.div
               variants={stackedCardVariant}
               whileHover={{ y: -6 }}
@@ -442,7 +415,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PHILOSOPHY — separate section, cream background, bordered cards */}
+      {/* PHILOSOPHY — overflow-hidden safe hai, sirf whileInView, koi sticky nahi */}
       <section className="section-py bg-[#f6e7c9] overflow-hidden">
         <div className="container-px mx-auto max-w-7xl">
           <motion.h2
@@ -479,12 +452,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* BRANDS STICKY SCROLL */}
+      {/* BRANDS STICKY SCROLL — NO overflow-hidden yahan! isme sticky + useScroll dono hain */}
       <section className="bg-white">
 
-        {/* Section Heading */}
         <div className="section-py container-px mx-auto max-w-7xl">
-
           <SectionTitle
             label="Our Brands"
             title="Four Brands, Every Kitchen Covered"
@@ -492,21 +463,18 @@ export default function Home() {
             align="center"
             className="mx-auto"
           />
-
         </div>
 
-        {/* Horizontal Scroll */}
         <BrandHorizontalScroll />
 
       </section>
 
-      {/* WHY CHOOSE US */}
+      {/* WHY CHOOSE US — NO overflow-hidden yahan! isme sticky cards hain (position: sticky) */}
       <section className="relative bg-white py-24 lg:py-32">
         <div className="container-px mx-auto max-w-7xl">
 
           <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-24">
 
-            {/* LEFT STICKY CONTENT */}
             <div className="lg:sticky lg:top-28 lg:h-fit">
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
@@ -520,7 +488,6 @@ export default function Home() {
                   description="Every product from Sadguru Food Processing Pvt. Ltd. follows a transparent and disciplined process. From sourcing quality ingredients to delivering consistent products, we focus on trust, care, and excellence at every stage."
                 />
 
-                {/* Small Decorative Element */}
                 <div className="mt-10 flex items-center gap-3">
                   <div className="h-[2px] w-12 bg-orange-500" />
                   <span className="text-sm font-medium tracking-wide text-charcoal-400">
@@ -530,8 +497,6 @@ export default function Home() {
               </motion.div>
             </div>
 
-
-            {/* RIGHT STACKING CARDS */}
             <div className="relative">
 
               {whyChooseUs.map((item, i) => (
@@ -554,7 +519,6 @@ export default function Home() {
                     className="mb-8 flex min-h-[360px] flex-col justify-between rounded-[2rem] border-2 border-orange-500 bg-[#FFF9EF] p-8 shadow-[0_10px_40px_rgba(0,0,0,0.06)] transition-all duration-500 hover:shadow-[0_15px_50px_rgba(239,127,26,0.12)] sm:p-10"
                   >
 
-                    {/* TOP */}
                     <div>
                       <div className="mb-8 flex h-16 w-16 items-center justify-center bg-orange-500 text-white">
                         <item.icon size={30} strokeWidth={1.8} />
@@ -565,7 +529,6 @@ export default function Home() {
                       </h3>
                     </div>
 
-                    {/* BOTTOM */}
                     <div className="mt-10 flex items-end justify-between gap-6">
                       <p className="max-w-md text-base leading-relaxed text-charcoal-400 sm:text-lg">
                         {item.desc}
@@ -584,7 +547,6 @@ export default function Home() {
 
           </div>
 
-          {/* STATS */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -605,8 +567,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="section-py bg-white">
+      {/* FAQ — overflow-hidden safe hai, koi sticky/scroll animation nahi */}
+      <section className="section-py bg-white overflow-hidden">
         <div className="container-px mx-auto max-w-4xl">
           <SectionTitle
             label="At Sadguru Food Processing Pvt. Ltd., consistency and care guide every step:"

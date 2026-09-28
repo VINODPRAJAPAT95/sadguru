@@ -47,7 +47,7 @@ export default function Services() {
           <SectionTitle
             label="Why Partner With Us"
             title="Infrastructure You Can Trust"
-            description="We built our own brands on this same infrastructure — so when you partner with us, you're working with a team that holds its own products to the same standard."
+            description="We built our own brands on this same infrastructure so when you partner with us, you're working with a team that holds its own products to the same standard."
           />
           <motion.ul
             initial="hidden"
@@ -73,7 +73,7 @@ export default function Services() {
 
       <CTASection
         title="Let's discuss your requirements"
-        description="Tell us about your product and volume needs — our team will get back within one business day."
+        description="Tell us about your product and volume needs our team will get back within one business day."
       />
     </>
   );

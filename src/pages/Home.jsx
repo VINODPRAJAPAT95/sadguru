@@ -28,10 +28,8 @@ import ValueCard from "../components/ValueCard";
 import BrandHorizontalScroll from "../components/BrandHorizontalScroll";
 import FAQ from "../components/FAQ";
 import CTASection from "../components/CTASection";
-import StatCounter from "../components/StatCounter";
 import values from "../data/values";
 import faqs from "../data/faqs";
-import { STATS } from "../config";
 
 const whyChooseUs = [
   { icon: Leaf, title: "Clean Ingredients", desc: "Carefully selected, clean ingredients in every formulation." },
@@ -55,7 +53,7 @@ const whatWeDoItems = [
   {
     icon: Zap,
     title: "Smart Convenience",
-    desc: "Ready when you are — food that fits modern routines without compromising on freshness or nutrition.",
+    desc: "Ready when you are food that fits modern routines without compromising on freshness or nutrition.",
   },
 ];
 
@@ -152,77 +150,77 @@ export default function Home() {
         description="A multi-brand food company crafting wholesome, minimally processed food rooted in tradition and modern nutrition."
       />
 
-     {/* HERO */}
-<section
-  ref={heroRef}
-  className="relative flex min-h-screen items-center overflow-hidden bg-charcoal"
->
-  <motion.div style={{ y: bgY }} className="absolute inset-0 scale-110">
-    <img
-      src={heroBg}
-      alt="Freshly prepared wholesome snacks and food"
-      className="h-full w-full object-cover"
-      loading="eager"
-      decoding="async"
-      fetchpriority="high"
-    />
-    <div className="absolute inset-0 bg-charcoal/45" />
-  </motion.div>
+      {/* HERO */}
+      <section
+        ref={heroRef}
+        className="relative flex min-h-screen items-center overflow-hidden bg-charcoal"
+      >
+        <motion.div style={{ y: bgY }} className="absolute inset-0 scale-110">
+          <img
+            src={heroBg}
+            alt="Freshly prepared wholesome snacks and food"
+            className="h-full w-full object-cover"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+          />
+          <div className="absolute inset-0 bg-charcoal/45" />
+        </motion.div>
 
-  <motion.div
-    style={{ y: textY, opacity: textOpacity }}
-    className="container-px relative mx-auto w-full max-w-6xl py-28 text-center"
-  >
-    <motion.span
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      className="inline-flex max-w-full flex-wrap items-center justify-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-orange-400 sm:text-sm sm:tracking-[0.35em]"
-    >
-      Premium Food Processing
-    </motion.span>
-
-    <h1 className="mx-auto mt-6 max-w-5xl text-balance break-words font-display text-4xl font-black uppercase leading-[1.1] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-      {["Wholesome Food,", "Thoughtfully Prepared", "for Healthier Living"].map((line, i) => (
-        <motion.span
-          key={line}
-          custom={i}
-          initial="hidden"
-          animate="visible"
-          variants={headlineLine}
-          className={`block ${i === 1 ? "text-orange-500" : "text-white"}`}
+        <motion.div
+          style={{ y: textY, opacity: textOpacity }}
+          className="container-px relative mx-auto w-full max-w-6xl py-28 text-center"
         >
-          {line}
-        </motion.span>
-      ))}
-    </h1>
+          <motion.span
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex max-w-full flex-wrap items-center justify-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-orange-400 sm:text-sm sm:tracking-[0.35em]"
+          >
+            Premium Food Processing
+          </motion.span>
 
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, delay: 0.55 }}
-      className="mt-10 flex flex-wrap items-center justify-center gap-4"
-    >
-      <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-        <Button to="/brands" variant="primary" className="bg-orange-500 hover:bg-orange-600">
-          Explore Our Brands
-        </Button>
-      </motion.div>
-      <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-        <Button
-          to="/about/our-story"
-          variant="outline"
-          icon={false}
-          className="border-white/40 text-white hover:border-orange-400 hover:text-orange-300"
-        >
-          Discover Our Story
-        </Button>
-      </motion.div>
-    </motion.div>
-  </motion.div>
-</section>
+          <h1 className="mx-auto mt-6 max-w-5xl text-balance break-words font-display text-4xl font-black uppercase leading-[1.1] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+            {["Wholesome Food,", "Thoughtfully Prepared", "for Healthier Living"].map((line, i) => (
+              <motion.span
+                key={line}
+                custom={i}
+                initial="hidden"
+                animate="visible"
+                variants={headlineLine}
+                className={`block ${i === 1 ? "text-orange-500" : "text-white"}`}
+              >
+                {line}
+              </motion.span>
+            ))}
+          </h1>
 
-      {/* SHORT ABOUT — overflow-hidden safe rakha, koi sticky/scroll animation nahi hai */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.55 }}
+            className="mt-10 flex flex-wrap items-center justify-center gap-4"
+          >
+            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+              <Button to="/brands" variant="primary" className="bg-orange-500 hover:bg-orange-600">
+                Explore Our Brands
+              </Button>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+              <Button
+                to="/about/our-story"
+                variant="outline"
+                icon={false}
+                className="border-white/40 text-white hover:border-orange-400 hover:text-orange-300"
+              >
+                Discover Our Story
+              </Button>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* SHORT ABOUT */}
       <section className="section-py overflow-hidden">
         <div className="container-px mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20">
 
@@ -281,10 +279,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* WHAT WE DO — original overflow-hidden already tha, safe hai */}
-      <section className="section-py relative overflow-hidden bg-charcoal">
-        <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-orange-500/20 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-orange-500/10 blur-3xl" />
+      {/* WHAT WE DO — cream background */}
+      <section className="section-py relative overflow-hidden bg-[#FFF9EF]">
+        <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-orange-500/10 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-orange-400/10 blur-3xl" />
 
         <div className="container-px relative mx-auto max-w-7xl">
           <motion.div
@@ -294,14 +292,14 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="mx-auto max-w-3xl text-center"
           >
-            <span className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.35em] text-orange-400">
+            <span className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.35em] text-orange-500">
               What We Do
             </span>
-            <h2 className="font-baloo mt-4 text-4xl font-bold leading-tight text-white sm:text-5xl">
+            <h2 className="font-baloo mt-4 text-4xl font-bold leading-tight text-[#241209] sm:text-5xl">
               Simple, Nourishing Food{" "}
               <span className="text-orange-500">for Everyday Life</span>
             </h2>
-            <p className="mt-6 leading-relaxed text-white/70">
+            <p className="mt-6 leading-relaxed text-charcoal-400">
               We prepare a broad selection of food products designed to fit today's lifestyle
               while keeping traditional values in mind. Our foods support everyday nourishment,
               are suitable for the entire family, and are made with careful attention to
@@ -321,15 +319,15 @@ export default function Home() {
                 key={item.title}
                 variants={whatWeDoCardVariant}
                 whileHover={{ y: -6 }}
-                className="group relative flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-sm transition-colors duration-300 hover:border-orange-500/60 hover:bg-white/[0.06]"
+                className="group relative flex flex-col rounded-2xl border border-orange-200 bg-white p-8 shadow-sm transition-all duration-300 hover:border-orange-500 hover:shadow-lg"
               >
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-500/10 text-orange-400 transition-colors duration-300 group-hover:bg-orange-500 group-hover:text-white">
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-500/10 text-orange-500 transition-colors duration-300 group-hover:bg-orange-500 group-hover:text-white">
                   <item.icon size={26} strokeWidth={1.75} />
                 </div>
-                <h3 className="font-baloo mt-6 text-xl font-bold text-white">
+                <h3 className="font-baloo mt-6 text-xl font-bold text-[#241209]">
                   {item.title}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-white/65">
+                <p className="mt-3 text-sm leading-relaxed text-charcoal-400">
                   {item.desc}
                 </p>
               </motion.div>
@@ -338,13 +336,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* VALUES / VISION / MISSION — overflow-hidden safe hai, isme sticky nahi, sirf whileInView hai */}
+      {/* VALUES / VISION / MISSION */}
       <section className="section-py bg-orange-50/40 overflow-hidden">
         <div className="container-px mx-auto max-w-7xl">
           <SectionTitle
             label="What Drives Us"
             title="Values, Vision & Mission"
-            description="These principles shape every decision — from sourcing an ingredient to sealing a pack."
+            description="These principles shape every decision from sourcing an ingredient to sealing a pack."
             align="center"
             className="mb-14"
           />
@@ -415,7 +413,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PHILOSOPHY — overflow-hidden safe hai, sirf whileInView, koi sticky nahi */}
+      {/* PHILOSOPHY */}
       <section className="section-py bg-[#f6e7c9] overflow-hidden">
         <div className="container-px mx-auto max-w-7xl">
           <motion.h2
@@ -452,7 +450,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* BRANDS STICKY SCROLL — NO overflow-hidden yahan! isme sticky + useScroll dono hain */}
+      {/* BRANDS HORIZONTAL SCROLL */}
       <section className="bg-white">
 
         <div className="section-py container-px mx-auto max-w-7xl">
@@ -469,7 +467,7 @@ export default function Home() {
 
       </section>
 
-      {/* WHY CHOOSE US — NO overflow-hidden yahan! isme sticky cards hain (position: sticky) */}
+      {/* WHY CHOOSE US */}
       <section className="relative bg-white py-24 lg:py-32">
         <div className="container-px mx-auto max-w-7xl">
 
@@ -488,11 +486,12 @@ export default function Home() {
                   description="Every product from Sadguru Food Processing Pvt. Ltd. follows a transparent and disciplined process. From sourcing quality ingredients to delivering consistent products, we focus on trust, care, and excellence at every stage."
                 />
 
-                <div className="mt-10 flex items-center gap-3">
+                <div className="mt-10 flex items-center justify-center gap-4 lg:justify-start">
                   <div className="h-[2px] w-12 bg-orange-500" />
-                  <span className="text-sm font-medium tracking-wide text-charcoal-400">
+                  <span className="whitespace-nowrap text-sm font-medium tracking-wide text-charcoal-400">
                     Quality • Trust • Care
                   </span>
+                  <div className="h-[2px] w-12 bg-orange-500" />
                 </div>
               </motion.div>
             </div>
@@ -547,27 +546,10 @@ export default function Home() {
 
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="mt-24 grid grid-cols-2 gap-8 border-t border-charcoal/10 pt-12 sm:grid-cols-4"
-          >
-            {STATS.map((s) => (
-              <StatCounter
-                key={s.label}
-                value={s.value}
-                suffix={s.suffix}
-                label={s.label}
-              />
-            ))}
-          </motion.div>
-
         </div>
       </section>
 
-      {/* FAQ — overflow-hidden safe hai, koi sticky/scroll animation nahi */}
+      {/* FAQ */}
       <section className="section-py bg-white overflow-hidden">
         <div className="container-px mx-auto max-w-4xl">
           <SectionTitle

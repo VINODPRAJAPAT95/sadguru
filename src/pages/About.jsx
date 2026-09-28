@@ -28,7 +28,7 @@ const links = [
 export default function About() {
   return (
     <>
-      <Seo title="About Us | Sadguru Food Processing Pvt. Ltd." description="Learn about Sadguru Food Processing Pvt. Ltd. — our story, our team and our policies." />
+      <Seo title="About Us | Sadguru Food Processing Pvt. Ltd." description="Learn about Sadguru Food Processing Pvt. Ltd. our story, our team and our policies." />
       <PageHero
         eyebrow="About Us"
         title="Wholesome Food, Thoughtfully Prepared"

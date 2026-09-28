@@ -13,8 +13,7 @@ export const CONTACT = {
   phone: "+91 92475 33992",
   phoneRaw: "+919247533992",
   email: "operations@sadgurufoods.com",
-  address:
-    "Plot No 86, 2nd Floor, Hafeezpet, Serilingampalli, Jntu Kukat Pally, Hyderabad, Tirumalagiri, Telangana, India, 500085",
+  address: `Mani Tech Space, Plot No. 1072 & 1073, 301 – 3rd Floor, Siddhivinayak Nagar, Madhapur, Khanammet Village, Hyderabad, Telangana – 500081`,
   hours: "Monday – Saturday, 9:30 AM – 6:30 PM IST",
 };
 

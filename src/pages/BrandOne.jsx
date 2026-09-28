@@ -8,9 +8,6 @@ import {
   Clock,
   ShieldCheck,
   HeartHandshake,
-  Package,
-  Eye,
-  Sprout,
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
@@ -19,7 +16,7 @@ import Button from "../components/Button";
 import CTASection from "../components/CTASection";
 import brands from "../data/brands";
 
-// Product images — replace the path below with wherever your product photos live
+// Product images: replace the path below with wherever your product photos live
 import product1 from "../assets/products/product1.jpg";
 import product2 from "../assets/products/product2.jpg";
 import product3 from "../assets/products/product3.jpg";
@@ -35,31 +32,36 @@ import product12 from "../assets/products/product12.jpg";
 
 const brand = brands[0];
 
-// All 12 Mumma products — edit name/category/desc to match your real product copy
+// Removes em dashes / en dashes from any text and replaces them with a comma
+const clean = (text = "") => text.replace(/\s*[\u2014\u2013]\s*/g, ", ");
+
+// All 12 Mumma products
 const PRODUCTS = [
-  { name: "Ragi Cookies", category: "Cookies", image: product1, desc: "Wholesome ragi-based cookies, lightly sweetened for growing kids." },
-  { name: "Multigrain Puffs", category: "Puffs", image: product2, desc: "Crunchy multigrain puffs made with real grains, no maida." },
-  { name: "Fruit & Nut Bars", category: "Bars", image: product3, desc: "Chewy bars packed with dried fruits and nuts, no refined sugar." },
-  { name: "Veggie Crackers", category: "Crackers", image: product4, desc: "Baked, not fried — crackers made with real vegetables." },
-  { name: "Millet Bites", category: "Bites", image: product5, desc: "Bite-sized millet snacks for an energy-packed tiffin box." },
-  { name: "Protein Balls", category: "Energy Bites", image: product6, desc: "No-bake protein balls made with nuts, seeds and jaggery." },
-  { name: "Oats Cookies", category: "Cookies", image: product7, desc: "Soft-baked oats cookies with a touch of honey." },
-  { name: "Banana Chips", category: "Chips", image: product8, desc: "Baked banana chips, a wholesome alternative to fried snacks." },
-  { name: "Quinoa Puffs", category: "Puffs", image: product9, desc: "Light, airy quinoa puffs for a protein-rich crunch." },
-  { name: "Almond Bars", category: "Bars", image: product10, desc: "Roasted almond bars bound with dates, no added sugar." },
-  { name: "Sprouted Mix", category: "Trail Mix", image: product11, desc: "A crunchy mix of sprouted grains, nuts and seeds." },
-  { name: "Wholegrain Rusks", category: "Rusks", image: product12, desc: "Crisp wholegrain rusks, perfect with a glass of milk." },
+  { name: "Ragi Cookies", image: product1 },
+  { name: "Multigrain Puffs", image: product2 },
+  { name: "Fruit & Nut Bars", image: product3 },
+  { name: "Veggie Crackers", image: product4 },
+  { name: "Millet Bites", image: product5 },
+  { name: "Protein Balls", image: product6 },
+  { name: "Oats Cookies", image: product7 },
+  { name: "Banana Chips", image: product8 },
+  { name: "Quinoa Puffs", image: product9 },
+  { name: "Almond Bars", image: product10 },
+  { name: "Sprouted Mix", image: product11 },
+  { name: "Wholegrain Rusks", image: product12 },
 ];
 
-// Mumma brand palette — pulled from data
+// Mumma brand palette, pulled from data
 const PRIMARY = brand.colors.primary; // #DF1C51
-const BLUE = brand.colors.blue;       // #3CA9E0
 const YELLOW = brand.colors.yellow;   // #FCE700
 const WHITE = brand.colors.white;     // #FEFEFE
 const DARK = "#233B50";
 
 const STANDS_FOR_ICONS = { Leaf, Sparkles, Smile, Clock, ShieldCheck, HeartHandshake };
-const VALUE_ICONS = [Package, Eye, Sprout];
+
+// Shared eyebrow (small label above headings)
+const eyebrow =
+  "text-base font-extrabold uppercase tracking-[0.25em] sm:text-xl";
 
 // Small decorative heart, used in place of a logo mark
 const Heart = ({ color = PRIMARY, size = 20 }) => (
@@ -85,29 +87,20 @@ const CurveDivider = ({ fromColor, toColor }) => (
 export default function BrandOne() {
   const [showAllProducts, setShowAllProducts] = useState(false);
   const visibleProducts = showAllProducts ? PRODUCTS : PRODUCTS.slice(0, 4);
-  const aboutParagraphs = brand.about.split("\n\n");
-  const philosophyParagraphs = brand.philosophy.split("\n\n");
-  const whoWeServeParagraphs = brand.whoWeServe.split("\n\n");
+  const aboutParagraphs = clean(brand.about).split("\n\n");
+  const philosophyParagraphs = clean(brand.philosophy).split("\n\n");
+  const whoWeServeParagraphs = clean(brand.whoWeServe).split("\n\n");
   const taglineParts = brand.tagline.split(". ").map((s) => s.replace(/\.$/, ""));
 
   return (
     <>
-      <Seo title={`${brand.name} | ${brand.tagline}`} description={brand.description} />
+      <Seo title={`${brand.name} | ${brand.tagline}`} description={clean(brand.description)} />
 
-      {/* ── SECTION 1: HERO (shortened) ── */}
+      {/* SECTION 1: HERO */}
       <section
         className="relative overflow-hidden"
         style={{ backgroundColor: PRIMARY, minHeight: "62vh" }}
       >
-        <div
-          className="absolute right-0 top-0 h-full w-1/2"
-          style={{ background: `linear-gradient(135deg, transparent 40%, ${YELLOW}22 100%)` }}
-        />
-        <div
-          className="absolute bottom-0 left-0 h-48 w-64 rounded-full opacity-10"
-          style={{ background: YELLOW, transform: "translate(-30%, 30%)" }}
-        />
-
         <div className="relative mx-auto grid max-w-7xl items-center gap-8 px-6 py-16 lg:grid-cols-2 lg:px-12 lg:py-20">
           {/* Left text */}
           <motion.div
@@ -129,7 +122,7 @@ export default function BrandOne() {
               ))}
             </h1>
             <p className="mt-5 max-w-md text-base leading-relaxed text-white opacity-75">
-              {brand.description}
+              {clean(brand.description)}
             </p>
             <div className="mt-7 flex flex-wrap gap-4">
               <Button
@@ -161,7 +154,7 @@ export default function BrandOne() {
           >
             <img
               src={brand.heroImage}
-              alt={`${brand.name} — mother and child`}
+              alt={`${brand.name} mother and child`}
               className="h-auto w-full max-h-[46vh] object-contain"
             />
           </motion.div>
@@ -170,16 +163,18 @@ export default function BrandOne() {
 
       <CurveDivider fromColor={PRIMARY} toColor={WHITE} />
 
-      {/* ── SECTION 2: ABOUT MUMMA ── */}
+      {/* SECTION 2: ABOUT MUMMA */}
       <section className="bg-white py-14 sm:py-20">
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-6 lg:grid-cols-2 lg:gap-12 lg:px-12">
           {/* Left */}
           <div>
-            <h2 className="text-3xl font-extrabold leading-[1.1] sm:text-5xl lg:text-6xl lg:leading-[1.0]" style={{ color: DARK }}>
+            <h2
+              className="text-3xl font-extrabold leading-[1.1] sm:text-5xl lg:text-6xl lg:leading-[1.0]"
+              style={{ color: DARK }}
+            >
               Love. Care.{" "}
               <br />
               <span style={{ color: PRIMARY }}>Nourishment.</span>
-              <span style={{ color: YELLOW }}>—</span>
             </h2>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -201,10 +196,13 @@ export default function BrandOne() {
 
           {/* Right */}
           <div className="border-l-4 pl-6 sm:pl-8" style={{ borderColor: YELLOW }}>
-            <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: PRIMARY }}>
+            <p className={eyebrow} style={{ color: PRIMARY }}>
               ABOUT {brand.name.toUpperCase()}
             </p>
-            <h3 className="mt-4 text-2xl font-extrabold leading-[1.15] sm:text-4xl sm:leading-[1.05]" style={{ color: DARK }}>
+            <h3
+              className="mt-4 text-2xl font-extrabold leading-[1.15] sm:text-4xl sm:leading-[1.05]"
+              style={{ color: DARK }}
+            >
               Wholesome Ingredients.
               <br />
               Grown-Up Standards.
@@ -218,54 +216,57 @@ export default function BrandOne() {
         </div>
       </section>
 
-      {/* ── SECTION 3: OUR PHILOSOPHY ── */}
-      <section className="relative overflow-hidden py-14 sm:py-16" style={{ backgroundColor: PRIMARY }}>
-        <div className="pointer-events-none absolute inset-0 opacity-5">
-          {[...Array(6)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute rounded-full border-2 border-white"
-              style={{
-                width: `${80 + i * 60}px`,
-                height: `${80 + i * 60}px`,
-                left: `${i * 15}%`,
-                top: "50%",
-                transform: "translateY(-50%)",
-              }}
-            />
-          ))}
-        </div>
-
-        <div className="mx-auto max-w-7xl px-6 lg:px-12">
-          <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: YELLOW }}>
+      {/* SECTION 3: OUR PHILOSOPHY (fully centered) */}
+      <section className="py-16 sm:py-20" style={{ backgroundColor: PRIMARY }}>
+        <div className="mx-auto max-w-7xl px-6 text-center lg:px-12">
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className={eyebrow}
+            style={{ color: YELLOW }}
+          >
             OUR PHILOSOPHY
-          </p>
-          <h2 className="mb-6 mt-4 max-w-2xl text-2xl font-extrabold text-white sm:text-4xl">
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.08 }}
+            className="mx-auto mb-8 mt-4 max-w-3xl text-3xl font-extrabold text-white sm:text-5xl"
+          >
             Every Bite Matters.
-          </h2>
+          </motion.h2>
           {philosophyParagraphs.map((p, i) => (
-            <p
+            <motion.p
               key={i}
-              className="max-w-2xl leading-relaxed text-white opacity-75"
-              style={{ marginTop: i === 0 ? 0 : "1rem" }}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.15 + i * 0.1 }}
+              className="mx-auto max-w-3xl text-base leading-relaxed text-white opacity-85 sm:text-lg"
+              style={{ marginTop: i === 0 ? 0 : "1.25rem" }}
             >
               {p}
-            </p>
+            </motion.p>
           ))}
         </div>
       </section>
 
       <CurveDivider fromColor={PRIMARY} toColor={WHITE} />
 
-      {/* ── SECTION 4: WHO WE SERVE ── */}
+      {/* SECTION 4: WHO WE SERVE */}
       <section className="bg-white py-14 sm:py-20">
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
-          <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: PRIMARY }}>
+          <p className={eyebrow} style={{ color: PRIMARY }}>
             WHO WE SERVE
           </p>
-          <div className="mt-4 grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
+          <div className="mt-5 grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
             <div>
-              <h2 className="text-3xl font-extrabold leading-[1.1] sm:text-5xl sm:leading-[1.05]" style={{ color: DARK }}>
+              <h2
+                className="text-4xl font-extrabold leading-[1.1] sm:text-6xl sm:leading-[1.05] lg:text-7xl"
+                style={{ color: DARK }}
+              >
                 For Growing Kids.
                 <br />
                 For Caring Parents.
@@ -273,7 +274,11 @@ export default function BrandOne() {
             </div>
             <div className="rounded-2xl p-6 sm:p-8" style={{ backgroundColor: `${PRIMARY}0A` }}>
               {whoWeServeParagraphs.map((p, i) => (
-                <p key={i} className="leading-relaxed text-slate-600" style={{ marginTop: i === 0 ? 0 : "1rem" }}>
+                <p
+                  key={i}
+                  className="text-base leading-relaxed text-slate-600 sm:text-lg"
+                  style={{ marginTop: i === 0 ? 0 : "1rem" }}
+                >
                   {p}
                 </p>
               ))}
@@ -282,28 +287,34 @@ export default function BrandOne() {
         </div>
       </section>
 
-      {/* ── SECTION 5: HOW WE MAKE IT (flow) ── */}
+      {/* SECTION 5: HOW WE MAKE IT */}
       <section className="py-14 sm:py-20" style={{ backgroundColor: `${PRIMARY}0A` }}>
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
           <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-12">
             {/* Left */}
             <div>
-              <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: YELLOW }}>
+              <p className={eyebrow} style={{ color: PRIMARY }}>
                 HOW WE MAKE IT
               </p>
-              <h2 className="mt-4 text-2xl font-extrabold leading-[1.15] sm:text-4xl sm:leading-[1.05]" style={{ color: DARK }}>
+              <h2
+                className="mt-4 text-3xl font-extrabold leading-[1.15] sm:text-5xl sm:leading-[1.05]"
+                style={{ color: DARK }}
+              >
                 Small Batches.
                 <br />
                 Real Ingredients. No Shortcuts.
               </h2>
-              <p className="mt-5 leading-relaxed text-slate-600">
+              <p className="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg">
                 Because when kids eat well, they dream bigger, learn better and grow stronger.
               </p>
             </div>
 
             {/* Right process flow */}
             <div>
-              <p className="mb-4 text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: PRIMARY }}>
+              <p
+                className="mb-4 text-sm font-extrabold uppercase tracking-[0.25em] sm:text-base"
+                style={{ color: PRIMARY }}
+              >
                 OUR PROCESS
               </p>
               <div className="flex flex-col gap-2">
@@ -335,59 +346,30 @@ export default function BrandOne() {
         </div>
       </section>
 
-      {/* ── SECTION 6: WHAT MAKES MUMMA DIFFERENT (no image, redesigned) ── */}
-      <section className="relative overflow-hidden py-14 sm:py-20" style={{ backgroundColor: PRIMARY }}>
-        {/* decorative background rings instead of a photo */}
-        <div className="pointer-events-none absolute inset-0 opacity-10">
-          {[...Array(5)].map((_, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, delay: i * 0.1 }}
-              className="absolute rounded-full border-2 border-white"
-              style={{
-                width: `${100 + i * 70}px`,
-                height: `${100 + i * 70}px`,
-                right: `${-5 + i * 4}%`,
-                top: `${10 + i * 6}%`,
-              }}
-            />
-          ))}
-        </div>
-
-        <div className="relative mx-auto max-w-7xl px-6 lg:px-12">
+      {/* SECTION 6: OUR DIFFERENCE */}
+      <section className="py-14 sm:py-20" style={{ backgroundColor: PRIMARY }}>
+        <div className="mx-auto max-w-7xl px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="mx-auto max-w-2xl text-center"
           >
-            <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: YELLOW }}>
+            <p className={eyebrow} style={{ color: YELLOW }}>
               OUR DIFFERENCE
             </p>
             <h2 className="mt-3 text-3xl font-extrabold text-white sm:text-5xl">
               What Makes {brand.name} Different
             </h2>
-            <div className="mx-auto mt-3 h-1 w-12 rounded-full" style={{ backgroundColor: YELLOW }} />
-            <p className="mt-5 text-white opacity-70">
+            <div className="mx-auto mt-4 h-1 w-14 rounded-full" style={{ backgroundColor: WHITE }} />
+            <p className="mt-5 text-base text-white opacity-80 sm:text-lg">
               Thoughtful nutrition, made for growing children.
             </p>
           </motion.div>
 
-          {/* Keyword grid */}
+          {/* Keyword grid: all boxes share the same white style */}
           <div className="mt-10 grid grid-cols-2 gap-3 sm:mt-14 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
             {brand.standsFor.map(({ title, icon }, i) => {
-              const styles = [
-                { bg: WHITE, color: PRIMARY },
-                { bg: "transparent", color: YELLOW, border: `2px solid ${YELLOW}` },
-                { bg: YELLOW, color: DARK },
-                { bg: "transparent", color: WHITE, border: `2px solid ${WHITE}` },
-                { bg: WHITE, color: PRIMARY },
-                { bg: YELLOW, color: DARK },
-              ];
-              const s = styles[i % styles.length];
               const Icon = STANDS_FOR_ICONS[icon] || Leaf;
               return (
                 <motion.div
@@ -397,21 +379,15 @@ export default function BrandOne() {
                   viewport={{ once: true }}
                   whileHover={{ y: -6, scale: 1.04 }}
                   transition={{ delay: i * 0.08, type: "spring", stiffness: 220, damping: 18 }}
-                  className="flex flex-col items-center justify-center gap-2 rounded-2xl px-3 py-5 text-center text-[10px] font-extrabold tracking-widest shadow-lg sm:gap-3 sm:px-4 sm:py-7 sm:text-xs"
-                  style={{
-                    backgroundColor: s.bg,
-                    color: s.color,
-                    border: s.border || "none",
-                  }}
+                  className="flex flex-col items-center justify-center gap-2 rounded-2xl px-3 py-5 text-center text-[11px] font-extrabold tracking-widest shadow-lg sm:gap-3 sm:px-4 sm:py-7 sm:text-sm"
+                  style={{ backgroundColor: WHITE, color: PRIMARY }}
                 >
                   <span
-                    className="flex h-9 w-9 items-center justify-center rounded-full sm:h-10 sm:w-10"
-                    style={{
-                      backgroundColor: s.color === WHITE || s.color === YELLOW ? `${s.color}22` : `${PRIMARY}14`,
-                    }}
+                    className="flex h-9 w-9 items-center justify-center rounded-full sm:h-11 sm:w-11"
+                    style={{ backgroundColor: `${PRIMARY}14` }}
                   >
                     <Icon size={18} className="sm:hidden" />
-                    <Icon size={20} className="hidden sm:block" />
+                    <Icon size={22} className="hidden sm:block" />
                   </span>
                   {title.toUpperCase()}
                 </motion.div>
@@ -423,29 +399,20 @@ export default function BrandOne() {
 
       <CurveDivider fromColor={PRIMARY} toColor={WHITE} />
 
-      {/* ── SECTION 7: PRODUCTS ── */}
-      <section className="relative overflow-hidden bg-white py-14 sm:py-20">
-        <div
-          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full opacity-[0.06]"
-          style={{ backgroundColor: PRIMARY }}
-        />
-        <div
-          className="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full opacity-[0.08]"
-          style={{ backgroundColor: YELLOW }}
-        />
-
-        <div className="relative mx-auto max-w-7xl px-6 lg:px-12">
+      {/* SECTION 7: PRODUCTS */}
+      <section className="bg-white py-14 sm:py-20">
+        <div className="mx-auto max-w-7xl px-6 lg:px-12">
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
             <div>
-              <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: YELLOW }}>
+              <p className={eyebrow} style={{ color: PRIMARY }}>
                 OUR PRODUCTS
               </p>
-              <h2 className="mt-3 text-2xl font-extrabold sm:text-4xl" style={{ color: DARK }}>
+              <h2 className="mt-3 text-3xl font-extrabold sm:text-5xl" style={{ color: PRIMARY }}>
                 Snacks Kids Love. Parents Trust.
               </h2>
             </div>
             <span
-              className="rounded-full px-4 py-1.5 text-xs font-extrabold tracking-widest"
+              className="rounded-full px-5 py-2 text-xs font-extrabold tracking-widest sm:text-sm"
               style={{ backgroundColor: `${PRIMARY}0F`, color: PRIMARY }}
             >
               {PRODUCTS.length} PRODUCTS
@@ -467,12 +434,11 @@ export default function BrandOne() {
                   whileHover={{ y: -6 }}
                   transition={{ duration: 0.35, delay: i < 4 ? i * 0.08 : (i - 4) * 0.06 }}
                 >
-                  <img
-                    src={p.image}
-                    alt={p.name}
-                    className="w-full h-auto"
-                  />
-                  <h3 className="mt-2 text-center text-xs font-extrabold leading-tight sm:mt-3 sm:text-base" style={{ color: PRIMARY }}>
+                  <img src={p.image} alt={p.name} className="h-auto w-full" />
+                  <h3
+                    className="mt-2 text-center text-sm font-extrabold leading-tight sm:mt-3 sm:text-lg"
+                    style={{ color: PRIMARY }}
+                  >
                     {p.name}
                   </h3>
                 </motion.div>
@@ -503,45 +469,31 @@ export default function BrandOne() {
         </div>
       </section>
 
-      {/* ── SECTION 8: VISION ── */}
-      <section className="relative overflow-hidden py-14 sm:py-20" style={{ backgroundColor: YELLOW }}>
-        <div className="pointer-events-none absolute inset-0 opacity-10">
-          {[...Array(4)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute rounded-full border-2"
-              style={{
-                borderColor: PRIMARY,
-                width: `${120 + i * 80}px`,
-                height: `${120 + i * 80}px`,
-                right: `${5 + i * 8}%`,
-                top: "50%",
-                transform: `translateY(-50%) rotate(${i * 15}deg)`,
-              }}
-            />
-          ))}
-        </div>
-
-        <div className="relative mx-auto max-w-7xl px-6 lg:px-12">
-          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
+      {/* SECTION 8: VISION */}
+      <section className="py-16 sm:py-24" style={{ backgroundColor: YELLOW }}>
+        <div className="mx-auto max-w-7xl px-6 lg:px-12">
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
             <div>
-              <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: PRIMARY }}>
+              <p className={eyebrow} style={{ color: PRIMARY }}>
                 OUR VISION
               </p>
-              <h2 className="mt-4 text-2xl font-extrabold leading-[1.15] sm:text-4xl sm:leading-[1.05] lg:text-5xl" style={{ color: PRIMARY }}>
+              <h2
+                className="mt-4 text-3xl font-extrabold leading-[1.12] sm:text-5xl sm:leading-[1.08] lg:text-6xl"
+                style={{ color: PRIMARY }}
+              >
                 A Trusted Household Name
                 <br />
                 in Children's Nutrition.
               </h2>
             </div>
             <div>
-              <p className="leading-relaxed" style={{ color: PRIMARY }}>
-                {brand.vision}
+              <p className="text-lg leading-relaxed sm:text-xl" style={{ color: PRIMARY }}>
+                {clean(brand.vision)}
               </p>
               <div className="mt-8">
                 <Link
                   to="/contact"
-                  className="inline-block rounded-full px-8 py-3 text-sm font-extrabold tracking-widest text-white transition hover:opacity-90"
+                  className="inline-block rounded-full px-8 py-3.5 text-sm font-extrabold tracking-widest text-white transition hover:opacity-90 sm:text-base"
                   style={{ backgroundColor: PRIMARY }}
                 >
                   DISCOVER {brand.name.toUpperCase()} →
@@ -552,31 +504,25 @@ export default function BrandOne() {
         </div>
       </section>
 
-      {/* ── SECTION 9: MUMMA PROMISE ── */}
-      <section className="relative overflow-hidden bg-white py-14 sm:py-20">
-        <div
-          className="absolute bottom-0 left-0 h-32 w-48 rounded-full opacity-30"
-          style={{ backgroundColor: YELLOW, transform: "translate(-30%, 30%)" }}
-        />
-        <div
-          className="absolute right-0 top-0 h-32 w-48 rounded-full opacity-15"
-          style={{ backgroundColor: PRIMARY, transform: "translate(30%, -30%)" }}
-        />
-
-        <div className="relative mx-auto max-w-7xl px-6 text-center lg:px-12">
-          <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: PRIMARY }}>
+      {/* SECTION 9: MUMMA PROMISE */}
+      <section className="bg-white py-16 sm:py-24">
+        <div className="mx-auto max-w-7xl px-6 text-center lg:px-12">
+          <p className={eyebrow} style={{ color: PRIMARY }}>
             {brand.name.toUpperCase()} PROMISE
           </p>
-          <h2 className="mx-auto mt-4 max-w-3xl text-2xl font-extrabold leading-[1.15] sm:text-4xl sm:leading-[1.05] lg:text-5xl" style={{ color: DARK }}>
-            "{brand.promise}"
+          <h2
+            className="mx-auto mt-5 max-w-4xl text-3xl font-extrabold leading-[1.15] sm:text-5xl sm:leading-[1.1] lg:text-6xl"
+            style={{ color: DARK }}
+          >
+            "{clean(brand.promise)}"
           </h2>
 
           {/* Mark, in place of a logo */}
           <div
-            className="mx-auto mt-8 flex h-24 w-24 items-center justify-center rounded-full bg-white shadow-lg"
+            className="mx-auto mt-10 flex h-28 w-28 items-center justify-center rounded-full bg-white shadow-lg"
             style={{ border: `3px solid ${PRIMARY}` }}
           >
-            <Heart color={PRIMARY} size={40} />
+            <Heart color={PRIMARY} size={48} />
           </div>
         </div>
       </section>

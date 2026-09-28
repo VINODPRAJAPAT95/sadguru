@@ -2,8 +2,16 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
-  Wallet, Clock, Heart, Repeat, ShieldCheck, Store, Users, PackageCheck,
-  ChevronDown, ChevronUp,
+  Wallet,
+  Clock,
+  Heart,
+  Repeat,
+  ShieldCheck,
+  Store,
+  Users,
+  PackageCheck,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import Seo from "../components/Seo";
 import Button from "../components/Button";
@@ -33,39 +41,55 @@ import product19 from "../assets/t2m/product19.png";
 
 const brand = brands[1];
 
-const PRIMARY = brand.colors.primary; // #5B2A9D — purple
-const YELLOW = brand.colors.yellow;   // #FBBF09
-const WHITE = brand.colors.white;     // #FEFEFE
+const clean = (text = "") =>
+  text.replace(/\s*[\u2014\u2013]\s*/g, ", ");
+
+const PRIMARY = brand.colors.primary;
+const YELLOW = brand.colors.yellow;
+const WHITE = brand.colors.white;
 const DARK = "#241A33";
 
-const DIFF_ICONS = [Wallet, Clock, Heart, Repeat, ShieldCheck, Store, Users, PackageCheck];
-
-// All 19 T2M products — edit name/desc to match your real product copy
-const PRODUCTS = [
-  { name: "Wheel Rings", image: product1, desc: "Crunchy gram-flour noodles with a peppery kick." },
-  { name: "Onion Rings", image: product2, desc: "Roasted moong dal, lightly spiced and crisp." },
-  { name: "Kara Boondi", image: product3, desc: "Crunchy peanuts coated in a tangy spice mix." },
-  { name: "Murmura Mixture", image: product4, desc: "A bold, hearty namkeen mix with a Punjabi twist." },
-  { name: "Vamapoosa", image: product5, desc: "The classic sweet-and-tangy party mix." },
-  { name: "Madras Mixture", image: product6, desc: "Spicy, fine sev with an authentic Ratlami flavour." },
-  { name: "Chekodi(Spicy)", image: product7, desc: "Light, crispy chivda made with roasted corn flakes." },
-  { name: "Garlic Mixture", image: product8, desc: "Thin, crunchy bhujia in the traditional Bikaneri style." },
-  { name: "Salted Peanuts", image: product9, desc: "Roasted chana dal, salted and mildly spiced." },
-  { name: "Spiced Peanuts", image: product10, desc: "A festive nine-ingredient snack mix." },
-  { name: "Chikodi(Salted)", image: product11, desc: "Crunchy, protein-rich soya sticks with a spicy coating." },
-  { name: "Ribbon Pakoda", image: product12, desc: "Crispy banana chips tossed in classic masala." },
-  { name: "Popcorn", image: product13, desc: "Potato chips with a bold Punjabi tadka seasoning." },
-  { name: "Potato Chips(Salted)", image: product14, desc: "Traditional sesame and jaggery brittle." },
-  { name: "Potato Chips(Magic Masala)", image: product15, desc: "Ready-to-cook, protein-packed chilla mix." },
-  { name: "Potato Chips(Tomato)", image: product16, desc: "A tangy roasted chickpea street-food classic." },
-  { name: "Makka Chura", image: product17, desc: "A rich mix of cashews and crunchy namkeen." },
-  { name: "Murukku", image: product18, desc: "Sweet-and-tangy sun-dried mango fruit leather." },
-  { name: "Star Murukku", image: product19, desc: "Crisp, spiced puris perfect for evening chai." },
+const DIFF_ICONS = [
+  Wallet,
+  Clock,
+  Heart,
+  Repeat,
+  ShieldCheck,
+  Store,
+  Users,
+  PackageCheck,
 ];
 
-// Soft rounded divider between sections
+const eyebrow =
+  "text-base font-extrabold uppercase tracking-[0.25em] sm:text-xl";
+
+const PRODUCTS = [
+  { name: "Wheel Rings", image: product1 },
+  { name: "Onion Rings", image: product2 },
+  { name: "Kara Boondi", image: product3 },
+  { name: "Murmura Mixture", image: product4 },
+  { name: "Vamapoosa", image: product5 },
+  { name: "Madras Mixture", image: product6 },
+  { name: "Chekodi(Spicy)", image: product7 },
+  { name: "Garlic Mixture", image: product8 },
+  { name: "Salted Peanuts", image: product9 },
+  { name: "Spiced Peanuts", image: product10 },
+  { name: "Chikodi(Salted)", image: product11 },
+  { name: "Ribbon Pakoda", image: product12 },
+  { name: "Popcorn", image: product13 },
+  { name: "Potato Chips(Salted)", image: product14 },
+  { name: "Potato Chips(Magic Masala)", image: product15 },
+  { name: "Potato Chips(Tomato)", image: product16 },
+  { name: "Makka Chura", image: product17 },
+  { name: "Murukku", image: product18 },
+  { name: "Star Murukku", image: product19 },
+];
+
 const CurveDivider = ({ fromColor, toColor }) => (
-  <div className="relative h-16 overflow-hidden" style={{ backgroundColor: toColor }}>
+  <div
+    className="relative h-16 overflow-hidden"
+    style={{ backgroundColor: toColor }}
+  >
     <div
       className="absolute inset-0"
       style={{
@@ -79,31 +103,51 @@ const CurveDivider = ({ fromColor, toColor }) => (
 
 export default function BrandTwo() {
   const [showAllProducts, setShowAllProducts] = useState(false);
-  const visibleProducts = showAllProducts ? PRODUCTS : PRODUCTS.slice(0, 4);
-  const aboutParagraphs = brand.about.split("\n\n");
-  const offerParagraphs = brand.whatWeOffer.split("\n\n");
-  const taglineParts = brand.tagline.split(". ").map((s) => s.replace(/\.$/, ""));
+
+  const visibleProducts = showAllProducts
+    ? PRODUCTS
+    : PRODUCTS.slice(0, 4);
+
+  const aboutParagraphs = clean(brand.about).split("\n\n");
+  const offerParagraphs = clean(brand.whatWeOffer).split("\n\n");
+
+  const taglineParts = brand.tagline
+    .split(". ")
+    .map((s) => s.replace(/\.$/, ""));
 
   return (
     <>
-      <Seo title={`${brand.name} | ${brand.tagline}`} description={brand.description} />
+      <Seo
+        title={`${brand.name} | ${brand.tagline}`}
+        description={clean(brand.description)}
+      />
 
-      {/* ── SECTION 1: HERO (shortened, matches BrandOne) ── */}
+      {/* =====================================================
+          SECTION 1: HERO
+      ===================================================== */}
       <section
         className="relative overflow-hidden"
-        style={{ backgroundColor: PRIMARY, minHeight: "62vh" }}
+        style={{
+          backgroundColor: PRIMARY,
+          minHeight: "62vh",
+        }}
       >
         <div
-          className="absolute right-0 top-0 h-full w-1/2"
-          style={{ background: `linear-gradient(135deg, transparent 40%, ${YELLOW}22 100%)` }}
-        />
-        <div
-          className="absolute bottom-0 left-0 h-48 w-64 rounded-full opacity-10"
-          style={{ background: YELLOW, transform: "translate(-30%, 30%)" }}
-        />
-
-        <div className="relative mx-auto grid max-w-7xl items-center gap-8 px-6 py-16 lg:grid-cols-2 lg:px-12 lg:py-20">
-          {/* Left text */}
+          className="
+            relative
+            mx-auto
+            grid
+            max-w-7xl
+            items-center
+            gap-8
+            px-6
+            py-16
+            lg:grid-cols-2
+            lg:px-12
+            lg:py-20
+          "
+        >
+          {/* LEFT CONTENT */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -112,103 +156,210 @@ export default function BrandTwo() {
             <p className="text-xs font-extrabold uppercase tracking-[0.25em] text-white opacity-70">
               {brand.number}. {brand.name.toUpperCase()}
             </p>
+
             <h1 className="mt-4 text-3xl font-extrabold leading-[1.1] text-white sm:text-5xl lg:text-6xl lg:leading-[1.05]">
               {taglineParts.map((part, i) => (
                 <span key={i}>
-                  <span style={{ color: i === 1 ? YELLOW : WHITE }}>{part}.</span>
+                  <span
+                    style={{
+                      color: i === 1 ? YELLOW : WHITE,
+                    }}
+                  >
+                    {part}.
+                  </span>
+
                   {i < taglineParts.length - 1 && <br />}
                 </span>
               ))}
             </h1>
+
             <p className="mt-5 max-w-md text-base leading-relaxed text-white opacity-75">
-              {brand.description}
+              {clean(brand.description)}
             </p>
+
             <div className="mt-7 flex flex-wrap gap-4">
               <Button
                 to="/contact"
                 variant="primary"
                 className="!rounded-full !font-extrabold !tracking-wider hover:!opacity-90"
-                style={{ backgroundColor: YELLOW, color: DARK }}
+                style={{
+                  backgroundColor: YELLOW,
+                  color: DARK,
+                }}
               >
                 EXPLORE {brand.name.toUpperCase()}
               </Button>
+
               <Link
                 to="/contact"
                 className="rounded-full border-2 border-white px-7 py-3 text-sm font-extrabold tracking-wider text-white transition hover:bg-white"
                 style={{ color: WHITE }}
-                onMouseEnter={(e) => { e.currentTarget.style.color = PRIMARY; }}
-                onMouseLeave={(e) => { e.currentTarget.style.color = WHITE; }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = PRIMARY;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = WHITE;
+                }}
               >
                 OUR SNACKS →
               </Link>
             </div>
           </motion.div>
 
-          {/* Right image — smaller, with a subtle floating animation */}
+          {/* =================================================
+              RIGHT SIDE — LARGE T2M HERO LOGO
+              ================================================= */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.9 }}
-            className="relative flex items-center justify-center"
+            initial={{
+              opacity: 0,
+              scale: 0.75,
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+            }}
+            transition={{
+              duration: 0.9,
+              type: "spring",
+              stiffness: 100,
+              damping: 15,
+            }}
+            className="
+              relative
+              flex
+              items-center
+              justify-center
+              lg:min-h-[520px]
+            "
           >
             <motion.img
               src={brand.heroImage}
               alt={`${brand.name} Indian Snacks`}
-              className="h-auto w-full max-w-[260px] max-h-[28vh] object-contain sm:max-w-[320px] sm:max-h-[32vh]"
-              animate={{ y: [0, -14, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="
+                h-auto
+                w-full
+                max-w-[360px]
+                max-h-[42vh]
+                object-contain
+
+                sm:max-w-[480px]
+                sm:max-h-[50vh]
+
+                lg:max-w-[600px]
+                lg:max-h-[60vh]
+              "
+              animate={{
+                y: [0, -14, 0],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
             />
           </motion.div>
         </div>
       </section>
 
-      <CurveDivider fromColor={PRIMARY} toColor={WHITE} />
+      <CurveDivider
+        fromColor={PRIMARY}
+        toColor={WHITE}
+      />
 
-      {/* ── SECTION 2: ABOUT T2M ── */}
+      {/* =====================================================
+          SECTION 2: ABOUT T2M
+      ===================================================== */}
       <section className="bg-white py-14 sm:py-20">
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-6 lg:grid-cols-2 lg:gap-12 lg:px-12">
-          {/* Left */}
           <div>
-            <h2 className="text-3xl font-extrabold leading-[1.1] sm:text-5xl lg:text-6xl lg:leading-[1.0]" style={{ color: DARK }}>
-              India Loves Its{" "}
+            <h2
+              className="text-4xl font-extrabold leading-[1.1] sm:text-6xl lg:text-7xl lg:leading-[1.0]"
+              style={{ color: DARK }}
+            >
+              India Loves Its
               <br />
-              <span style={{ color: PRIMARY }}>Snacks.</span>
-              <span style={{ color: YELLOW }}>—</span>
+              <span style={{ color: PRIMARY }}>
+                Snacks.
+              </span>
             </h2>
+
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -6, boxShadow: "0 25px 50px -12px rgba(0,0,0,0.35)" }}
-              transition={{ type: "spring", stiffness: 200, damping: 20 }}
+              initial={{
+                opacity: 0,
+                y: 20,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+              whileHover={{
+                y: -6,
+                boxShadow:
+                  "0 25px 50px -12px rgba(0,0,0,0.35)",
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 200,
+                damping: 20,
+              }}
               className="relative mt-8 overflow-hidden rounded-[2rem] shadow-xl"
             >
               <motion.img
                 src={brand.cardImage}
                 alt="Indian snacks collage"
                 className="h-[220px] w-full object-cover sm:h-[320px]"
-                whileHover={{ scale: 1.08 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
+                whileHover={{
+                  scale: 1.08,
+                }}
+                transition={{
+                  duration: 0.5,
+                  ease: "easeOut",
+                }}
               />
+
               <div
                 className="absolute bottom-0 left-0 right-0 h-20"
-                style={{ background: `linear-gradient(to top, ${YELLOW}AA, transparent)` }}
+                style={{
+                  background: `linear-gradient(to top, ${YELLOW}AA, transparent)`,
+                }}
               />
             </motion.div>
           </div>
 
-          {/* Right */}
-          <div className="border-l-4 pl-6 sm:pl-8" style={{ borderColor: YELLOW }}>
-            <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: YELLOW }}>
+          <div
+            className="border-l-4 pl-6 sm:pl-8"
+            style={{
+              borderColor: YELLOW,
+            }}
+          >
+            <p
+              className={eyebrow}
+              style={{
+                color: PRIMARY,
+              }}
+            >
               ABOUT {brand.name.toUpperCase()}
             </p>
-            <h3 className="mt-4 text-2xl font-extrabold leading-[1.15] sm:text-4xl sm:leading-[1.05]" style={{ color: DARK }}>
+
+            <h3
+              className="mt-4 text-3xl font-extrabold leading-[1.15] sm:text-5xl sm:leading-[1.05]"
+              style={{
+                color: DARK,
+              }}
+            >
               Familiar Flavours.
               <br />
               Modern Standards.
             </h3>
+
             {aboutParagraphs.map((p, i) => (
-              <p key={i} className="mt-4 leading-relaxed text-slate-600 first:mt-5">
+              <p
+                key={i}
+                className="mt-4 text-base leading-relaxed text-slate-600 first:mt-5 sm:text-lg"
+              >
                 {p}
               </p>
             ))}
@@ -216,141 +367,281 @@ export default function BrandTwo() {
         </div>
       </section>
 
-      {/* ── SECTION 3: WHAT WE OFFER ── */}
-      <section className="relative overflow-hidden py-14 sm:py-16" style={{ backgroundColor: PRIMARY }}>
-        <div className="pointer-events-none absolute inset-0 opacity-5">
-          {[...Array(6)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute rounded-full border-2 border-white"
-              style={{
-                width: `${80 + i * 60}px`,
-                height: `${80 + i * 60}px`,
-                left: `${i * 15}%`,
-                top: "50%",
-                transform: "translateY(-50%)",
-              }}
-            />
-          ))}
-        </div>
-
-        <div className="mx-auto max-w-7xl px-6 lg:px-12">
-          <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: YELLOW }}>
+      {/* =====================================================
+          SECTION 3: WHAT WE OFFER
+      ===================================================== */}
+      <section
+        className="py-16 sm:py-20"
+        style={{
+          backgroundColor: PRIMARY,
+        }}
+      >
+        <div className="mx-auto max-w-7xl px-6 text-center lg:px-12">
+          <motion.p
+            initial={{
+              opacity: 0,
+              y: 12,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{
+              once: true,
+            }}
+            className={eyebrow}
+            style={{
+              color: YELLOW,
+            }}
+          >
             WHAT WE OFFER
-          </p>
-          <h2 className="mb-6 mt-4 max-w-2xl text-2xl font-extrabold text-white sm:text-4xl">
+          </motion.p>
+
+          <motion.h2
+            initial={{
+              opacity: 0,
+              y: 16,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{
+              once: true,
+            }}
+            transition={{
+              delay: 0.08,
+            }}
+            className="mx-auto mb-8 mt-4 max-w-4xl text-3xl font-extrabold text-white sm:text-5xl"
+          >
             Snacking Made for Everyday Life.
-          </h2>
+          </motion.h2>
+
           {offerParagraphs.map((p, i) => (
-            <p key={i} className="max-w-2xl leading-relaxed text-white opacity-75" style={{ marginTop: i === 0 ? 0 : "1rem" }}>
+            <motion.p
+              key={i}
+              initial={{
+                opacity: 0,
+                y: 16,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                delay: 0.15 + i * 0.1,
+              }}
+              className="mx-auto max-w-3xl text-base leading-relaxed text-white opacity-85 sm:text-lg"
+              style={{
+                marginTop:
+                  i === 0 ? 0 : "1.25rem",
+              }}
+            >
               {p}
-            </p>
+            </motion.p>
           ))}
         </div>
       </section>
 
-      <CurveDivider fromColor={PRIMARY} toColor={WHITE} />
+      <CurveDivider
+        fromColor={PRIMARY}
+        toColor={WHITE}
+      />
 
-      {/* ── SECTION 4: OUR PURPOSE ── */}
+      {/* =====================================================
+          SECTION 4: OUR PURPOSE
+      ===================================================== */}
       <section className="bg-white py-14 sm:py-20">
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
-          <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: PRIMARY }}>
+          <p
+            className={eyebrow}
+            style={{
+              color: PRIMARY,
+            }}
+          >
             OUR PURPOSE
           </p>
-          <div className="mt-4 grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
+
+          <div className="mt-5 grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
             <div>
-              <h2 className="text-3xl font-extrabold leading-[1.1] sm:text-5xl sm:leading-[1.05]" style={{ color: DARK }}>
+              <h2
+                className="text-4xl font-extrabold leading-[1.1] sm:text-6xl sm:leading-[1.05] lg:text-7xl"
+                style={{
+                  color: DARK,
+                }}
+              >
                 Good Snacking.
                 <br />
                 Made Accessible.
               </h2>
             </div>
+
             <div
               className="rounded-2xl p-6 sm:p-8"
-              style={{ backgroundColor: `${PRIMARY}0A` }}
+              style={{
+                backgroundColor: `${PRIMARY}0A`,
+              }}
             >
-              <p className="leading-relaxed text-slate-600">
-                {brand.purpose}
+              <p className="text-base leading-relaxed text-slate-600 sm:text-lg">
+                {clean(brand.purpose)}
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── SECTION 5: MARKET FOCUS ── */}
-      <section className="py-14 sm:py-20" style={{ backgroundColor: `${PRIMARY}0A` }}>
+      {/* =====================================================
+          SECTION 5: MARKET FOCUS
+      ===================================================== */}
+      <section
+        className="py-14 sm:py-20"
+        style={{
+          backgroundColor: `${PRIMARY}0A`,
+        }}
+      >
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
           <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-12">
-            {/* Left */}
             <div>
-              <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: YELLOW }}>
+              <p
+                className={eyebrow}
+                style={{
+                  color: PRIMARY,
+                }}
+              >
                 MARKET FOCUS
               </p>
-              <h2 className="mt-4 text-2xl font-extrabold leading-[1.15] sm:text-4xl sm:leading-[1.05]" style={{ color: DARK }}>
+
+              <h2
+                className="mt-4 text-3xl font-extrabold leading-[1.15] sm:text-5xl sm:leading-[1.05]"
+                style={{
+                  color: DARK,
+                }}
+              >
                 Built for the
                 <br />
                 Everyday Indian Market.
               </h2>
-              <p className="mt-5 leading-relaxed text-slate-600">
-                {brand.marketFocus}
+
+              <p className="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg">
+                {clean(brand.marketFocus)}
               </p>
             </div>
 
-            {/* Right distribution flow */}
             <div>
-              <p className="mb-4 text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: PRIMARY }}>
+              <p
+                className="mb-4 text-sm font-extrabold uppercase tracking-[0.25em] sm:text-base"
+                style={{
+                  color: PRIMARY,
+                }}
+              >
                 OUR DISTRIBUTION ECOSYSTEM
               </p>
+
               <div className="flex flex-col gap-2">
-                {brand.distributionChain.map((step, i) => (
-                  <motion.div
-                    key={step}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    className="flex flex-col items-start"
-                  >
-                    <div
-                      className="w-full rounded-full px-4 py-3 text-center text-sm font-extrabold tracking-widest text-white sm:px-6 sm:py-4 sm:text-base"
-                      style={{ backgroundColor: PRIMARY }}
+                {brand.distributionChain.map(
+                  (step, i) => (
+                    <motion.div
+                      key={step}
+                      initial={{
+                        opacity: 0,
+                        y: 16,
+                      }}
+                      whileInView={{
+                        opacity: 1,
+                        y: 0,
+                      }}
+                      viewport={{
+                        once: true,
+                      }}
+                      transition={{
+                        delay: i * 0.1,
+                      }}
+                      className="flex flex-col items-start"
                     >
-                      {step.toUpperCase()}
-                    </div>
-                    {i < brand.distributionChain.length - 1 && (
-                      <div className="flex w-full justify-center py-1">
-                        <span className="text-2xl font-extrabold" style={{ color: YELLOW }}>↓</span>
+                      <div
+                        className="w-full rounded-full px-4 py-3 text-center text-sm font-extrabold tracking-widest text-white sm:px-6 sm:py-4 sm:text-base"
+                        style={{
+                          backgroundColor: PRIMARY,
+                        }}
+                      >
+                        {step.toUpperCase()}
                       </div>
-                    )}
-                  </motion.div>
-                ))}
+
+                      {i <
+                        brand.distributionChain.length -
+                          1 && (
+                        <div className="flex w-full justify-center py-1">
+                          <span
+                            className="text-2xl font-extrabold"
+                            style={{
+                              color: YELLOW,
+                            }}
+                          >
+                            ↓
+                          </span>
+                        </div>
+                      )}
+                    </motion.div>
+                  )
+                )}
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── SECTION 6: WHAT MAKES T2M DIFFERENT ── */}
-      <section className="relative overflow-hidden py-14 sm:py-20" style={{ backgroundColor: PRIMARY }}>
+      {/* =====================================================
+          SECTION 6: WHAT MAKES T2M DIFFERENT
+      ===================================================== */}
+      <section
+        className="py-14 sm:py-20"
+        style={{
+          backgroundColor: PRIMARY,
+        }}
+      >
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
           <div className="grid items-start gap-10 lg:grid-cols-[1fr_1.5fr] lg:gap-12">
-            {/* Left heading */}
             <div>
-              <h2 className="text-3xl font-extrabold text-white sm:text-5xl">
+              <h2 className="text-4xl font-extrabold leading-[1.1] text-white sm:text-6xl">
                 What Makes {brand.name} Different
               </h2>
-              <div className="mt-3 h-1 w-12 rounded-full" style={{ backgroundColor: YELLOW }} />
-              <p className="mt-5 text-white opacity-70">
+
+              <div
+                className="mt-4 h-1 w-14 rounded-full"
+                style={{
+                  backgroundColor: YELLOW,
+                }}
+              />
+
+              <p className="mt-5 text-base text-white opacity-80 sm:text-lg">
                 Traditional Indian taste.
                 <br />
                 Modern manufacturing standards.
               </p>
+
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.03 }}
-                transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                initial={{
+                  opacity: 0,
+                  y: 20,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                viewport={{
+                  once: true,
+                }}
+                whileHover={{
+                  scale: 1.03,
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 20,
+                }}
                 className="relative mt-8 overflow-hidden rounded-[2rem] shadow-2xl"
               >
                 <img
@@ -361,72 +652,100 @@ export default function BrandTwo() {
               </motion.div>
             </div>
 
-            {/* Right keyword grid */}
-            <div className="grid grid-cols-2 gap-3">
-              {brand.differentiators.map((word, i) => {
-                const styles = [
-                  { bg: WHITE, color: PRIMARY },
-                  { bg: "transparent", color: YELLOW, border: `2px solid ${YELLOW}` },
-                  { bg: YELLOW, color: DARK },
-                  { bg: "transparent", color: WHITE, border: `2px solid ${WHITE}` },
-                  { bg: WHITE, color: PRIMARY },
-                  { bg: YELLOW, color: DARK },
-                  { bg: "transparent", color: YELLOW, border: `2px solid ${YELLOW}` },
-                  { bg: WHITE, color: PRIMARY },
-                ];
-                const s = styles[i % styles.length];
-                const Icon = DIFF_ICONS[i % DIFF_ICONS.length];
-                return (
-                  <motion.div
-                    key={word}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    whileHover={{ y: -4, scale: 1.03 }}
-                    transition={{ delay: i * 0.07, type: "spring", stiffness: 220, damping: 18 }}
-                    className="flex flex-col items-center justify-center gap-2 rounded-xl px-3 py-4 text-center text-[10px] font-extrabold tracking-widest shadow-md sm:px-4 sm:py-5 sm:text-xs"
-                    style={{
-                      backgroundColor: s.bg,
-                      color: s.color,
-                      border: s.border || "none",
-                    }}
-                  >
-                    <Icon size={18} />
-                    {word.toUpperCase()}
-                  </motion.div>
-                );
-              })}
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              {brand.differentiators.map(
+                (word, i) => {
+                  const Icon =
+                    DIFF_ICONS[
+                      i % DIFF_ICONS.length
+                    ];
+
+                  return (
+                    <motion.div
+                      key={word}
+                      initial={{
+                        opacity: 0,
+                        y: 16,
+                      }}
+                      whileInView={{
+                        opacity: 1,
+                        y: 0,
+                      }}
+                      viewport={{
+                        once: true,
+                      }}
+                      whileHover={{
+                        y: -4,
+                        scale: 1.03,
+                      }}
+                      transition={{
+                        delay: i * 0.07,
+                        type: "spring",
+                        stiffness: 220,
+                        damping: 18,
+                      }}
+                      className="flex flex-col items-center justify-center gap-2 rounded-xl px-3 py-5 text-center text-[11px] font-extrabold tracking-widest shadow-md sm:gap-3 sm:px-4 sm:py-7 sm:text-sm"
+                      style={{
+                        backgroundColor: WHITE,
+                        color: PRIMARY,
+                      }}
+                    >
+                      <span
+                        className="flex h-9 w-9 items-center justify-center rounded-full sm:h-11 sm:w-11"
+                        style={{
+                          backgroundColor: `${PRIMARY}14`,
+                        }}
+                      >
+                        <Icon size={20} />
+                      </span>
+
+                      {word.toUpperCase()}
+                    </motion.div>
+                  );
+                }
+              )}
             </div>
           </div>
         </div>
       </section>
 
-      <CurveDivider fromColor={PRIMARY} toColor={WHITE} />
+      <CurveDivider
+        fromColor={PRIMARY}
+        toColor={WHITE}
+      />
 
-      {/* ── SECTION 7: PRODUCTS ── */}
-      <section className="relative overflow-hidden bg-white py-14 sm:py-20">
-        <div
-          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full opacity-[0.06]"
-          style={{ backgroundColor: PRIMARY }}
-        />
-        <div
-          className="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full opacity-[0.08]"
-          style={{ backgroundColor: YELLOW }}
-        />
-
-        <div className="relative mx-auto max-w-7xl px-6 lg:px-12">
+      {/* =====================================================
+          SECTION 7: PRODUCTS
+      ===================================================== */}
+      <section className="bg-white py-14 sm:py-20">
+        <div className="mx-auto max-w-7xl px-6 lg:px-12">
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
             <div>
-              <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: YELLOW }}>
+              <p
+                className={eyebrow}
+                style={{
+                  color: PRIMARY,
+                }}
+              >
                 OUR PRODUCTS
               </p>
-              <h2 className="mt-3 text-2xl font-extrabold sm:text-4xl" style={{ color: DARK }}>
+
+              <h2
+                className="mt-3 text-3xl font-extrabold sm:text-5xl"
+                style={{
+                  color: PRIMARY,
+                }}
+              >
                 Snacks India Trusts, Bite After Bite.
               </h2>
             </div>
+
             <span
-              className="rounded-full px-4 py-1.5 text-xs font-extrabold tracking-widest"
-              style={{ backgroundColor: `${PRIMARY}0F`, color: PRIMARY }}
+              className="rounded-full px-5 py-2 text-xs font-extrabold tracking-widest sm:text-sm"
+              style={{
+                backgroundColor: `${PRIMARY}0F`,
+                color: PRIMARY,
+              }}
             >
               {PRODUCTS.length} PRODUCTS
             </span>
@@ -441,18 +760,41 @@ export default function BrandTwo() {
                 <motion.div
                   key={p.name}
                   layout
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  whileHover={{ y: -6 }}
-                  transition={{ duration: 0.35, delay: i < 4 ? i * 0.08 : (i - 4) * 0.06 }}
+                  initial={{
+                    opacity: 0,
+                    y: 20,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  exit={{
+                    opacity: 0,
+                    y: -10,
+                  }}
+                  whileHover={{
+                    y: -6,
+                  }}
+                  transition={{
+                    duration: 0.35,
+                    delay:
+                      i < 4
+                        ? i * 0.08
+                        : (i - 4) * 0.06,
+                  }}
                 >
                   <img
                     src={p.image}
                     alt={p.name}
-                    className="w-full h-auto"
+                    className="h-auto w-full"
                   />
-                  <h3 className="mt-2 text-center text-xs font-extrabold leading-tight sm:mt-3 sm:text-base" style={{ color: PRIMARY }}>
+
+                  <h3
+                    className="mt-2 text-center text-sm font-extrabold leading-tight sm:mt-3 sm:text-lg"
+                    style={{
+                      color: PRIMARY,
+                    }}
+                  >
                     {p.name}
                   </h3>
                 </motion.div>
@@ -464,17 +806,23 @@ export default function BrandTwo() {
             <div className="mt-10 flex justify-center sm:mt-12">
               <button
                 type="button"
-                onClick={() => setShowAllProducts((v) => !v)}
+                onClick={() =>
+                  setShowAllProducts((v) => !v)
+                }
                 className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-xs font-extrabold tracking-wider text-white shadow-md transition hover:opacity-90 sm:px-8 sm:text-sm"
-                style={{ backgroundColor: PRIMARY }}
+                style={{
+                  backgroundColor: PRIMARY,
+                }}
               >
                 {showAllProducts ? (
                   <>
-                    VIEW LESS PRODUCTS <ChevronUp size={18} />
+                    VIEW LESS PRODUCTS
+                    <ChevronUp size={18} />
                   </>
                 ) : (
                   <>
-                    VIEW MORE PRODUCTS <ChevronDown size={18} />
+                    VIEW MORE PRODUCTS
+                    <ChevronDown size={18} />
                   </>
                 )}
               </button>
@@ -483,46 +831,56 @@ export default function BrandTwo() {
         </div>
       </section>
 
-      {/* ── SECTION 8: VISION ── */}
-      <section className="relative overflow-hidden py-14 sm:py-20" style={{ backgroundColor: YELLOW }}>
-        <div className="pointer-events-none absolute inset-0 opacity-10">
-          {[...Array(4)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute rounded-full border-2"
-              style={{
-                borderColor: PRIMARY,
-                width: `${120 + i * 80}px`,
-                height: `${120 + i * 80}px`,
-                right: `${5 + i * 8}%`,
-                top: "50%",
-                transform: `translateY(-50%) rotate(${i * 15}deg)`,
-              }}
-            />
-          ))}
-        </div>
-
-        <div className="relative mx-auto max-w-7xl px-6 lg:px-12">
-          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
+      {/* =====================================================
+          SECTION 8: VISION
+      ===================================================== */}
+      <section
+        className="py-16 sm:py-24"
+        style={{
+          backgroundColor: YELLOW,
+        }}
+      >
+        <div className="mx-auto max-w-7xl px-6 lg:px-12">
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
             <div>
-              <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: PRIMARY }}>
+              <p
+                className={eyebrow}
+                style={{
+                  color: PRIMARY,
+                }}
+              >
                 OUR VISION
               </p>
-              <h2 className="mt-4 text-2xl font-extrabold leading-[1.15] sm:text-4xl sm:leading-[1.05] lg:text-5xl" style={{ color: PRIMARY }}>
+
+              <h2
+                className="mt-4 text-3xl font-extrabold leading-[1.12] sm:text-5xl sm:leading-[1.08] lg:text-6xl"
+                style={{
+                  color: PRIMARY,
+                }}
+              >
                 Millions of Consumers.
                 <br />
                 One Trusted Snacking Brand.
               </h2>
             </div>
+
             <div>
-              <p className="leading-relaxed" style={{ color: PRIMARY }}>
-                {brand.vision}
+              <p
+                className="text-lg leading-relaxed sm:text-xl"
+                style={{
+                  color: PRIMARY,
+                }}
+              >
+                {clean(brand.vision)}
               </p>
+
               <div className="mt-8">
                 <Link
                   to="/contact"
-                  className="inline-block rounded-full px-8 py-3 text-sm font-extrabold tracking-widest text-white transition hover:opacity-90"
-                  style={{ backgroundColor: PRIMARY }}
+                  className="inline-block rounded-full px-8 py-3.5 text-sm font-extrabold tracking-widest text-white transition hover:opacity-90 sm:text-base"
+                  style={{
+                    backgroundColor: PRIMARY,
+                  }}
                 >
                   DISCOVER {brand.name.toUpperCase()} →
                 </Link>
@@ -532,56 +890,96 @@ export default function BrandTwo() {
         </div>
       </section>
 
-      {/* ── SECTION 9: T2M PROMISE (no image) ── */}
-      <section className="relative overflow-hidden bg-white py-14 sm:py-20">
-        <div
-          className="absolute bottom-0 left-0 h-32 w-48 rounded-full opacity-30"
-          style={{ backgroundColor: YELLOW, transform: "translate(-30%, 30%)" }}
-        />
-        <div
-          className="absolute right-0 top-0 h-32 w-48 rounded-full opacity-15"
-          style={{ backgroundColor: PRIMARY, transform: "translate(30%, -30%)" }}
-        />
-
-        <div className="relative mx-auto max-w-7xl px-6 text-center lg:px-12">
+      {/* =====================================================
+          SECTION 9: T2M PROMISE
+      ===================================================== */}
+      <section className="bg-white py-16 sm:py-24">
+        <div className="mx-auto max-w-7xl px-6 text-center lg:px-12">
           <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-xs font-extrabold uppercase tracking-[0.25em]"
-            style={{ color: PRIMARY }}
+            initial={{
+              opacity: 0,
+              y: 10,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{
+              once: true,
+            }}
+            className={eyebrow}
+            style={{
+              color: PRIMARY,
+            }}
           >
             {brand.name.toUpperCase()} PROMISE
           </motion.p>
+
           <motion.h2
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="mx-auto mt-4 max-w-3xl text-2xl font-extrabold leading-[1.15] sm:text-4xl sm:leading-[1.05] lg:text-5xl"
-            style={{ color: DARK }}
+            initial={{
+              opacity: 0,
+              y: 16,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{
+              once: true,
+            }}
+            transition={{
+              delay: 0.1,
+            }}
+            className="mx-auto mt-5 max-w-4xl text-3xl font-extrabold leading-[1.15] sm:text-5xl sm:leading-[1.1] lg:text-6xl"
+            style={{
+              color: DARK,
+            }}
           >
-            "{brand.promise}"
+            "{clean(brand.promise)}"
           </motion.h2>
 
-          {/* Logo mark */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, type: "spring", stiffness: 200, damping: 16 }}
-            className="mx-auto mt-8 flex h-24 w-24 items-center justify-center rounded-full bg-white shadow-lg"
-            style={{ border: `3px solid ${PRIMARY}` }}
+            initial={{
+              opacity: 0,
+              scale: 0.8,
+            }}
+            whileInView={{
+              opacity: 1,
+              scale: 1,
+            }}
+            viewport={{
+              once: true,
+            }}
+            transition={{
+              delay: 0.2,
+              type: "spring",
+              stiffness: 200,
+              damping: 16,
+            }}
+            className="mx-auto mt-10 flex h-48 w-48 items-center justify-center rounded-full bg-white shadow-lg"
+            style={{
+              border: `3px solid ${PRIMARY}`,
+            }}
           >
-            <img src={brand.logo} alt={brand.name} className="h-14 w-14 object-contain" />
+            <img
+              src={brand.logo}
+              alt={brand.name}
+              className="h-36 w-36 object-contain"
+            />
           </motion.div>
         </div>
       </section>
 
+      {/* =====================================================
+          CTA
+      ===================================================== */}
       <CTASection
         title={`Discover More About ${brand.name}`}
         description="Get in touch to explore distribution and partnership opportunities."
-        secondary={{ label: "All Brands", to: "/brands" }}
+        secondary={{
+          label: "All Brands",
+          to: "/brands",
+        }}
       />
     </>
   );

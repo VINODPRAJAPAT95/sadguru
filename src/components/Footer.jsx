@@ -5,18 +5,15 @@ import { FacebookIcon, TwitterIcon, YoutubeIcon, InstagramIcon } from "./SocialI
 import { COMPANY_NAME, CONTACT, SOCIAL } from "../config";
 import logo from "../assets/logofooter.png";
 
-// Same palette as GetInTouchBar, so the two sit together as one visual family.
-const DARK = "#2A160C";
+const DARK = "#4A3220";
 const CREAM = "#F7ECDA";
 const ORANGE = "#E2903F";
 
-// Brand links are defined here directly since each brand page now owns its
-// own content (see pages/BrandOne.jsx, BrandTwo.jsx, BrandThree.jsx, BrandFour.jsx).
 const brandLinks = [
   { name: "Mumma", slug: "brand-1" },
   { name: "T2M", slug: "brand-2" },
   { name: "Milletveda", slug: "brand-3" },
-  { name: "Nashta", slug: "brand-4" },
+  { name: "Ahaarsutra", slug: "brand-4" },
 ];
 
 const quickLinks = [
@@ -52,10 +49,7 @@ const fadeUp = {
 
 function ColumnHeading({ children }) {
   return (
-    <p
-      className="text-sm font-extrabold uppercase tracking-[0.1em]"
-      style={{ color: CREAM }}
-    >
+    <p className="text-sm font-extrabold uppercase tracking-[0.1em]" style={{ color: CREAM }}>
       {children}
     </p>
   );
@@ -64,17 +58,8 @@ function ColumnHeading({ children }) {
 function FooterLink({ to, children }) {
   return (
     <li className="flex items-center gap-2">
-      <span
-        className="h-1.5 w-1.5 shrink-0 rounded-full"
-        style={{ backgroundColor: ORANGE }}
-      />
-      <Link
-        to={to}
-        className="text-[15px] transition-colors duration-200"
-        style={{ color: `${CREAM}CC` }}
-        onMouseEnter={(e) => (e.currentTarget.style.color = ORANGE)}
-        onMouseLeave={(e) => (e.currentTarget.style.color = `${CREAM}CC`)}
-      >
+      <span className="h-1 w-1 shrink-0 rounded-full" style={{ backgroundColor: ORANGE }} />
+      <Link to={to} className="text-[15px] transition-colors duration-200" style={{ color: `${CREAM}CC` }} onMouseEnter={(e) => (e.currentTarget.style.color = ORANGE)} onMouseLeave={(e) => (e.currentTarget.style.color = `${CREAM}CC`)}>
         {children}
       </Link>
     </li>
@@ -84,95 +69,39 @@ function FooterLink({ to, children }) {
 export default function Footer() {
   return (
     <footer className="relative">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7 }}
-        className="relative w-full overflow-hidden rounded-t-[2rem]"
-        style={{ backgroundColor: DARK }}
-      >
-        {/* Gradient seam along the top edge, matching the CTA bar's accent */}
-        <div className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-transparent via-[#E2903F] to-transparent" />
-
-        {/* Ambient glow accents */}
-        <div className="pointer-events-none absolute -left-20 -top-20 h-64 w-64 rounded-full bg-[#E2903F]/10 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-24 -right-16 h-72 w-72 rounded-full bg-[#E2903F]/10 blur-3xl" />
-
-        <div className="relative container-px mx-auto max-w-7xl px-6 pb-10 pt-12 sm:px-10 sm:pt-14 lg:px-14">
-          <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-5 lg:gap-8">
-            {/* Contact column */}
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              custom={0}
-              className="lg:col-span-2"
-            >
+      <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="relative w-full overflow-hidden rounded-t-[1.25rem]" style={{ backgroundColor: DARK }}>
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#E2903F] to-transparent" />
+        <div className="pointer-events-none absolute -left-16 -top-16 h-40 w-40 rounded-full bg-[#E2903F]/8 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-16 -right-12 h-44 w-44 rounded-full bg-[#E2903F]/8 blur-3xl" />
+        <div className="relative container-px mx-auto max-w-7xl px-5 pb-6 pt-8 sm:px-7 sm:pt-9 lg:px-10">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-5 lg:gap-6">
+            <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} custom={0} className="lg:col-span-2">
               <Link to="/" className="inline-flex items-center">
-                <img src={logo} alt={COMPANY_NAME} className="h-20 w-auto object-contain sm:h-24 lg:h-28" />
+                <img src={logo} alt={COMPANY_NAME} className="h-14 w-auto object-contain sm:h-16 lg:h-20" />
               </Link>
-
-              <div className="mt-8">
+              <div className="mt-5">
                 <ColumnHeading>Contact</ColumnHeading>
-                <div className="mt-4 flex flex-col gap-2 text-[15px]" style={{ color: `${CREAM}CC` }}>
-                  <a
-                    href={`tel:${CONTACT.phoneRaw}`}
-                    className="inline-flex w-fit items-center gap-2 transition-colors duration-200 hover:!text-[#E2903F]"
-                  >
-                    <Phone size={14} style={{ color: ORANGE }} />
+                <div className="mt-2 flex flex-col gap-1 text-[15px]" style={{ color: `${CREAM}CC` }}>
+                  <a href={`tel:${CONTACT.phoneRaw}`} className="inline-flex w-fit items-center gap-2 transition-colors duration-200 hover:text-[#E2903F]">
+                    <Phone size={13} style={{ color: ORANGE }} />
                     {CONTACT.phone}
                   </a>
-                  <a
-                    href={`mailto:${CONTACT.email}`}
-                    className="inline-flex w-fit items-center gap-2 transition-colors duration-200 hover:!text-[#E2903F]"
-                  >
-                    <Mail size={14} style={{ color: ORANGE }} />
+                  <a href={`mailto:${CONTACT.email}`} className="inline-flex w-fit items-center gap-2 transition-colors duration-200 hover:text-[#E2903F]">
+                    <Mail size={13} style={{ color: ORANGE }} />
                     {CONTACT.email}
                   </a>
                 </div>
               </div>
-
-              <div className="mt-8">
+              <div className="mt-5">
                 <ColumnHeading>Headquarters Address</ColumnHeading>
-                <p className="mt-4 max-w-sm text-[15px] leading-relaxed" style={{ color: `${CREAM}CC` }}>
+                <p className="mt-2 max-w-xs text-[14px] leading-relaxed" style={{ color: `${CREAM}CC` }}>
                   {CONTACT.address}
                 </p>
               </div>
-
-              <div className="mt-8">
-                <ColumnHeading>Social Media</ColumnHeading>
-                <div className="mt-4 flex items-center gap-5">
-                  {socials.map(({ Icon, href, label }) => (
-                    <motion.a
-                      key={label}
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={label}
-                      whileHover={{ y: -3, scale: 1.08 }}
-                      whileTap={{ scale: 0.92 }}
-                      style={{ color: CREAM }}
-                      className="transition-colors duration-200 hover:!text-[#E2903F]"
-                    >
-                      <Icon size={20} />
-                    </motion.a>
-                  ))}
-                </div>
-              </div>
             </motion.div>
-
-            {/* Quick Links */}
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              custom={1}
-            >
+            <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} custom={1}>
               <ColumnHeading>Quick Links</ColumnHeading>
-              <ul className="mt-5 flex flex-col gap-3.5">
+              <ul className="mt-2 flex flex-col gap-2">
                 {quickLinks.map((l) => (
                   <FooterLink key={l.to} to={l.to}>
                     {l.label}
@@ -180,17 +109,9 @@ export default function Footer() {
                 ))}
               </ul>
             </motion.div>
-
-            {/* Brands */}
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              custom={2}
-            >
+            <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} custom={2}>
               <ColumnHeading>Brands</ColumnHeading>
-              <ul className="mt-5 flex flex-col gap-3.5">
+              <ul className="mt-2 flex flex-col gap-2">
                 {brandLinks.map((b) => (
                   <FooterLink key={b.slug} to={`/brands/${b.slug}`}>
                     {b.name}
@@ -198,59 +119,42 @@ export default function Footer() {
                 ))}
               </ul>
             </motion.div>
-
-            {/* Legal */}
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              custom={3}
-            >
+            <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} custom={3}>
               <ColumnHeading>Legal</ColumnHeading>
-              <ul className="mt-5 flex flex-col gap-3.5">
+              <ul className="mt-2 flex flex-col gap-2">
                 {legalLinks.map((l) => (
                   <FooterLink key={l.to} to={l.to}>
                     {l.label}
                   </FooterLink>
                 ))}
               </ul>
+              <div className="mt-5">
+                <ColumnHeading>Social Media</ColumnHeading>
+                <div className="mt-2 flex items-center gap-3">
+                  {socials.map(({ Icon, href, label }) => (
+                    <motion.a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} whileHover={{ y: -3, scale: 1.08 }} whileTap={{ scale: 0.92 }} style={{ color: CREAM }} className="transition-colors duration-200 hover:text-[#E2903F]">
+                      <Icon size={32} />
+                    </motion.a>
+                  ))}
+                </div>
+              </div>
             </motion.div>
           </div>
-
-          {/* Divider */}
-          <div className="mt-14 h-px w-full" style={{ backgroundColor: `${CREAM}1F` }} />
-
-          {/* Bottom bar */}
-          <div className="mt-7 flex flex-col items-center justify-between gap-3 text-xs font-semibold uppercase tracking-[0.06em] sm:flex-row">
+          <div className="mt-8 h-px w-full" style={{ backgroundColor: `${CREAM}1F` }} />
+          <div className="mt-4 flex flex-col items-center justify-between gap-2 text-[12px] font-semibold uppercase tracking-[0.06em] sm:flex-row">
             <p style={{ color: `${CREAM}CC` }}>
               Copyright © {new Date().getFullYear()} {COMPANY_NAME}. All Rights Reserved.
             </p>
             <p style={{ color: `${CREAM}CC` }}>
               Developed by{" "}
-              <a
-                href="https://creadordesigns.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition-colors duration-200 hover:!text-[#E2903F]"
-              >
+              <a href="https://creadordesigns.com" target="_blank" rel="noopener noreferrer" className="transition-colors duration-200 hover:text-[#E2903F]">
                 Creador Designs
               </a>
             </p>
           </div>
         </div>
-
-        {/* Scroll to top */}
-        <motion.button
-          type="button"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          aria-label="Scroll to top"
-          whileHover={{ y: -3 }}
-          whileTap={{ scale: 0.92 }}
-          className="absolute bottom-6 right-6 flex h-11 w-11 items-center justify-center rounded-xl shadow-lg sm:bottom-8 sm:right-8"
-          style={{ backgroundColor: ORANGE, color: DARK }}
-        >
-          <ChevronUp size={20} strokeWidth={2.5} />
+        <motion.button type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="Scroll to top" whileHover={{ y: -3 }} whileTap={{ scale: 0.92 }} className="absolute bottom-4 right-4 flex h-9 w-9 items-center justify-center rounded-lg shadow-lg sm:bottom-5 sm:right-5" style={{ backgroundColor: ORANGE, color: DARK }}>
+          <ChevronUp size={16} strokeWidth={2.5} />
         </motion.button>
       </motion.div>
     </footer>

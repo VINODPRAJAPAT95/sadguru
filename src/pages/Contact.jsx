@@ -42,7 +42,7 @@ export default function Contact() {
 
   return (
     <>
-      <Seo title="Contact Us | Sadguru Food Processing Pvt. Ltd." description="Get in touch with Sadguru Food Processing Pvt. Ltd. — phone, email, address and contact form." />
+      <Seo title="Contact Us | Sadguru Food Processing Pvt. Ltd." description="Get in touch with Sadguru Food Processing Pvt. Ltd. phone, email, address and contact form." />
       <PageHero
         eyebrow="Contact"
         title="Let's Start a Conversation"

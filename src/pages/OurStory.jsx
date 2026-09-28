@@ -10,7 +10,6 @@ import {
   Leaf,
   Sparkles,
   HeartHandshake,
-  ArrowRight,
 } from "lucide-react";
 import Seo from "../components/Seo";
 import Button from "../components/Button";
@@ -54,42 +53,37 @@ const differentiators = [
     num: "05",
     icon: Settings2,
     title: "Thoughtful Innovation",
-    desc: "We do not innovate simply to create something different. We ask: can it be healthier, more nutritious, more convenient — can a familiar food be made better? This mindset guides our product and brand development.",
+    desc: "We do not innovate simply to create something different. We ask: can it be healthier, more nutritious, more convenient can a familiar food be made better? This mindset guides our product and brand development.",
     span: "lg:col-span-5",
     wide: true,
   },
 ];
 
+/*
+  LIFE STAGES
+  To swap a photo, just replace the `img` URL below.
+  If a URL fails to load, the card falls back to an orange gradient automatically.
+*/
 const lifeStages = [
   {
-    stage: "01",
-    title: "Childhood",
-    desc: "Nutrition, taste, and everyday goodness.",
-    img: "https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?auto=format&fit=crop&w=800&q=80",
+    title: "Kids",
+    desc: "Gentle nutrition and tastes made for growing little ones.",
+    img: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=900&q=80",
   },
   {
-    stage: "02",
-    title: "Young Adults",
-    desc: "Convenience, energy, and balanced choices.",
-    img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80",
+    title: "Children",
+    desc: "Energy and balanced choices for school days and playtime.",
+    img: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=900&q=80",
   },
   {
-    stage: "03",
-    title: "Families",
-    desc: "Quality, trust, and food everyone can enjoy.",
-    img: "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=800&q=80",
+    title: "Adults",
+    desc: "Convenience, energy, and balanced choices for busy routines.",
+    img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80",
   },
   {
-    stage: "04",
-    title: "Health-Conscious",
-    desc: "Thoughtful nutrition and better ingredients.",
-    img: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    stage: "05",
     title: "Elderly",
     desc: "Food designed around evolving nutritional needs.",
-    img: "https://images.unsplash.com/photo-1447069387593-a5de0862481e?auto=format&fit=crop&w=800&q=80",
+    img: "https://images.unsplash.com/photo-1516307365426-bea591f05011?auto=format&fit=crop&w=900&q=80",
   },
 ];
 
@@ -101,6 +95,18 @@ const commitments = [
   { icon: Users2, label: "Trust" },
   { icon: HeartHandshake, label: "Responsibility" },
 ];
+
+/* -----------------------------------------
+   SHARED STYLES
+----------------------------------------- */
+
+// Small orange label above headings (now larger)
+const eyebrow =
+  "text-lg font-bold uppercase tracking-[0.2em] text-orange-500 sm:text-xl";
+
+// Main section headings (now larger)
+const h2Big =
+  "font-display text-4xl font-bold leading-[1.12] tracking-tight text-charcoal sm:text-5xl lg:text-[3.4rem]";
 
 /* -----------------------------------------
    MOTION VARIANTS
@@ -121,16 +127,40 @@ const cardItem = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
 };
 
+const premiumCardItem = {
+  hidden: { opacity: 0, y: 40, scale: 0.97 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const quoteContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.22, delayChildren: 0.15 } },
+};
+
+const quoteLine = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
 export default function OurStory() {
   return (
     <>
       <Seo
         title="About Us | Sadguru Foods Processing Pvt. Ltd."
-        description="Big dreams, thoughtful innovation, and better food for every generation — the story, vision, and values behind Sadguru Foods Processing Private Limited."
+        description="Big dreams, thoughtful innovation, and better food for every generation the story, vision, and values behind Sadguru Foods Processing Private Limited."
       />
 
       {/* ================= ABOUT HERO ================= */}
-      <section className="relative overflow-hidden bg-white pt-16 pb-24 lg:pt-24 lg:pb-32">
+      <section className="relative overflow-hidden bg-white pt-16 pb-14 lg:pt-24 lg:pb-16">
         <div className="container-px mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-16">
 
           {/* LEFT CONTENT */}
@@ -139,31 +169,20 @@ export default function OurStory() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <span className="text-sm font-bold uppercase tracking-[0.25em] text-orange-500">
+            <span className="text-xl font-bold uppercase tracking-[0.18em] text-orange-500 sm:text-2xl sm:tracking-[0.2em]">
               About Sadguru Foods
             </span>
 
-            <h1 className="mt-6 font-display text-4xl font-bold leading-[1.12] tracking-tight text-charcoal sm:text-5xl lg:text-[3.4rem]">
+            <h1 className="mt-6 font-display text-4xl font-bold leading-[1.1] tracking-tight text-charcoal sm:text-5xl lg:text-[3.9rem]">
               Big Dreams. Thoughtful Innovation.{" "}
               <span className="text-orange-500">Better Food for Every Generation.</span>
             </h1>
 
             <p className="mt-7 max-w-lg text-base leading-relaxed text-charcoal-400 sm:text-lg">
               Sadguru Foods Processing Private Limited is a growing food processing
-              startup built with the ambition to create a forward-thinking food
+              startup built with the ambition to create a forward thinking food
               company rooted in nutrition, innovation, and consumer needs.
             </p>
-
-            <motion.a
-              href="#our-story"
-              whileHover={{ y: 3 }}
-              className="mt-10 inline-flex items-center gap-3 text-sm font-semibold text-charcoal"
-            >
-              <span className="flex h-9 w-9 items-center justify-center rounded-full border border-charcoal/20">
-                <ArrowRight size={15} className="rotate-90" />
-              </span>
-              Scroll to explore
-            </motion.a>
           </motion.div>
 
           {/* RIGHT IMAGE */}
@@ -198,7 +217,7 @@ export default function OurStory() {
       </section>
 
       {/* ================= OUR STORY ================= */}
-      <section id="our-story" className="section-py bg-white overflow-hidden">
+      <section id="our-story" className="bg-white overflow-hidden pt-8 pb-16 lg:pt-10 lg:pb-24">
         <div className="container-px mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
 
           {/* LEFT COLLAGE */}
@@ -223,9 +242,6 @@ export default function OurStory() {
                 className="h-full w-full object-cover"
               />
             </div>
-            <div className="absolute -top-4 right-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-500 text-white shadow-lg">
-              <Leaf size={22} />
-            </div>
           </motion.div>
 
           {/* RIGHT CONTENT */}
@@ -235,10 +251,8 @@ export default function OurStory() {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <span className="text-sm font-bold uppercase tracking-[0.25em] text-orange-500">
-              Our Story
-            </span>
-            <h2 className="mt-4 font-display text-3xl font-bold leading-tight text-charcoal sm:text-4xl">
+            <span className={eyebrow}>Our Story</span>
+            <h2 className={`mt-4 ${h2Big}`}>
               How Can We Make{" "}
               <span className="text-orange-500">Everyday Food Better?</span>
             </h2>
@@ -267,29 +281,28 @@ export default function OurStory() {
         </div>
       </section>
 
-      {/* ================= OUR VISION (dark) ================= */}
-      <section className="relative overflow-hidden bg-charcoal py-24 lg:py-32">
+      {/* ================= OUR VISION (cream) ================= */}
+      <section className="relative overflow-hidden bg-[#FFF9EF] py-24 lg:py-32">
         {/* subtle floating grain dots */}
         <div className="pointer-events-none absolute right-10 top-14 h-2 w-2 rounded-full bg-orange-400/60" />
         <div className="pointer-events-none absolute right-24 top-28 h-1.5 w-1.5 rounded-full bg-orange-400/40" />
         <div className="pointer-events-none absolute right-16 bottom-20 h-2 w-2 rounded-full bg-orange-400/50" />
 
-        <div className="container-px mx-auto grid max-w-7xl grid-cols-1 gap-14 lg:grid-cols-2 lg:gap-20">
+        <div className="container-px mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
 
+          {/* LEFT CONTENT */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <span className="text-sm font-bold uppercase tracking-[0.25em] text-orange-400">
-              Our Vision
-            </span>
-            <h2 className="mt-4 font-display text-3xl font-bold leading-tight text-white sm:text-4xl">
+            <span className={eyebrow}>Our Vision</span>
+            <h2 className={`mt-4 ${h2Big}`}>
               Better Food for Better Living.
             </h2>
 
-            <p className="mt-6 max-w-lg text-base leading-relaxed text-white/65">
+            <p className="mt-6 max-w-lg text-base leading-relaxed text-charcoal-400">
               Our vision is to build a trusted and diversified food company that
               creates better food choices for people across every stage of life.
               We see an opportunity to create food solutions for children, young
@@ -298,48 +311,70 @@ export default function OurStory() {
               nutritional needs and preferences.
             </p>
 
-            <p className="mt-5 max-w-lg text-base leading-relaxed text-white/65">
+            <p className="mt-5 max-w-lg text-base leading-relaxed text-charcoal-400">
               We want to make healthier and more thoughtful food choices easier
               to find, easier to enjoy, and easier to make part of everyday life.
             </p>
           </motion.div>
 
+          {/* RIGHT: PREMIUM 3-LINE STATEMENT (exactly 3 lines on sm and up) */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.15 }}
-            className="flex items-center"
+            variants={quoteContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.4 }}
+            className="flex min-w-0 flex-col justify-center lg:pl-6"
           >
-            <p className="font-display text-3xl font-bold leading-tight text-orange-400 sm:text-4xl lg:text-5xl">
+            {/* Line 1 */}
+            <motion.p
+              variants={quoteLine}
+              className="font-display text-4xl font-black leading-[1.1] tracking-tight text-charcoal sm:whitespace-nowrap sm:text-5xl lg:text-[3.25rem] xl:text-6xl"
+            >
               Different needs.
-              <br />
+            </motion.p>
+
+            {/* Line 2 */}
+            <motion.p
+              variants={quoteLine}
+              className="mt-2 font-display text-4xl font-black leading-[1.1] tracking-tight text-charcoal sm:whitespace-nowrap sm:text-5xl lg:text-[3.25rem] xl:text-6xl"
+            >
               Different journeys.
-              <br />
-              One purpose —
-              <br />
-              Better Food for Better Living.
-            </p>
+            </motion.p>
+
+            {/* Line 3 */}
+            <motion.div variants={quoteLine} className="mt-7 flex items-center gap-4">
+              <span className="hidden h-[3px] w-10 shrink-0 rounded-full bg-orange-500 sm:block" />
+              <p className="bg-gradient-to-r from-orange-600 via-orange-500 to-orange-400 bg-clip-text font-display text-xl font-bold leading-snug text-transparent sm:whitespace-nowrap sm:text-2xl lg:text-[1.4rem] xl:text-[1.65rem]">
+                One purpose Better Food for Better Living.
+              </p>
+            </motion.div>
           </motion.div>
 
         </div>
       </section>
 
-      {/* ================= WHAT MAKES US DIFFERENT ================= */}
-      <section className="section-py bg-white">
-        <div className="container-px mx-auto max-w-7xl">
+      {/* ================= WHAT MAKES US DIFFERENT (premium) ================= */}
+      <section className="section-py relative overflow-hidden bg-white">
+        {/* soft ambient glows */}
+        <div className="pointer-events-none absolute -right-32 top-10 h-96 w-96 rounded-full bg-orange-200/30 blur-3xl" />
+        <div className="pointer-events-none absolute -left-32 bottom-10 h-96 w-96 rounded-full bg-[#FFF1D6]/70 blur-3xl" />
+
+        <div className="container-px relative mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="max-w-2xl"
+            className="mx-auto max-w-4xl text-center"
           >
-            <span className="text-sm font-bold uppercase tracking-[0.25em] text-orange-500">
+            <span className="inline-flex items-center justify-center gap-4 text-xl font-bold uppercase tracking-[0.18em] text-orange-500 sm:text-2xl sm:tracking-[0.2em]">
+              <span className="hidden h-[2px] w-10 bg-orange-500 sm:block" />
               What Makes Us Different
+              <span className="hidden h-[2px] w-10 bg-orange-500 sm:block" />
             </span>
-            <h2 className="mt-4 font-display text-3xl font-bold leading-tight text-charcoal sm:text-4xl">
-              Building food brands with purpose.
+            <h2 className={`mt-6 ${h2Big} lg:text-[3.8rem]`}>
+              Building food brands{" "}
+              <span className="text-orange-500">with purpose.</span>
             </h2>
           </motion.div>
 
@@ -347,91 +382,121 @@ export default function OurStory() {
             variants={cardContainer}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-5"
+            viewport={{ once: true, amount: 0.15 }}
+            className="mt-16 grid grid-cols-1 gap-6 lg:grid-cols-5"
           >
             {differentiators.map((item) => (
               <motion.div
                 key={item.num}
-                variants={cardItem}
-                whileHover={{ y: -6 }}
-                className={`group rounded-[1.75rem] border border-orange-500/30 bg-white p-8 shadow-[0_6px_30px_rgba(0,0,0,0.04)] transition-all duration-300 hover:border-orange-500 hover:shadow-[0_15px_40px_rgba(239,127,26,0.1)] ${item.span} ${
-                  item.wide ? "lg:flex lg:items-center lg:gap-10" : ""
+                variants={premiumCardItem}
+                whileHover={{ y: -8 }}
+                transition={{ type: "spring", stiffness: 260, damping: 22 }}
+                className={`group relative overflow-hidden rounded-[2rem] border border-orange-100 bg-gradient-to-br from-white via-white to-[#FFF6E5] p-8 shadow-[0_10px_40px_-15px_rgba(36,18,9,0.12)] transition-all duration-500 hover:border-orange-300 hover:shadow-[0_25px_60px_-20px_rgba(239,127,26,0.35)] sm:p-10 ${item.span} ${
+                  item.wide ? "lg:flex lg:items-center lg:gap-14" : ""
                 }`}
               >
-                <div className={item.wide ? "lg:w-2/5" : ""}>
-                  <div className="flex items-center justify-between">
-                    <span className="font-display text-4xl font-bold text-orange-500/90">
-                      {item.num}
-                    </span>
-                    <div className="flex h-11 w-11 items-center justify-center rounded-full border border-orange-500/40 text-orange-500">
-                      <item.icon size={20} strokeWidth={1.75} />
-                    </div>
+                {/* corner glow on hover */}
+                <div className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-orange-500/0 blur-3xl transition-all duration-500 group-hover:bg-orange-500/20" />
+
+                <div className={`relative ${item.wide ? "lg:w-2/5" : ""}`}>
+                  {/* icon tile */}
+                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-400 to-orange-600 text-white shadow-lg shadow-orange-500/30 ring-4 ring-orange-500/10 transition-transform duration-500 group-hover:-rotate-6 group-hover:scale-110">
+                    <item.icon size={26} strokeWidth={1.75} />
                   </div>
-                  <h3 className="mt-6 font-baloo text-xl font-bold text-charcoal">
+
+                  <h3 className="mt-7 max-w-sm font-display text-2xl font-bold leading-snug text-charcoal sm:text-[1.7rem]">
                     {item.title}
                   </h3>
+
+                  {/* animated divider */}
+                  <div className="mt-5 h-[3px] w-10 rounded-full bg-gradient-to-r from-orange-500 to-orange-300 transition-all duration-500 group-hover:w-24" />
                 </div>
-                <p className={`mt-4 text-sm leading-relaxed text-charcoal-400 ${item.wide ? "lg:mt-0 lg:flex-1" : ""}`}>
+
+                <p
+                  className={`relative mt-5 text-[0.95rem] leading-relaxed text-charcoal-400 ${
+                    item.wide ? "lg:mt-0 lg:flex-1 lg:text-base" : ""
+                  }`}
+                >
                   {item.desc}
                 </p>
+
+                {/* bottom accent line that sweeps in on hover */}
+                <span className="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-orange-500 via-orange-400 to-orange-200 transition-all duration-700 group-hover:w-full" />
               </motion.div>
             ))}
           </motion.div>
         </div>
       </section>
 
-      {/* ================= FOOD FOR EVERY STAGE OF LIFE ================= */}
-      <section className="section-py bg-cream">
-        <div className="container-px mx-auto max-w-7xl">
-          <motion.span
-            initial={{ opacity: 0, y: 16 }}
+      {/* ================= FOOD FOR EVERY STAGE OF LIFE (premium) ================= */}
+      <section className="section-py relative overflow-hidden bg-cream">
+        <div className="pointer-events-none absolute -left-24 top-0 h-80 w-80 rounded-full bg-orange-200/30 blur-3xl" />
+        <div className="pointer-events-none absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-orange-300/20 blur-3xl" />
+
+        <div className="container-px relative mx-auto max-w-7xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="block text-sm font-bold uppercase tracking-[0.25em] text-orange-500"
+            transition={{ duration: 0.6 }}
+            className="mx-auto max-w-4xl text-center"
           >
-            Food for Every Stage of Life
-          </motion.span>
+            <span className="inline-flex items-center justify-center gap-4 text-xl font-bold uppercase tracking-[0.18em] text-orange-500 sm:text-2xl sm:tracking-[0.2em]">
+              <span className="hidden h-[2px] w-10 bg-orange-500 sm:block" />
+              Food for Every Stage of Life
+              <span className="hidden h-[2px] w-10 bg-orange-500 sm:block" />
+            </span>
+          </motion.div>
 
-          <div className="mt-10 flex gap-5 overflow-x-auto pb-4 no-scrollbar sm:grid sm:grid-cols-2 sm:overflow-visible lg:grid-cols-5">
-            {lifeStages.map((stage, i) => (
+          <motion.div
+            variants={cardContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
+          >
+            {lifeStages.map((stage) => (
               <motion.div
                 key={stage.title}
-                initial={{ opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="w-64 shrink-0 overflow-hidden rounded-2xl bg-white shadow-soft sm:w-auto"
+                variants={premiumCardItem}
+                whileHover={{ y: -8 }}
+                transition={{ type: "spring", stiffness: 260, damping: 22 }}
+                className="group relative flex flex-col overflow-hidden rounded-[2rem] bg-white shadow-[0_15px_50px_-20px_rgba(36,18,9,0.25)] transition-shadow duration-500 hover:shadow-[0_30px_70px_-25px_rgba(239,127,26,0.45)]"
               >
-                <img
-                  src={stage.img}
-                  alt={stage.title}
-                  className="h-44 w-full object-cover"
-                />
-                <div className="p-5">
-                  <span className="text-xs font-bold uppercase tracking-[0.15em] text-orange-500">
-                    {stage.stage} — {stage.title}
-                  </span>
-                  <p className="mt-2 text-sm leading-relaxed text-charcoal-400">
+                {/* image */}
+                <div className="relative h-72 overflow-hidden bg-gradient-to-br from-orange-400 to-orange-600">
+                  <img
+                    src={stage.img}
+                    alt={stage.title}
+                    loading="lazy"
+                    onError={(e) => {
+                      e.currentTarget.style.display = "none";
+                    }}
+                    className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#241209]/80 via-[#241209]/10 to-transparent" />
+
+                  {/* title over image */}
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <h3 className="font-display text-3xl font-bold text-white">
+                      {stage.title}
+                    </h3>
+                    <div className="mt-3 h-[3px] w-10 rounded-full bg-orange-400 transition-all duration-500 group-hover:w-20" />
+                  </div>
+                </div>
+
+                {/* description */}
+                <div className="flex flex-1 p-6">
+                  <p className="text-[0.95rem] leading-relaxed text-charcoal-400">
                     {stage.desc}
                   </p>
                 </div>
+
+                {/* bottom accent sweep */}
+                <span className="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-orange-500 via-orange-400 to-orange-200 transition-all duration-700 group-hover:w-full" />
               </motion.div>
             ))}
-          </div>
-
-          {/* progress indicator */}
-          <div className="mt-8 flex justify-center gap-2">
-            {lifeStages.map((s, i) => (
-              <span
-                key={s.title}
-                className={`h-1.5 rounded-full transition-all ${
-                  i === 0 ? "w-8 bg-orange-500" : "w-1.5 bg-orange-500/20"
-                }`}
-              />
-            ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -482,10 +547,8 @@ export default function OurStory() {
             transition={{ duration: 0.7 }}
             className="order-1 lg:order-2"
           >
-            <span className="text-sm font-bold uppercase tracking-[0.25em] text-orange-500">
-              Tradition + Innovation
-            </span>
-            <h2 className="mt-4 font-display text-3xl font-bold leading-tight text-charcoal sm:text-4xl">
+            <span className={eyebrow}>Tradition + Innovation</span>
+            <h2 className={`mt-4 ${h2Big}`}>
               Where Tradition Meets Innovation
             </h2>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-charcoal-400">
@@ -493,7 +556,7 @@ export default function OurStory() {
               practices. We see an opportunity to combine this heritage with
               nutrition, food science, modern processing, and contemporary
               formats to create products that are relevant to today's consumers
-              — food that carries the past forward without asking anyone to
+              food that carries the past forward without asking anyone to
               compromise on how they live now.
             </p>
           </motion.div>
@@ -511,10 +574,8 @@ export default function OurStory() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <span className="text-sm font-bold uppercase tracking-[0.25em] text-orange-500">
-                Our Commitment
-              </span>
-              <h2 className="mt-4 font-display text-3xl font-bold leading-tight text-charcoal sm:text-4xl">
+              <span className={eyebrow}>Our Commitment</span>
+              <h2 className={`mt-4 ${h2Big}`}>
                 Built on Strong Foundations.
               </h2>
               <p className="mt-6 max-w-md text-base leading-relaxed text-charcoal-400">
@@ -570,14 +631,14 @@ export default function OurStory() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-sm font-bold uppercase tracking-[0.25em] text-white/80">
+            <span className="text-lg font-bold uppercase tracking-[0.2em] text-white/90 sm:text-xl">
               Our Big Dream
             </span>
             <p className="mt-6 max-w-sm text-sm leading-relaxed text-white/85">
               We aspire to grow beyond the brands we have today, continuously
               exploring new ideas, new categories, new products, and new
               possibilities through thoughtful innovation. Our ambition is not
-              simply to grow bigger — it is to grow with purpose, create with
+              simply to grow bigger it is to grow with purpose, create with
               responsibility, and make a lasting difference through food.
             </p>
           </motion.div>
@@ -588,7 +649,7 @@ export default function OurStory() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <h2 className="font-display text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
+            <h2 className="font-display text-4xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl">
               Today, we are building the foundation.
             </h2>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/90">
@@ -606,7 +667,7 @@ export default function OurStory() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="font-display text-3xl font-bold text-charcoal sm:text-4xl"
+            className="font-display text-4xl font-bold tracking-tight text-charcoal sm:text-5xl"
           >
             Building Better Food, Together.
           </motion.h2>

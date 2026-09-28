@@ -22,7 +22,7 @@ export default function OurTeam() {
           <SectionTitle
             label="Leadership"
             title="Meet the Team"
-            description="A group united by one goal — food that families can trust, made without shortcuts."
+            description="A group united by one goal food that families can trust, made without shortcuts."
             align="center"
             className="mb-16 mx-auto"
           />

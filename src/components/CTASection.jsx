@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ChevronsRight } from "lucide-react";
 
-const DARK = "#2A160C";
+const DARK = "#4A3220";
 const CREAM = "#F7ECDA";
 const ORANGE = "#E2903F";
 

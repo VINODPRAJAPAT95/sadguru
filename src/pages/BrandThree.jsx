@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
@@ -9,6 +8,10 @@ import Seo from "../components/Seo";
 import Button from "../components/Button";
 import CTASection from "../components/CTASection";
 import brands from "../data/brands";
+
+// About section image (left side)
+// Change the folder and file name to your real image path.
+import aboutImage from "../assets/miletveda/about.jpg";
 
 const brand = brands[2];
 
@@ -140,7 +143,7 @@ export default function BrandThree() {
             className="relative overflow-hidden rounded-[2rem] shadow-xl"
           >
             <motion.img
-              src={brand.cardImage}
+              src={aboutImage}
               alt={`${brand.name} grains`}
               className="h-[380px] w-full object-cover"
               whileHover={{ scale: 1.08 }}

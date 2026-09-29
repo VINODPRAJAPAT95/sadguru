@@ -18,6 +18,10 @@ import Button from "../components/Button";
 import CTASection from "../components/CTASection";
 import brands from "../data/brands";
 
+// About section image (left side)
+// Change the file name to your real image. Put it in src/assets/t2m/
+import aboutImage from "../assets/t2m/about.png";
+
 // Product images
 import product1 from "../assets/t2m/product1.png";
 import product2 from "../assets/t2m/product2.png";
@@ -294,7 +298,7 @@ export default function BrandTwo() {
               className="relative mt-8 overflow-hidden rounded-[2rem] shadow-xl"
             >
               <motion.img
-                src={brand.cardImage}
+                src={aboutImage}
                 alt="Indian snacks collage"
                 className="h-[220px] w-full object-cover sm:h-[320px]"
                 whileHover={{

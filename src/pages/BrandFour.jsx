@@ -6,6 +6,10 @@ import Button from "../components/Button";
 import CTASection from "../components/CTASection";
 import brands from "../data/brands";
 
+// About section image
+// Change the folder and file name to your real image path.
+import aboutImage from "../assets/ahaarsutra/about.png";
+
 const brand = brands[3];
 
 // Removes em dashes / en dashes from any text and replaces them with a comma
@@ -161,7 +165,7 @@ export default function BrandFour() {
               className="relative mt-8 overflow-hidden rounded-[2rem] shadow-xl"
             >
               <img
-                src={brand.cardImage}
+                src={aboutImage}
                 alt="Ahaarsutra purposeful nutrition"
                 className="h-[200px] w-full object-cover sm:h-[260px] lg:h-[300px]"
               />

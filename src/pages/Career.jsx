@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import {
   MapPin, Briefcase, Clock, Send, ArrowRight,
@@ -6,16 +6,18 @@ import {
   FlaskConical, Factory, ShieldCheck, Settings2, Truck,
   LineChart, Megaphone, ShoppingCart, Wallet, UserCog, Laptop2,
   Sparkles, ShieldCheck as Integrity, Rocket, Handshake, RefreshCw,
-  FileText,
+  FileText, UploadCloud, X, CheckCircle2, AlertCircle,
 } from "lucide-react";
 import Seo from "../components/Seo";
-import PageHero from "../components/PageHero";
 import SectionTitle from "../components/SectionTitle";
 import jobs from "../data/jobs";
 
 const ORANGE = "#EF7F1A";
 const CHARCOAL = "#2B2A29";
 const WHITE = "#FFFFFF";
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+const ALLOWED_EXT = ["pdf", "doc", "docx"];
 
 /* ── WHY SADGURU FOODS ── */
 const whySadguru = [
@@ -52,6 +54,20 @@ const categories = [
   { icon: Laptop2, title: "IT & Systems", roles: ["IT Systems", "Systems Administration", "ERP & Business Systems", "Technical Support"] },
 ];
 
+/* ── START YOUR JOURNEY: FRESHERS / EXPERIENCED (same UI) ── */
+const journeyCards = [
+  {
+    icon: GraduationCap,
+    title: "Freshers",
+    desc: "Begin your professional journey with practical exposure and opportunities to learn from real business environments.",
+  },
+  {
+    icon: Briefcase,
+    title: "Experienced Professionals",
+    desc: "Bring your expertise, take on new challenges, and contribute to building the next phase of Sadguru Foods.",
+  },
+];
+
 /* ── OUR VALUES ── */
 const values = [
   { icon: Sparkles, title: "Quality", desc: "We strive for consistency and excellence in our products and processes." },
@@ -61,12 +77,71 @@ const values = [
   { icon: RefreshCw, title: "Continuous Improvement", desc: "We learn from every experience and continuously look for ways to do better." },
 ];
 
+const inputClass =
+  "w-full rounded-xl border border-slate-200 bg-slate-50/60 px-4 py-3 text-sm outline-none transition-all placeholder:text-slate-400 focus:border-[#EF7F1A] focus:bg-white focus:ring-4 focus:ring-[#EF7F1A]/10";
+
+const formatSize = (bytes) =>
+  bytes < 1024 * 1024
+    ? `${(bytes / 1024).toFixed(0)} KB`
+    : `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+
+/* Big eyebrow label with accent line */
+const Eyebrow = ({ children }) => (
+  <p
+    className="inline-flex items-center gap-3 text-base font-extrabold uppercase tracking-[0.25em] sm:text-lg"
+    style={{ color: ORANGE }}
+  >
+    <span className="h-[3px] w-10 rounded-full" style={{ backgroundColor: ORANGE }} />
+    {children}
+  </p>
+);
+
 export default function Career() {
   const [submitted, setSubmitted] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
+  const [resume, setResume] = useState(null);
+  const [resumeError, setResumeError] = useState("");
+  const [dragging, setDragging] = useState(false);
+  const fileRef = useRef(null);
+
+  const validateAndSetFile = (file) => {
+    if (!file) return;
+    const ext = file.name.split(".").pop().toLowerCase();
+    if (!ALLOWED_EXT.includes(ext)) {
+      setResume(null);
+      setResumeError("Only PDF, DOC or DOCX files are allowed.");
+      return;
+    }
+    if (file.size > MAX_FILE_SIZE) {
+      setResume(null);
+      setResumeError("File size must be 5 MB or less.");
+      return;
+    }
+    setResumeError("");
+    setResume(file);
+  };
+
+  const removeFile = () => {
+    setResume(null);
+    setResumeError("");
+    if (fileRef.current) fileRef.current.value = "";
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setDragging(false);
+    validateAndSetFile(e.dataTransfer.files?.[0]);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!resume) {
+      setResumeError("Please upload your resume to continue.");
+      return;
+    }
+    // TODO: send to your backend / email service:
+    // const fd = new FormData(e.target); fd.set("resume", resume);
+    // await fetch("/api/career", { method: "POST", body: fd });
     setSubmitted(true);
   };
 
@@ -85,47 +160,55 @@ export default function Career() {
         description="Explore career opportunities at Sadguru Foods Processing Pvt. Ltd. across manufacturing, quality, R&D, marketing, sales and more."
       />
 
-      {/* ── HERO ── */}
-      <PageHero
-        eyebrow="CAREERS"
-        title="Grow With Sadguru Foods"
-        description="Building Great Food. Growing Great People. At Sadguru Foods Processing Private Limited, our journey is driven by innovation, quality, technology, operational excellence, and most importantly, our people."
-        image="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&q=80"
-      />
-
-      {/* Hero CTAs (in case PageHero doesn't render buttons) */}
-      <div className="flex flex-wrap justify-center gap-4 bg-white py-8">
-        <button
-          onClick={scrollToPositions}
-          className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold tracking-wide text-white shadow-md transition hover:opacity-90"
+      {/* ── TOP: ONLY TWO BUTTONS ──
+          pt-28 / sm:pt-32 navbar ke neeche jagah dene ke liye hai.
+          Agar navbar fixed nahi hai to pt-10 kar dena. */}
+      <section
+        className="relative overflow-hidden pb-6 pt-28 sm:pt-32"
+        style={{ backgroundColor: WHITE }}
+      >
+        <div
+          className="pointer-events-none absolute left-1/2 top-0 h-40 w-[36rem] -translate-x-1/2 rounded-full opacity-[0.08] blur-3xl"
           style={{ backgroundColor: ORANGE }}
+        />
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="relative mx-auto flex max-w-3xl flex-col items-stretch justify-center gap-4 px-6 sm:flex-row sm:items-center"
         >
-          VIEW OPEN POSITIONS <ArrowRight size={16} />
-        </button>
-        <button
-          onClick={scrollToEnquiry}
-          className="inline-flex items-center gap-2 rounded-full border-2 px-7 py-3.5 text-sm font-bold tracking-wide transition hover:bg-charcoal hover:text-white"
-          style={{ borderColor: CHARCOAL, color: CHARCOAL }}
-        >
-          SUBMIT YOUR RESUME
-        </button>
-      </div>
+          <button
+            onClick={scrollToPositions}
+            className="group inline-flex items-center justify-center gap-3 rounded-full px-9 py-4 text-sm font-extrabold tracking-[0.12em] text-white shadow-[0_14px_30px_-10px_rgba(239,127,26,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_40px_-10px_rgba(239,127,26,0.8)]"
+            style={{ background: `linear-gradient(135deg, ${ORANGE}, #F5A04C)` }}
+          >
+            VIEW OPEN POSITIONS
+            <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
+          </button>
+          <button
+            onClick={scrollToEnquiry}
+            className="inline-flex items-center justify-center gap-3 rounded-full border-2 px-9 py-4 text-sm font-extrabold tracking-[0.12em] transition-all duration-300 hover:-translate-y-0.5 hover:text-white hover:shadow-[0_14px_30px_-10px_rgba(43,42,41,0.5)]"
+            style={{ borderColor: CHARCOAL, color: CHARCOAL }}
+            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = CHARCOAL)}
+            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
+          >
+            SUBMIT YOUR RESUME
+          </button>
+        </motion.div>
+      </section>
 
       {/* ── WHY SADGURU FOODS ── */}
-      <section className="py-20" style={{ backgroundColor: WHITE }}>
+      <section className="py-16" style={{ backgroundColor: WHITE }}>
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
           <div className="grid gap-14 lg:grid-cols-2 lg:items-center">
-            {/* Left */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: ORANGE }}>
-                WHY SADGURU FOODS?
-              </p>
-              <h2 className="mt-4 text-4xl font-extrabold leading-[1.1] sm:text-5xl" style={{ color: CHARCOAL }}>
+              <Eyebrow>WHY SADGURU FOODS?</Eyebrow>
+              <h2 className="mt-5 text-4xl font-extrabold leading-[1.1] sm:text-5xl" style={{ color: CHARCOAL }}>
                 A Place to Learn.
                 <br />
                 A Place to Contribute.
@@ -139,7 +222,6 @@ export default function Career() {
               </p>
             </motion.div>
 
-            {/* Right: feature cards */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {whySadguru.map((c, i) => (
                 <motion.div
@@ -171,7 +253,7 @@ export default function Career() {
       </section>
 
       {/* ── BEHIND EVERY PRODUCT IS A TEAM ── */}
-      <section className="py-20" style={{ backgroundColor: WHITE }}>
+      <section className="pb-16" style={{ backgroundColor: WHITE }}>
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
           <div
             className="overflow-hidden rounded-[2.5rem] px-6 py-14 sm:px-12 lg:px-16"
@@ -188,7 +270,6 @@ export default function Career() {
               stage work together to transform ideas into products that reach consumers.
             </p>
 
-            {/* Flow — desktop horizontal, mobile vertical */}
             <div className="mt-12 flex flex-col items-stretch gap-0 lg:flex-row lg:items-center">
               {productJourney.map((step, i) => (
                 <div key={step} className="flex flex-1 flex-col items-center lg:flex-row">
@@ -222,40 +303,49 @@ export default function Career() {
         </div>
       </section>
 
-      {/* ── CAREER OPPORTUNITIES ── */}
-      <section className="py-20" style={{ backgroundColor: "#FAF9F7" }}>
+      {/* ── CAREER OPPORTUNITIES (simple + premium) ── */}
+      <section className="py-16" style={{ backgroundColor: "#FAF9F7" }}>
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
           <SectionTitle
             label="Career Opportunities"
             title="We Offer Opportunities Across a Wide Range of Functions"
             align="center"
-            className="mb-14 mx-auto"
+            className="mb-12 mx-auto"
           />
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {categories.map((cat, i) => (
               <motion.div
                 key={cat.title}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                whileHover={{ y: -5, borderColor: ORANGE }}
+                whileHover={{ y: -6 }}
                 transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
-                className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:shadow-lg"
+                className="group relative overflow-hidden rounded-2xl border border-slate-200/70 bg-white p-8 shadow-[0_2px_16px_-6px_rgba(0,0,0,0.08)] transition-shadow duration-300 hover:shadow-[0_22px_44px_-16px_rgba(43,42,41,0.25)]"
               >
+                {/* top accent line on hover */}
                 <span
-                  className="flex h-12 w-12 items-center justify-center rounded-full"
+                  className="absolute left-0 top-0 h-[3px] w-0 transition-all duration-500 group-hover:w-full"
+                  style={{ backgroundColor: ORANGE }}
+                />
+
+                <span
+                  className="flex h-12 w-12 items-center justify-center rounded-xl transition-colors duration-300 group-hover:bg-[#EF7F1A] group-hover:text-white"
                   style={{ backgroundColor: `${ORANGE}14`, color: ORANGE }}
                 >
-                  <cat.icon size={22} />
+                  <cat.icon size={22} strokeWidth={1.8} />
                 </span>
-                <h3 className="mt-4 text-base font-bold" style={{ color: CHARCOAL }}>
+
+                <h3 className="mt-6 text-lg font-bold leading-snug" style={{ color: CHARCOAL }}>
                   {cat.title}
                 </h3>
-                <ul className="mt-3 space-y-1.5">
+                <div className="mt-3 h-[2px] w-8 rounded-full" style={{ backgroundColor: ORANGE }} />
+
+                <ul className="mt-5 space-y-2.5">
                   {cat.roles.map((r) => (
-                    <li key={r} className="flex items-start gap-2 text-sm text-slate-500">
+                    <li key={r} className="flex items-center gap-3 text-sm text-slate-600">
                       <span
-                        className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full"
+                        className="h-1.5 w-1.5 shrink-0 rounded-full"
                         style={{ backgroundColor: ORANGE }}
                       />
                       {r}
@@ -269,7 +359,7 @@ export default function Career() {
       </section>
 
       {/* ── START YOUR JOURNEY WITH US ── */}
-      <section className="py-20" style={{ backgroundColor: WHITE }}>
+      <section className="py-16" style={{ backgroundColor: WHITE }}>
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <motion.div
@@ -287,10 +377,8 @@ export default function Career() {
             </motion.div>
 
             <div>
-              <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: ORANGE }}>
-                START YOUR JOURNEY WITH US
-              </p>
-              <h2 className="mt-4 text-3xl font-extrabold leading-[1.15] sm:text-4xl" style={{ color: CHARCOAL }}>
+              <Eyebrow>START YOUR JOURNEY WITH US</Eyebrow>
+              <h2 className="mt-5 text-3xl font-extrabold leading-[1.15] sm:text-4xl" style={{ color: CHARCOAL }}>
                 Whatever Stage You're At, There's a Place for You
               </h2>
               <p className="mt-4 leading-relaxed text-slate-600">
@@ -299,39 +387,35 @@ export default function Career() {
                 problems, and contribute to a growing organisation.
               </p>
 
-              <div className="mt-8 flex flex-col gap-5 sm:flex-row">
-                <motion.div
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.1 }}
-                  className="flex-1 rounded-2xl p-6"
-                  style={{ backgroundColor: `${ORANGE}0F` }}
-                >
-                  <h3 className="text-sm font-extrabold uppercase tracking-wider" style={{ color: ORANGE }}>
-                    Freshers
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                    Begin your professional journey with practical exposure and
-                    opportunities to learn from real business environments.
-                  </p>
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 }}
-                  className="flex-1 rounded-2xl p-6 text-white"
-                  style={{ backgroundColor: CHARCOAL }}
-                >
-                  <h3 className="text-sm font-extrabold uppercase tracking-wider" style={{ color: ORANGE }}>
-                    Experienced Professionals
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-white/70">
-                    Bring your expertise, take on new challenges, and contribute to
-                    building the next phase of Sadguru Foods.
-                  </p>
-                </motion.div>
+              {/* Freshers + Experienced: same UI */}
+              <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                {journeyCards.map((card, i) => (
+                  <motion.div
+                    key={card.title}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    whileHover={{ y: -5 }}
+                    transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
+                    className="group relative overflow-hidden rounded-2xl border border-slate-200/70 bg-white p-6 shadow-[0_2px_16px_-6px_rgba(0,0,0,0.08)] transition-shadow duration-300 hover:shadow-[0_22px_44px_-16px_rgba(43,42,41,0.25)]"
+                  >
+                    <span
+                      className="absolute left-0 top-0 h-[3px] w-0 transition-all duration-500 group-hover:w-full"
+                      style={{ backgroundColor: ORANGE }}
+                    />
+                    <span
+                      className="flex h-12 w-12 items-center justify-center rounded-xl transition-colors duration-300 group-hover:bg-[#EF7F1A] group-hover:text-white"
+                      style={{ backgroundColor: `${ORANGE}14`, color: ORANGE }}
+                    >
+                      <card.icon size={22} strokeWidth={1.8} />
+                    </span>
+                    <h3 className="mt-5 text-base font-extrabold" style={{ color: CHARCOAL }}>
+                      {card.title}
+                    </h3>
+                    <div className="mt-2.5 h-[2px] w-8 rounded-full" style={{ backgroundColor: ORANGE }} />
+                    <p className="mt-3 text-sm leading-relaxed text-slate-600">{card.desc}</p>
+                  </motion.div>
+                ))}
               </div>
             </div>
           </div>
@@ -339,9 +423,9 @@ export default function Career() {
       </section>
 
       {/* ── OUR VALUES ── */}
-      <section className="py-20" style={{ backgroundColor: "#FAF9F7" }}>
+      <section className="py-16" style={{ backgroundColor: "#FAF9F7" }}>
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
-          <SectionTitle label="Our Values" title="What We Stand For" align="center" className="mb-14 mx-auto" />
+          <SectionTitle label="Our Values" title="What We Stand For" align="center" className="mb-12 mx-auto" />
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5">
             {values.map((v, i) => (
               <motion.div
@@ -370,9 +454,9 @@ export default function Career() {
       </section>
 
       {/* ── OPEN POSITIONS ── */}
-      <section id="open-positions" className="py-20" style={{ backgroundColor: WHITE }}>
+      <section id="open-positions" className="py-16" style={{ backgroundColor: WHITE }}>
         <div className="mx-auto max-w-5xl px-6 lg:px-12">
-          <SectionTitle label="Open Positions" title="Current Openings" align="center" className="mb-14 mx-auto" />
+          <SectionTitle label="Open Positions" title="Current Openings" align="center" className="mb-12 mx-auto" />
           <div className="flex flex-col gap-4">
             {jobs.map((job, i) => (
               <motion.div
@@ -407,10 +491,10 @@ export default function Career() {
       </section>
 
       {/* ── FIND YOUR OPPORTUNITY CTA ── */}
-      <section className="py-20" style={{ backgroundColor: WHITE }}>
+      <section className="pb-16" style={{ backgroundColor: WHITE }}>
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
           <div
-            className="relative overflow-hidden rounded-[2.5rem] px-6 py-16 sm:px-12 lg:px-16"
+            className="relative overflow-hidden rounded-[2.5rem] px-6 py-14 sm:px-12 lg:px-16"
             style={{ backgroundColor: CHARCOAL }}
           >
             <div
@@ -424,10 +508,8 @@ export default function Career() {
 
             <div className="relative grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:items-center">
               <div>
-                <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: ORANGE }}>
-                  FIND YOUR OPPORTUNITY
-                </p>
-                <h2 className="mt-4 max-w-xl text-3xl font-extrabold leading-[1.15] text-white sm:text-4xl">
+                <Eyebrow>FIND YOUR OPPORTUNITY</Eyebrow>
+                <h2 className="mt-5 max-w-xl text-3xl font-extrabold leading-[1.15] text-white sm:text-4xl">
                   Your next career opportunity could be the beginning of something meaningful.
                 </h2>
                 <p className="mt-4 max-w-lg leading-relaxed text-white/70">
@@ -477,9 +559,9 @@ export default function Career() {
         </div>
       </section>
 
-      {/* ── CAREER ENQUIRY / APPLICATION FORM ── */}
-      <section id="career-enquiry" className="py-20" style={{ backgroundColor: "#FAF9F7" }}>
-        <div className="mx-auto max-w-2xl px-6 lg:px-12">
+      {/* ── CAREER ENQUIRY / APPLICATION FORM (last section) ── */}
+      <section id="career-enquiry" className="py-16" style={{ backgroundColor: "#FAF9F7" }}>
+        <div className="mx-auto max-w-3xl px-6 lg:px-12">
           <SectionTitle
             label="Get In Touch"
             title={selectedJob ? `Apply for ${selectedJob}` : "Career Enquiry"}
@@ -492,99 +574,153 @@ export default function Career() {
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              className="rounded-2xl p-8 text-center"
-              style={{ backgroundColor: `${ORANGE}0F` }}
+              className="rounded-3xl border border-slate-100 bg-white p-10 text-center shadow-xl"
             >
-              <p className="text-lg font-bold" style={{ color: ORANGE }}>Thank you for reaching out!</p>
-              <p className="mt-2 text-sm text-slate-500">Our HR team will review your application and get back to you soon.</p>
+              <span
+                className="mx-auto flex h-16 w-16 items-center justify-center rounded-full"
+                style={{ backgroundColor: `${ORANGE}14`, color: ORANGE }}
+              >
+                <CheckCircle2 size={32} />
+              </span>
+              <p className="mt-5 text-xl font-extrabold" style={{ color: CHARCOAL }}>
+                Thank you for reaching out!
+              </p>
+              <p className="mt-2 text-sm text-slate-500">
+                Our HR team will review your application and get back to you soon.
+              </p>
             </motion.div>
           ) : (
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-5 rounded-2xl bg-white p-8 shadow-sm sm:grid-cols-2">
-              <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-medium" style={{ color: CHARCOAL }}>Full Name</label>
-                <input
-                  required
-                  type="text"
-                  className="rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition-colors focus:border-[#EF7F1A]"
-                />
+            <form
+              onSubmit={handleSubmit}
+              className="relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-8 shadow-[0_20px_60px_-20px_rgba(43,42,41,0.2)] sm:p-10"
+            >
+              <span className="absolute left-0 top-0 h-1.5 w-full" style={{ backgroundColor: ORANGE }} />
+
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-sm font-semibold" style={{ color: CHARCOAL }}>Full Name</label>
+                  <input required name="name" type="text" placeholder="Your full name" className={inputClass} />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-sm font-semibold" style={{ color: CHARCOAL }}>Email</label>
+                  <input required name="email" type="email" placeholder="you@example.com" className={inputClass} />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-sm font-semibold" style={{ color: CHARCOAL }}>Phone</label>
+                  <input required name="phone" type="tel" placeholder="+91 00000 00000" className={inputClass} />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-sm font-semibold" style={{ color: CHARCOAL }}>Position Interested In</label>
+                  <input
+                    key={selectedJob || "none"}
+                    name="position"
+                    type="text"
+                    defaultValue={selectedJob || ""}
+                    placeholder="e.g. Quality Executive"
+                    className={inputClass}
+                  />
+                </div>
+
+                {/* Resume upload */}
+                <div className="col-span-full flex flex-col gap-1.5">
+                  <label className="text-sm font-semibold" style={{ color: CHARCOAL }}>
+                    Upload Resume <span style={{ color: ORANGE }}>*</span>
+                  </label>
+
+                  <input
+                    ref={fileRef}
+                    type="file"
+                    name="resume"
+                    accept=".pdf,.doc,.docx"
+                    className="hidden"
+                    onChange={(e) => validateAndSetFile(e.target.files?.[0])}
+                  />
+
+                  {resume ? (
+                    <div
+                      className="flex items-center justify-between gap-4 rounded-2xl border p-4"
+                      style={{ borderColor: `${ORANGE}66`, backgroundColor: `${ORANGE}0D` }}
+                    >
+                      <div className="flex min-w-0 items-center gap-3">
+                        <span
+                          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white"
+                          style={{ backgroundColor: ORANGE }}
+                        >
+                          <FileText size={20} />
+                        </span>
+                        <div className="min-w-0">
+                          <p className="truncate text-sm font-semibold" style={{ color: CHARCOAL }}>
+                            {resume.name}
+                          </p>
+                          <p className="text-xs text-slate-500">{formatSize(resume.size)}</p>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={removeFile}
+                        aria-label="Remove file"
+                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-slate-500 shadow-sm transition hover:bg-red-50 hover:text-red-500"
+                      >
+                        <X size={16} />
+                      </button>
+                    </div>
+                  ) : (
+                    <div
+                      role="button"
+                      tabIndex={0}
+                      onClick={() => fileRef.current?.click()}
+                      onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && fileRef.current?.click()}
+                      onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
+                      onDragLeave={() => setDragging(false)}
+                      onDrop={handleDrop}
+                      className={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed px-6 py-9 text-center transition-all ${
+                        dragging
+                          ? "border-[#EF7F1A] bg-[#EF7F1A]/10"
+                          : "border-slate-300 bg-slate-50/60 hover:border-[#EF7F1A] hover:bg-[#EF7F1A]/5"
+                      }`}
+                    >
+                      <span
+                        className="flex h-14 w-14 items-center justify-center rounded-full"
+                        style={{ backgroundColor: `${ORANGE}14`, color: ORANGE }}
+                      >
+                        <UploadCloud size={26} />
+                      </span>
+                      <p className="text-sm font-semibold" style={{ color: CHARCOAL }}>
+                        Drag & drop your resume here, or{" "}
+                        <span style={{ color: ORANGE }} className="underline underline-offset-2">browse</span>
+                      </p>
+                      <p className="text-xs text-slate-400">PDF, DOC or DOCX · Max 5 MB</p>
+                    </div>
+                  )}
+
+                  {resumeError && (
+                    <p className="mt-1 flex items-center gap-1.5 text-xs font-medium text-red-500">
+                      <AlertCircle size={14} /> {resumeError}
+                    </p>
+                  )}
+                </div>
+
+                <div className="col-span-full flex flex-col gap-1.5">
+                  <label className="text-sm font-semibold" style={{ color: CHARCOAL }}>Message</label>
+                  <textarea
+                    name="message"
+                    rows={4}
+                    placeholder="Tell us a little about yourself..."
+                    className={`${inputClass} resize-none`}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="col-span-full mt-2 inline-flex items-center justify-center gap-2 rounded-full px-7 py-4 text-sm font-bold tracking-wide text-white shadow-lg transition hover:opacity-90"
+                  style={{ backgroundColor: ORANGE }}
+                >
+                  Submit Application
+                  <Send size={16} />
+                </button>
               </div>
-              <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-medium" style={{ color: CHARCOAL }}>Email</label>
-                <input
-                  required
-                  type="email"
-                  className="rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition-colors focus:border-[#EF7F1A]"
-                />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-medium" style={{ color: CHARCOAL }}>Phone</label>
-                <input
-                  required
-                  type="tel"
-                  className="rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition-colors focus:border-[#EF7F1A]"
-                />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-medium" style={{ color: CHARCOAL }}>Position Interested In</label>
-                <input
-                  type="text"
-                  defaultValue={selectedJob || ""}
-                  className="rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition-colors focus:border-[#EF7F1A]"
-                />
-              </div>
-              <div className="col-span-full flex flex-col gap-1.5">
-                <label className="text-sm font-medium" style={{ color: CHARCOAL }}>Message</label>
-                <textarea
-                  rows={4}
-                  className="resize-none rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition-colors focus:border-[#EF7F1A]"
-                />
-              </div>
-              <button
-                type="submit"
-                className="col-span-full inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold text-white transition-colors hover:opacity-90"
-                style={{ backgroundColor: CHARCOAL }}
-              >
-                Submit Application
-                <Send size={16} />
-              </button>
             </form>
           )}
-        </div>
-      </section>
-
-      {/* ── FINAL CTA ── */}
-      <section className="relative overflow-hidden py-20" style={{ backgroundColor: WHITE }}>
-        <div
-          className="pointer-events-none absolute -left-16 top-0 h-56 w-56 rounded-full opacity-[0.06]"
-          style={{ backgroundColor: ORANGE }}
-        />
-        <div
-          className="pointer-events-none absolute -right-10 bottom-0 h-64 w-64 rounded-full opacity-[0.06]"
-          style={{ backgroundColor: ORANGE }}
-        />
-        <div className="relative mx-auto max-w-3xl px-6 text-center lg:px-12">
-          <motion.h2
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl font-extrabold leading-[1.2] sm:text-4xl"
-            style={{ color: CHARCOAL }}
-          >
-            Be part of the people behind the food.
-            <br />
-            <span style={{ color: ORANGE }}>Be part of our growth.</span>
-          </motion.h2>
-          <motion.button
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.15 }}
-            onClick={scrollToPositions}
-            className="mt-8 inline-flex items-center gap-2 rounded-full px-8 py-3.5 text-sm font-bold tracking-wide text-white shadow-md transition hover:opacity-90"
-            style={{ backgroundColor: ORANGE }}
-          >
-            VIEW OPEN POSITIONS <ArrowRight size={16} />
-          </motion.button>
         </div>
       </section>
     </>

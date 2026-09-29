@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   MapPin, Briefcase, Clock, Send, ArrowRight,
   Lightbulb, GraduationCap, HandHeart, Users2, TrendingUp,
@@ -15,6 +15,7 @@ import jobs from "../data/jobs";
 const ORANGE = "#EF7F1A";
 const CHARCOAL = "#2B2A29";
 const WHITE = "#FFFFFF";
+const CREAM = "#FFF6E9";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
 const ALLOWED_EXT = ["pdf", "doc", "docx"];
@@ -30,13 +31,13 @@ const whySadguru = [
 
 /* ── FROM IDEA TO CONSUMER ── */
 const productJourney = [
-  "Idea",
-  "Research & Development",
-  "Quality & Food Safety",
-  "Manufacturing",
-  "Supply Chain & Operations",
-  "Marketing & Sales",
-  "Consumer",
+  { label: "Idea", icon: Lightbulb },
+  { label: "Research & Development", icon: FlaskConical },
+  { label: "Quality & Food Safety", icon: ShieldCheck },
+  { label: "Manufacturing", icon: Factory },
+  { label: "Supply Chain & Operations", icon: Truck },
+  { label: "Marketing & Sales", icon: Megaphone },
+  { label: "Consumer", icon: Users2 },
 ];
 
 /* ── CAREER OPPORTUNITIES ── */
@@ -103,6 +104,7 @@ export default function Career() {
   const [resumeError, setResumeError] = useState("");
   const [dragging, setDragging] = useState(false);
   const fileRef = useRef(null);
+  const reduce = useReducedMotion();
 
   const validateAndSetFile = (file) => {
     if (!file) return;
@@ -256,48 +258,185 @@ export default function Career() {
       <section className="pb-16" style={{ backgroundColor: WHITE }}>
         <div className="mx-auto max-w-7xl px-6 lg:px-12">
           <div
-            className="overflow-hidden rounded-[2.5rem] px-6 py-14 sm:px-12 lg:px-16"
-            style={{ backgroundColor: CHARCOAL }}
+            className="relative overflow-hidden rounded-[2rem] border px-6 py-12 sm:rounded-[2.5rem] sm:px-12 sm:py-14 lg:px-16"
+            style={{
+              borderColor: `${ORANGE}33`,
+              background: `linear-gradient(135deg, ${CREAM} 0%, #FFE9CC 55%, #FFD9A8 100%)`,
+            }}
           >
-            <p className="text-xs font-extrabold uppercase tracking-[0.25em]" style={{ color: ORANGE }}>
-              BEHIND EVERY PRODUCT IS A TEAM
-            </p>
-            <h2 className="mt-4 max-w-xl text-3xl font-extrabold leading-[1.15] text-white sm:text-4xl">
-              From Idea to Consumer
-            </h2>
-            <p className="mt-4 max-w-xl leading-relaxed text-white/70">
-              Every food product has a journey. At Sadguru Foods, people across every
-              stage work together to transform ideas into products that reach consumers.
-            </p>
+            {/* floating orange blobs */}
+            <motion.div
+              aria-hidden
+              className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full opacity-25 blur-3xl"
+              style={{ backgroundColor: ORANGE }}
+              animate={reduce ? undefined : { x: [0, -30, 0], y: [0, 24, 0] }}
+              transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              aria-hidden
+              className="pointer-events-none absolute -bottom-24 -left-16 h-64 w-64 rounded-full opacity-20 blur-3xl"
+              style={{ backgroundColor: "#F5A04C" }}
+              animate={reduce ? undefined : { x: [0, 30, 0], y: [0, -20, 0] }}
+              transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+            />
+            {/* dotted texture */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 opacity-[0.35]"
+              style={{
+                backgroundImage: `radial-gradient(${ORANGE}33 1.2px, transparent 1.2px)`,
+                backgroundSize: "22px 22px",
+                maskImage: "linear-gradient(to bottom, black, transparent 70%)",
+                WebkitMaskImage: "linear-gradient(to bottom, black, transparent 70%)",
+              }}
+            />
 
-            <div className="mt-12 flex flex-col items-stretch gap-0 lg:flex-row lg:items-center">
-              {productJourney.map((step, i) => (
-                <div key={step} className="flex flex-1 flex-col items-center lg:flex-row">
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.85 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: i * 0.08 }}
-                    className="flex w-full flex-col items-center gap-3 py-3 text-center lg:py-0"
-                  >
-                    <span
-                      className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full text-lg font-extrabold text-white"
-                      style={{ backgroundColor: ORANGE }}
+            <div className="relative">
+              {/* heading */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="max-w-2xl"
+              >
+                <p
+                  className="inline-flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.25em] sm:text-sm"
+                  style={{ color: ORANGE }}
+                >
+                  <span className="h-[3px] w-8 rounded-full" style={{ backgroundColor: ORANGE }} />
+                  Behind every product is a team
+                </p>
+                <h2
+                  className="mt-4 text-3xl font-extrabold leading-[1.1] sm:text-4xl lg:text-5xl"
+                  style={{ color: CHARCOAL }}
+                >
+                  From Idea to{" "}
+                  <span className="relative inline-block" style={{ color: ORANGE }}>
+                    Consumer
+                    <motion.svg
+                      aria-hidden
+                      viewBox="0 0 200 12"
+                      className="absolute -bottom-2 left-0 w-full"
+                      fill="none"
                     >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="max-w-[110px] text-xs font-bold uppercase leading-tight tracking-wide text-white">
-                      {step}
-                    </span>
-                  </motion.div>
-                  {i < productJourney.length - 1 && (
-                    <div
-                      className="my-2 h-8 w-px shrink-0 opacity-30 lg:my-0 lg:h-px lg:w-8"
-                      style={{ backgroundColor: WHITE }}
+                      <motion.path
+                        d="M2 8 Q 50 0, 100 6 T 198 4"
+                        stroke={ORANGE}
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        initial={{ pathLength: 0 }}
+                        whileInView={{ pathLength: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+                      />
+                    </motion.svg>
+                  </span>
+                </h2>
+                <p className="mt-5 max-w-xl leading-relaxed text-slate-600">
+                  Every food product has a journey. At Sadguru Foods, people across every
+                  stage work together to transform ideas into products that reach consumers.
+                </p>
+              </motion.div>
+
+              {/* journey */}
+              <div className="relative mt-14 lg:mt-16">
+                {/* ── Desktop: horizontal track ── */}
+                <div className="pointer-events-none absolute left-[7.14%] right-[7.14%] top-10 hidden lg:block">
+                  <div className="h-[3px] w-full rounded-full" style={{ backgroundColor: `${ORANGE}26` }} />
+                  <motion.div
+                    className="absolute left-0 top-0 h-[3px] w-full origin-left rounded-full"
+                    style={{ background: `linear-gradient(90deg, ${ORANGE}, #F5A04C)` }}
+                    initial={{ scaleX: reduce ? 1 : 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true, margin: "-80px" }}
+                    transition={{ duration: 1.8, ease: "easeInOut" }}
+                  />
+                  {/* travelling spark */}
+                  {!reduce && (
+                    <motion.span
+                      className="absolute -top-[5px] h-[13px] w-[13px] -translate-x-1/2 rounded-full bg-white"
+                      style={{ boxShadow: `0 0 0 3px ${ORANGE}, 0 0 16px 4px ${ORANGE}99` }}
+                      animate={{ left: ["0%", "100%"], opacity: [0, 1, 1, 0] }}
+                      transition={{ duration: 4.5, repeat: Infinity, ease: "linear", delay: 2 }}
                     />
                   )}
                 </div>
-              ))}
+
+                {/* ── Mobile / tablet: vertical track ── */}
+                <div className="pointer-events-none absolute bottom-8 left-[31px] top-8 w-[3px] lg:hidden">
+                  <div className="h-full w-full rounded-full" style={{ backgroundColor: `${ORANGE}26` }} />
+                  <motion.div
+                    className="absolute left-0 top-0 h-full w-full origin-top rounded-full"
+                    style={{ background: `linear-gradient(180deg, ${ORANGE}, #F5A04C)` }}
+                    initial={{ scaleY: reduce ? 1 : 0 }}
+                    whileInView={{ scaleY: 1 }}
+                    viewport={{ once: true, margin: "-60px" }}
+                    transition={{ duration: 1.8, ease: "easeInOut" }}
+                  />
+                </div>
+
+                {/* steps */}
+                <ol className="relative grid grid-cols-1 gap-7 lg:grid-cols-7 lg:gap-2">
+                  {productJourney.map((step, i) => {
+                    const isLast = i === productJourney.length - 1;
+                    const Icon = step.icon;
+                    return (
+                      <motion.li
+                        key={step.label}
+                        initial={{ opacity: 0, y: reduce ? 0 : 24 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-40px" }}
+                        transition={{ duration: 0.5, delay: reduce ? 0 : 0.15 + i * 0.22 }}
+                        className="group flex items-center gap-5 lg:flex-col lg:gap-5 lg:text-center"
+                      >
+                        {/* node */}
+                        <div className="relative shrink-0">
+                          {isLast && !reduce && (
+                            <motion.span
+                              aria-hidden
+                              className="absolute inset-0 rounded-full"
+                              style={{ backgroundColor: ORANGE }}
+                              animate={{ scale: [1, 1.5], opacity: [0.35, 0] }}
+                              transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut" }}
+                            />
+                          )}
+                          <motion.span
+                            whileHover={{ scale: 1.08, rotate: -4 }}
+                            transition={{ type: "spring", stiffness: 300, damping: 16 }}
+                            className={`relative flex h-16 w-16 items-center justify-center rounded-full border-[3px] shadow-[0_10px_24px_-10px_rgba(239,127,26,0.6)] transition-colors duration-300 lg:h-20 lg:w-20 ${
+                              isLast
+                                ? "text-white"
+                                : "bg-white group-hover:bg-[#EF7F1A] group-hover:text-white"
+                            }`}
+                            style={{
+                              borderColor: ORANGE,
+                              backgroundColor: isLast ? ORANGE : undefined,
+                              color: isLast ? WHITE : ORANGE,
+                            }}
+                          >
+                            <Icon size={26} strokeWidth={1.8} />
+                          </motion.span>
+                          <span
+                            className="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-extrabold text-white ring-2 ring-[#FFF6E9]"
+                            style={{ backgroundColor: CHARCOAL }}
+                          >
+                            {i + 1}
+                          </span>
+                        </div>
+
+                        {/* label */}
+                        <span
+                          className="text-sm font-bold leading-snug lg:max-w-[120px] lg:text-[13px]"
+                          style={{ color: CHARCOAL }}
+                        >
+                          {step.label}
+                        </span>
+                      </motion.li>
+                    );
+                  })}
+                </ol>
+              </div>
             </div>
           </div>
         </div>

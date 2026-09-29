@@ -16,6 +16,9 @@ import Button from "../components/Button";
 import CTASection from "../components/CTASection";
 import brands from "../data/brands";
 
+// About section image: replace the path below with wherever your image lives
+import aboutImg from "../assets/images/mumma-about.jpg";
+
 // Product images: replace the path below with wherever your product photos live
 import product1 from "../assets/products/product1.jpg";
 import product2 from "../assets/products/product2.jpg";
@@ -183,7 +186,7 @@ export default function BrandOne() {
               className="relative mt-8 overflow-hidden rounded-[2rem] shadow-xl"
             >
               <img
-                src={brand.cardImage}
+                src={aboutImg}
                 alt="Wholesome nutrition ingredients"
                 className="h-[220px] w-full object-cover sm:h-[320px]"
               />

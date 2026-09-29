@@ -24,13 +24,13 @@ const brands = [
     cardImage:
       mummaLogo,
     description:
-      "Mumma is a child-focused nutrition brand built around the bond between a mother and her child — love, care, trust, protection and nourishment, in every product.",
+      "Mumma is a child-focused nutrition brand built around the bond between a mother and her child love, care, trust, protection and nourishment, in every product.",
 
     about:
-      'Mumma is a child-focused nutrition brand built around one of the strongest and most universal relationships — the bond between a mother and her child. The name "Mumma" represents love, care, trust, protection, and nourishment. It reflects the belief that when parents choose food for their children, they look for the same care and responsibility that they would give themselves.\n\nMumma was created with a simple purpose: to make nutritious food for children convenient, enjoyable, and trustworthy for parents. In a world where parents are increasingly conscious about what goes into their children\'s food, Mumma focuses on creating thoughtfully formulated products using wholesome ingredients and child-friendly recipes — ensuring healthy food is not something children have to compromise on.',
+      'Mumma is a child-focused nutrition brand built around one of the strongest and most universal relationships — the bond between a mother and her child. The name "Mumma" represents love, care, trust, protection, and nourishment. It reflects the belief that when parents choose food for their children, they look for the same care and responsibility that they would give themselves.\n\nMumma was created with a simple purpose: to make nutritious food for children convenient, enjoyable, and trustworthy for parents. In a world where parents are increasingly conscious about what goes into their children\'s food, Mumma focuses on creating thoughtfully formulated products using wholesome ingredients and child-friendly recipes ensuring healthy food is not something children have to compromise on.',
 
     philosophy:
-      "Mumma believes that healthy children grow into happy and confident individuals. Every bite matters during childhood, and therefore, food should provide more than just taste — it should contribute to everyday nourishment and healthy development.\n\nThe brand combines the goodness of real ingredients with nutrition-focused formulation to create food products suitable for growing children, making wholesome choices easier for parents without making food routines complicated.",
+      "Mumma believes that healthy children grow into happy and confident individuals. Every bite matters during childhood, and therefore, food should provide more than just taste it should contribute to everyday nourishment and healthy development.\n\nThe brand combines the goodness of real ingredients with nutrition-focused formulation to create food products suitable for growing children, making wholesome choices easier for parents without making food routines complicated.",
 
     standsFor: [
       { title: "Clean & Thoughtful Ingredients", desc: "Wholesome cereals, pulses, millets, fruits, vegetables, nuts, dates, and other carefully selected ingredients.", icon: "Leaf" },
@@ -42,10 +42,10 @@ const brands = [
     ],
 
     whoWeServe:
-      "Mumma primarily focuses on children and their parents, addressing the nutritional requirements of growing children while also considering the expectations of modern parents. The brand is designed around the needs of families looking for convenient food options that are nutritious, wholesome, tasty, and thoughtfully made — making everyday food choices simpler without adding complexity to busy family routines.\n\nMumma also aims to create awareness among children and parents about making better food choices, encouraging them to reduce their dependence on junk and highly processed foods.",
+      "Mumma primarily focuses on children and their parents, addressing the nutritional requirements of growing children while also considering the expectations of modern parents. The brand is designed around the needs of families looking for convenient food options that are nutritious, wholesome, tasty, and thoughtfully made making everyday food choices simpler without adding complexity to busy family routines.\n\nMumma also aims to create awareness among children and parents about making better food choices, encouraging them to reduce their dependence on junk and highly processed foods.",
 
     vision:
-      "Mumma aims to become a trusted household name in children's nutrition — a brand that parents associate with care, purity, nourishment, and trust.",
+      "Mumma aims to become a trusted household name in children's nutrition a brand that parents associate with care, purity, nourishment, and trust.",
 
     promise: "Every bite made with the care of a Mumma.",
 
@@ -75,16 +75,16 @@ const brands = [
     cardImage:
       "https://images.unsplash.com/photo-1599490659213-e0b2757c5a91?auto=format&fit=crop&w=1200&q=80",
     description:
-      "T2M is Sadguru Foods' everyday healthy snacking brand — bringing familiar Indian flavours to consumers in convenient, affordable and hygienically processed formats.",
+      "T2M is Sadguru Foods' everyday healthy snacking brand bringing familiar Indian flavours to consumers in convenient, affordable and hygienically processed formats.",
 
     about:
       "T2M is Sadguru Foods' everyday healthy snacking brand created to bring familiar Indian flavours to consumers in convenient, affordable, and hygienically processed formats.\n\nIndia has a rich snacking culture. From a simple handful of peanuts to crunchy millets, superfoods, murukkus, chikkis, mixtures, popcorn, potato chips and a wide variety of snacks are part of everyday life across generations. T2M builds on this cultural connection by bringing traditional favourites together with modern food processing, packaging, quality control, and distribution.\n\nThe brand is designed to make good quality snacking accessible to a broad consumer base, particularly across Tier-2, Tier-3, and Tier-4 markets, where consumers value familiar taste, affordability, availability, and dependable quality.",
 
     purpose:
-      "T2M exists to make everyday snacking accessible, enjoyable, hygienic, and reliable. The brand focuses on delivering the flavours consumers already know and love while maintaining consistency in quality, packaging, portion sizes, and food safety — giving consumers a dependable snacking experience every time they pick up a T2M product.",
+      "T2M exists to make everyday snacking accessible, enjoyable, hygienic, and reliable. The brand focuses on delivering the flavours consumers already know and love while maintaining consistency in quality, packaging, portion sizes, and food safety giving consumers a dependable snacking experience every time they pick up a T2M product.",
 
     whatWeOffer:
-      "T2M's portfolio is designed around a diverse range of familiar Indian snacking preferences, offering convenient, affordable, and hygienically processed options for everyday consumption.\n\nThe products are planned in convenient pack sizes, making them suitable for individual consumption, retail counters, impulse purchases, corporate snacking, gifting hampers, and wider distribution — while maintaining consistency in taste, quality, portion size, and food safety.",
+      "T2M's portfolio is designed around a diverse range of familiar Indian snacking preferences, offering convenient, affordable, and hygienically processed options for everyday consumption.\n\nThe products are planned in convenient pack sizes, making them suitable for individual consumption, retail counters, impulse purchases, corporate snacking, gifting hampers, and wider distribution while maintaining consistency in taste, quality, portion size, and food safety.",
 
     marketFocus:
       "T2M is particularly positioned for consumers in Tier-2, Tier-3, and Tier-4 markets, where affordability, taste, availability, and trust are important purchasing factors. With the right distribution infrastructure, T2M has the potential to expand from regional markets into a wider national network and eventually international markets.",
@@ -138,7 +138,7 @@ const brands = [
     cardImage:
       "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=1200&q=80",
     description:
-      "Milletveda is a nutrition-focused brand inspired by the natural goodness, versatility, and traditional importance of millets — bringing ancient grains into modern, everyday formats.",
+      "Milletveda is a nutrition-focused brand inspired by the natural goodness, versatility, and traditional importance of millets bringing ancient grains into modern, everyday formats.",
 
     about:
       "Milletveda is a nutrition-focused brand inspired by the natural goodness, versatility, and traditional importance of millets.\n\nFor generations, millets have been part of Indian food culture. They are traditional grains that have supported communities through their versatility and nutritional value. Milletveda seeks to bring this heritage into the modern food landscape by creating convenient, enjoyable, and contemporary millet-based food choices.\n\nThe brand is built on the idea that traditional ingredients can have a meaningful place in modern lifestyles when they are presented in convenient and appealing formats.",
@@ -198,16 +198,16 @@ const brands = [
     cardImage:
       ahaarsutraLogo,
     description:
-      "Ahaarsutra is a wellness-focused food brand built around a simple idea: food should have a purpose — combining nutrition science, purposeful formulation, and mindful eating.",
+      "Ahaarsutra is a wellness-focused food brand built around a simple idea: food should have a purpose combining nutrition science, purposeful formulation, and mindful eating.",
 
     about:
       'Ahaarsutra is a wellness-focused food brand built around a simple idea: food should have a purpose.\n\nThe name combines two meaningful concepts — "Ahaar," meaning food, and "Sutra," meaning a guiding principle or philosophy. Together, Ahaarsutra represents a thoughtful approach to food and nutrition.\n\nThe brand brings together nutrition science, purposeful formulation, and mindful eating to develop food solutions that align with different nutritional and lifestyle needs.',
 
     story:
-      "Ahaarsutra believes that nutrition is not one-size-fits-all. Different individuals have different nutritional requirements, lifestyles, preferences, and wellness goals. Therefore, the brand focuses on developing products with a clear nutritional purpose rather than simply creating another snack. Ahaarsutra aims to transform everyday eating into a more intentional experience — helping consumers understand that what we eat can be part of how we care for ourselves.",
+      "Ahaarsutra believes that nutrition is not one-size-fits-all. Different individuals have different nutritional requirements, lifestyles, preferences, and wellness goals. Therefore, the brand focuses on developing products with a clear nutritional purpose rather than simply creating another snack. Ahaarsutra aims to transform everyday eating into a more intentional experience helping consumers understand that what we eat can be part of how we care for ourselves.",
 
     philosophy:
-      "Ahaarsutra believes that nutrition is not one-size-fits-all. The brand focuses on developing products with a clear nutritional purpose, transforming everyday eating into a more intentional experience — helping consumers understand that what we eat can be part of how we care for ourselves.",
+      "Ahaarsutra believes that nutrition is not one-size-fits-all. The brand focuses on developing products with a clear nutritional purpose, transforming everyday eating into a more intentional experience helping consumers understand that what we eat can be part of how we care for ourselves.",
 
     approach:
       "Ahaarsutra combines food and nutrition thinking rather than treating them as separate concepts. Its product development approach is informed by inputs from Clinical Nutritionists, Healthcare Practitioners, Fitness Coaches, and other wellness professionals, while formulations are crafted by Food Technologists with a focus on nutritional purpose, ingredient selection, food safety, taste, quality, and convenience.\n\nThe approach follows: Purpose → Expert Inputs → Nutrition → Ingredients → Formulation → Taste → Convenience.",
@@ -216,7 +216,7 @@ const brands = [
       "Ahaarsutra is intended for consumers who are increasingly conscious about their health and want food choices that align with their individual wellness goals. It is positioned for people who want to eat with awareness, choose with purpose, and make nutrition part of their everyday lifestyle.",
 
     vision:
-      "To create a trusted wellness food brand that makes purposeful nutrition accessible, convenient, understandable, and enjoyable. Ahaarsutra aims to become a bridge between modern consumers and meaningful nutrition — helping people make better food choices without compromising on taste or convenience.",
+      "To create a trusted wellness food brand that makes purposeful nutrition accessible, convenient, understandable, and enjoyable. Ahaarsutra aims to become a bridge between modern consumers and meaningful nutrition helping people make better food choices without compromising on taste or convenience.",
 
     promise: "Food with Purpose. Nutrition with Philosophy. Wellness in Every Bite.",
 
@@ -245,7 +245,7 @@ const brands = [
     values: [
       { title: "Expert-Led Formulation", desc: "Guided by Clinical Nutritionists, Healthcare Practitioners, and Fitness Coaches at every step." },
       { title: "Purpose Before Product", desc: "Every product starts with a clear nutritional purpose, not just a snacking idea." },
-      { title: "Taste Meets Function", desc: "Formulated by Food Technologists to stay enjoyable, safe, and convenient — never a compromise." },
+      { title: "Taste Meets Function", desc: "Formulated by Food Technologists to stay enjoyable, safe, and convenient never a compromise." },
     ],
 
     gallery: [

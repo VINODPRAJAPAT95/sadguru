@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Stethoscope, Target, Sparkles } from "lucide-react";
@@ -122,42 +121,18 @@ export default function BrandFour() {
             </div>
           </motion.div>
 
-          {/* Right image */}
+          {/* Right image (plain image only) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.9 }}
-            className="relative flex items-center justify-center"
+            className="flex items-center justify-center"
           >
-            <div
-              className="relative z-10 overflow-hidden rounded-[2.5rem] shadow-2xl"
-              style={{ border: `2px solid ${PRIMARY}20` }}
-            >
-              <img
-                src={brand.heroImage}
-                alt={brand.name}
-                className="h-auto w-full max-h-[46vh] object-cover"
-              />
-
-              <div
-                className="absolute bottom-0 left-0 right-0 h-16"
-                style={{
-                  background: `linear-gradient(to top, ${PRIMARY}55, transparent)`,
-                }}
-              />
-            </div>
-
-            {/* Enlarged circular logo badge */}
-            <div
-              className="absolute -left-6 -top-6 z-20 flex h-28 w-28 items-center justify-center rounded-full bg-white shadow-xl sm:h-32 sm:w-32"
-              style={{ border: `2px solid ${PRIMARY}30` }}
-            >
-              <img
-                src={brand.logo}
-                alt={brand.name}
-                className="h-20 w-20 object-contain sm:h-24 sm:w-24"
-              />
-            </div>
+            <img
+              src={brand.heroImage}
+              alt={brand.name}
+              className="h-auto w-full max-h-[46vh] object-contain lg:max-h-[52vh]"
+            />
           </motion.div>
         </div>
       </section>
@@ -169,11 +144,11 @@ export default function BrandFour() {
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-6 lg:grid-cols-2 lg:gap-12 lg:px-12">
           <div>
             <h2
-              className="text-4xl font-extrabold leading-[1.05] sm:text-6xl lg:text-7xl"
+              className="text-2xl font-extrabold leading-tight sm:text-3xl lg:text-4xl xl:text-[2.75rem]"
               style={{ color: DARK }}
             >
               "Ahaar" + "Sutra"{" "}
-              <br />
+              <br className="hidden sm:block" />
               <span style={{ color: PRIMARY }}>
                 Food with a Guiding Principle.
               </span>
@@ -188,7 +163,7 @@ export default function BrandFour() {
               <img
                 src={brand.cardImage}
                 alt="Ahaarsutra purposeful nutrition"
-                className="h-[220px] w-full object-cover sm:h-[320px]"
+                className="h-[200px] w-full object-cover sm:h-[260px] lg:h-[300px]"
               />
 
               <div

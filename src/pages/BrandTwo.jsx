@@ -207,30 +207,18 @@ export default function BrandTwo() {
           </motion.div>
 
           {/* =================================================
-              RIGHT SIDE — LARGE T2M HERO LOGO
+              RIGHT SIDE — HERO LOGO (smaller, sits lower so the top never gets cut)
               ================================================= */}
           <motion.div
-            initial={{
-              opacity: 0,
-              scale: 0.75,
-            }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-            }}
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{
               duration: 0.9,
               type: "spring",
               stiffness: 100,
               damping: 15,
             }}
-            className="
-              relative
-              flex
-              items-center
-              justify-center
-              lg:min-h-[520px]
-            "
+            className="relative flex items-center justify-center pt-8 lg:min-h-[480px] lg:translate-y-6 lg:pt-16"
           >
             <motion.img
               src={brand.heroImage}
@@ -238,19 +226,17 @@ export default function BrandTwo() {
               className="
                 h-auto
                 w-full
-                max-w-[360px]
-                max-h-[42vh]
+                max-w-[260px]
+                max-h-[32vh]
                 object-contain
 
-                sm:max-w-[480px]
-                sm:max-h-[50vh]
+                sm:max-w-[340px]
+                sm:max-h-[38vh]
 
-                lg:max-w-[600px]
-                lg:max-h-[60vh]
+                lg:max-w-[420px]
+                lg:max-h-[44vh]
               "
-              animate={{
-                y: [0, -14, 0],
-              }}
+              animate={{ y: [0, -8, 0] }}
               transition={{
                 duration: 4,
                 repeat: Infinity,

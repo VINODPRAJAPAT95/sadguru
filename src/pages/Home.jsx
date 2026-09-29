@@ -21,6 +21,8 @@ import {
   Zap,
 } from "lucide-react";
 import heroBg from "../assets/images/hero-bg.png";
+import aboutImg from "../assets/images/about-food.jpg";
+import valuesImg from "../assets/images/values-snacks.jpg";
 import Seo from "../components/Seo";
 import Button from "../components/Button";
 import SectionTitle from "../components/SectionTitle";
@@ -162,7 +164,7 @@ export default function Home() {
             className="h-full w-full object-cover"
             loading="eager"
             decoding="async"
-            fetchpriority="high"
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-charcoal/45" />
         </motion.div>
@@ -220,30 +222,67 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* SHORT ABOUT */}
+      {/* SHORT ABOUT / WHO WE ARE */}
       <section className="section-py overflow-hidden">
-        <div className="container-px mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20">
-
+        <div className="container-px mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 lg:grid-cols-2 lg:gap-20">
+          {/* Polaroid-style tilted photo stack */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="relative order-2 lg:order-1"
+            className="relative order-2 mx-auto w-full max-w-md px-4 pb-16 pt-6 sm:max-w-lg sm:px-8 lg:order-1 lg:max-w-none"
           >
-            <div className="absolute -bottom-6 -left-6 h-32 w-32 border-2 border-orange-200/60" />
-            <div className="absolute -right-5 -top-5 h-24 w-24 bg-orange-500/10" />
+            {/* Tilted orange backing card */}
+            <div className="absolute inset-x-6 inset-y-2 rotate-[5deg] rounded-3xl bg-orange-500 sm:inset-x-10" />
 
-            <div className="group relative overflow-hidden">
+            {/* Tilted cream backing card */}
+            <div className="absolute inset-x-4 inset-y-4 -rotate-[4deg] rounded-3xl bg-[#FFF1D6] sm:inset-x-8" />
+
+            {/* Main polaroid */}
+            <motion.figure
+              whileHover={{ rotate: 0, scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 200, damping: 18 }}
+              className="relative z-10 -rotate-2 rounded-md bg-white p-3 pb-14 shadow-2xl sm:p-4 sm:pb-16"
+            >
+              {/* Tape strip */}
+              <span className="absolute -top-3 left-1/2 h-6 w-24 -translate-x-1/2 rotate-3 bg-orange-200/80 shadow-sm" />
+
               <img
-                src="https://industry-ai.com/wp-content/uploads/2025/07/FMCG-Blogs-1-Home.jpg"
+                src={aboutImg}
                 alt="Preparing wholesome food"
-                className="relative z-10 h-[380px] w-full object-cover transition duration-700 group-hover:scale-105 sm:h-[460px]"
+                className="h-[300px] w-full object-cover sm:h-[400px] lg:h-[440px]"
+                loading="lazy"
               />
-              <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-            </div>
+              <figcaption className="absolute bottom-4 left-0 right-0 text-center font-baloo text-lg font-bold text-[#241209] sm:text-xl">
+                Made with care, every day
+              </figcaption>
+            </motion.figure>
 
-            <div className="absolute -bottom-3 left-8 z-20 h-1 w-24 bg-orange-500" />
+            {/* Small close-up polaroid */}
+            <motion.figure
+              initial={{ opacity: 0, y: 30, rotate: 0 }}
+              whileInView={{ opacity: 1, y: 0, rotate: 8 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.3 }}
+              className="absolute -bottom-2 right-0 z-20 w-32 rounded-md bg-white p-2 pb-6 shadow-xl sm:right-2 sm:w-44 sm:p-2.5 sm:pb-8"
+            >
+              <div className="h-24 w-full overflow-hidden sm:h-32">
+                <img
+                  src={aboutImg}
+                  alt=""
+                  aria-hidden="true"
+                  className="h-full w-full scale-[1.8] object-cover object-center"
+                  loading="lazy"
+                />
+              </div>
+            </motion.figure>
+
+            {/* Round badge */}
+            <div className="absolute -left-1 top-2 z-20 flex h-20 w-20 -rotate-12 flex-col items-center justify-center rounded-full border-4 border-white bg-orange-500 text-center text-white shadow-xl sm:-left-3 sm:h-24 sm:w-24">
+              <span className="font-baloo text-2xl font-bold leading-none sm:text-3xl">4</span>
+              <span className="text-[10px] font-bold uppercase tracking-wider sm:text-xs">Brands</span>
+            </div>
           </motion.div>
 
           <motion.div
@@ -275,7 +314,6 @@ export default function Home() {
               </Button>
             </motion.div>
           </motion.div>
-
         </div>
       </section>
 
@@ -359,7 +397,7 @@ export default function Home() {
               className="relative z-30 min-h-[300px] overflow-hidden rounded-3xl shadow-soft lg:col-span-3"
             >
               <img
-                src="https://i.pinimg.com/736x/bc/37/09/bc3709bd42e05ff5bfe5e99dd3cfce4b.jpg"
+                src={valuesImg}
                 alt="Freshly made snacks and chips"
                 className="absolute inset-0 h-full w-full object-cover"
                 loading="lazy"
@@ -452,7 +490,6 @@ export default function Home() {
 
       {/* BRANDS HORIZONTAL SCROLL */}
       <section className="bg-white">
-
         <div className="section-py container-px mx-auto max-w-7xl">
           <SectionTitle
             label="Our Brands"
@@ -464,15 +501,12 @@ export default function Home() {
         </div>
 
         <BrandHorizontalScroll />
-
       </section>
 
       {/* WHY CHOOSE US */}
       <section className="relative bg-white py-24 lg:py-32">
         <div className="container-px mx-auto max-w-7xl">
-
           <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-24">
-
             <div className="lg:sticky lg:top-28 lg:h-fit">
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
@@ -497,7 +531,6 @@ export default function Home() {
             </div>
 
             <div className="relative">
-
               {whyChooseUs.map((item, i) => (
                 <motion.div
                   key={item.title}
@@ -514,10 +547,7 @@ export default function Home() {
                     zIndex: i + 1,
                   }}
                 >
-                  <div
-                    className="mb-8 flex min-h-[360px] flex-col justify-between rounded-[2rem] border-2 border-orange-500 bg-[#FFF9EF] p-8 shadow-[0_10px_40px_rgba(0,0,0,0.06)] transition-all duration-500 hover:shadow-[0_15px_50px_rgba(239,127,26,0.12)] sm:p-10"
-                  >
-
+                  <div className="mb-8 flex min-h-[360px] flex-col justify-between rounded-[2rem] border-2 border-orange-500 bg-[#FFF9EF] p-8 shadow-[0_10px_40px_rgba(0,0,0,0.06)] transition-all duration-500 hover:shadow-[0_15px_50px_rgba(239,127,26,0.12)] sm:p-10">
                     <div>
                       <div className="mb-8 flex h-16 w-16 items-center justify-center bg-orange-500 text-white">
                         <item.icon size={30} strokeWidth={1.8} />
@@ -537,15 +567,11 @@ export default function Home() {
                         0{i + 1}
                       </span>
                     </div>
-
                   </div>
                 </motion.div>
               ))}
-
             </div>
-
           </div>
-
         </div>
       </section>
 

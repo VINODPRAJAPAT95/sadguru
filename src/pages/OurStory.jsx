@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
@@ -15,6 +16,17 @@ import Seo from "../components/Seo";
 import Button from "../components/Button";
 import SectionTitle from "../components/SectionTitle";
 import CTASection from "../components/CTASection";
+
+/* Images: put files in src/assets/ourstory/ (change names/paths/extensions if yours differ) */
+import heroMeal from "../assets/ourstory/hero-meal.jpg";
+import vegetables from "../assets/ourstory/vegetables.jpg";
+import grains from "../assets/ourstory/grains-spices.jpg";
+import kidsImg from "../assets/ourstory/life-kids.jpg";
+import childrenImg from "../assets/ourstory/life-children.jpg";
+import adultsImg from "../assets/ourstory/life-adults.jpg";
+import elderlyImg from "../assets/ourstory/life-elderly.jpg";
+import traditionalSpices from "../assets/ourstory/traditional-spices.jpg";
+import packagedFood from "../assets/ourstory/packaged-food.jpg";
 
 /* -----------------------------------------
    DATA
@@ -61,29 +73,29 @@ const differentiators = [
 
 /*
   LIFE STAGES
-  To swap a photo, just replace the `img` URL below.
+  To swap a photo, replace the image file (or its import) at the top of this file.
   If a URL fails to load, the card falls back to an orange gradient automatically.
 */
 const lifeStages = [
   {
     title: "Kids",
     desc: "Gentle nutrition and tastes made for growing little ones.",
-    img: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=900&q=80",
+    img: kidsImg,
   },
   {
     title: "Children",
     desc: "Energy and balanced choices for school days and playtime.",
-    img: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=900&q=80",
+    img: childrenImg,
   },
   {
     title: "Adults",
     desc: "Convenience, energy, and balanced choices for busy routines.",
-    img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80",
+    img: adultsImg,
   },
   {
     title: "Elderly",
     desc: "Food designed around evolving nutritional needs.",
-    img: "https://images.unsplash.com/photo-1516307365426-bea591f05011?auto=format&fit=crop&w=900&q=80",
+    img: elderlyImg,
   },
 ];
 
@@ -152,6 +164,8 @@ const quoteLine = {
 };
 
 export default function OurStory() {
+  const [activeStage, setActiveStage] = useState(0);
+
   return (
     <>
       <Seo
@@ -160,59 +174,115 @@ export default function OurStory() {
       />
 
       {/* ================= ABOUT HERO ================= */}
-      <section className="relative overflow-hidden bg-white pt-16 pb-14 lg:pt-24 lg:pb-16">
-        <div className="container-px mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-16">
-
-          {/* LEFT CONTENT */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
+      <section className="relative bg-white px-4 pb-14 pt-6 sm:px-6 lg:pb-20 lg:pt-10">
+        <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] bg-white px-6 py-14 sm:px-12 lg:px-16 lg:py-20">
+          {/* background rings */}
+          <svg
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-32 -top-32 h-[520px] w-[520px] text-orange-500"
+            viewBox="0 0 520 520"
+            fill="none"
+            stroke="currentColor"
           >
-            <span className="text-xl font-bold uppercase tracking-[0.18em] text-orange-500 sm:text-2xl sm:tracking-[0.2em]">
-              About Sadguru Foods
-            </span>
+            {[80, 140, 200, 250].map((r) => (
+              <circle key={r} cx="260" cy="260" r={r} strokeOpacity="0.18" strokeWidth="1.5" />
+            ))}
+          </svg>
 
-            <h1 className="mt-6 font-display text-4xl font-bold leading-[1.1] tracking-tight text-charcoal sm:text-5xl lg:text-[3.9rem]">
-              Big Dreams. Thoughtful Innovation.{" "}
-              <span className="text-orange-500">Better Food for Every Generation.</span>
-            </h1>
+          <div className="relative grid grid-cols-1 items-center gap-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12">
+            {/* LEFT CONTENT */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+            >
+              {/* Clearly visible label: solid pill instead of thin orange text */}
+              <span className="inline-flex items-center gap-3 rounded-full bg-charcoal px-5 py-2.5 text-sm font-semibold tracking-wide text-white shadow-md sm:text-base">
+                <span className="h-2.5 w-2.5 rounded-full bg-orange-500" />
+                About Sadguru Foods
+              </span>
 
-            <p className="mt-7 max-w-lg text-base leading-relaxed text-charcoal-400 sm:text-lg">
-              Sadguru Foods Processing Private Limited is a growing food processing
-              startup built with the ambition to create a forward thinking food
-              company rooted in nutrition, innovation, and consumer needs.
-            </p>
-          </motion.div>
+              <h1 className="mt-8 font-display text-4xl font-bold leading-[1.08] tracking-tight text-charcoal sm:text-5xl lg:text-[3.6rem]">
+                <span className="block">Big Dreams.</span>
+                <span className="block">Thoughtful Innovation.</span>
+                <span className="block text-orange-500">
+                  Better Food for Every Generation.
+                </span>
+              </h1>
 
-          {/* RIGHT IMAGE */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.94 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative"
-          >
-            {/* Decorative orange blob behind image */}
-            <div className="absolute -left-6 -top-6 h-28 w-28 rounded-[40%_60%_60%_40%/50%_40%_60%_50%] bg-orange-500/90 sm:h-36 sm:w-36" />
+              <p className="mt-7 max-w-lg text-base leading-relaxed text-charcoal-400 sm:text-lg">
+                Sadguru Foods Processing Private Limited is a growing food processing
+                startup built with the ambition to create a forward thinking food
+                company rooted in nutrition, innovation, and consumer needs.
+              </p>
 
-            <div className="relative overflow-hidden rounded-[3rem] rounded-tl-[6rem]">
-              <img
-                src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80"
-                alt="Child enjoying a wholesome, nutritious meal"
-                className="h-[380px] w-full object-cover sm:h-[460px] lg:h-[500px]"
+              <div className="mt-9 flex flex-wrap items-center gap-4">
+                <Button to="/brands" variant="primary" className="bg-orange-500 hover:bg-orange-600">
+                  Explore Our Brands
+                </Button>
+                <a
+                  href="#our-story"
+                  className="rounded-full border-2 border-charcoal px-6 py-3 text-sm font-semibold text-charcoal transition-colors duration-200 hover:bg-charcoal hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+                >
+                  Read Our Story
+                </a>
+              </div>
+            </motion.div>
+
+            {/* RIGHT VISUAL: arch photo + rotating badge + round inset photo */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.94 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="relative mx-auto w-full max-w-md"
+            >
+              {/* offset outline */}
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 translate-x-4 translate-y-4 rounded-t-[999px] rounded-b-[2.5rem] border-2 border-charcoal"
               />
-            </div>
+              <div className="relative overflow-hidden rounded-t-[999px] rounded-b-[2.5rem]">
+                <img
+                  src={heroMeal}
+                  alt="Child enjoying a wholesome, nutritious meal"
+                  className="h-[400px] w-full object-cover sm:h-[500px]"
+                />
+              </div>
 
-            {/* Floating badge */}
-            <div className="absolute -bottom-5 right-4 rounded-full bg-orange-500 px-6 py-3 text-xs font-bold uppercase tracking-[0.15em] text-white shadow-lg sm:right-8 sm:text-sm">
-              Food • Nutrition • Innovation
-            </div>
+              {/* rotating text badge */}
+              <div className="absolute -right-3 top-8 flex h-28 w-28 items-center justify-center rounded-full bg-white shadow-lg sm:-right-8 sm:h-32 sm:w-32">
+                <svg
+                  viewBox="0 0 120 120"
+                  className="absolute inset-0 h-full w-full animate-[spin_24s_linear_infinite] motion-reduce:animate-none"
+                  aria-hidden="true"
+                >
+                  <defs>
+                    <path
+                      id="hero-badge-path"
+                      d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"
+                    />
+                  </defs>
+                  <text fontSize="9.5" fontWeight="700" fill="#2B2A29" textLength="270" lengthAdjust="spacing">
+                    <textPath href="#hero-badge-path">
+                      FOOD • NUTRITION • INNOVATION •
+                    </textPath>
+                  </text>
+                </svg>
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-orange-500 text-white">
+                  <Leaf size={20} strokeWidth={1.75} />
+                </div>
+              </div>
 
-            {/* Floating grain/leaf dot accents */}
-            <div className="pointer-events-none absolute -right-3 top-10 hidden h-3 w-3 rounded-full bg-orange-300 sm:block" />
-            <div className="pointer-events-none absolute -left-4 bottom-24 hidden h-2 w-2 rounded-full bg-orange-400 sm:block" />
-          </motion.div>
-
+              {/* round inset photo */}
+              <div className="absolute -bottom-6 -left-4 h-28 w-28 overflow-hidden rounded-full border-4 border-white shadow-lg sm:-left-10 sm:h-36 sm:w-36">
+                <img
+                  src={vegetables}
+                  alt="Fresh vegetables"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -230,14 +300,14 @@ export default function OurStory() {
           >
             <div className="absolute left-0 top-0 h-64 w-64 overflow-hidden rounded-3xl shadow-soft sm:h-72 sm:w-72">
               <img
-                src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80"
+                src={grains}
                 alt="Indian grains and spices"
                 className="h-full w-full object-cover"
               />
             </div>
             <div className="absolute bottom-0 right-0 h-52 w-52 overflow-hidden rounded-3xl border-4 border-white shadow-soft sm:h-60 sm:w-60">
               <img
-                src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80"
+                src={vegetables}
                 alt="Fresh vegetables"
                 className="h-full w-full object-cover"
               />
@@ -428,24 +498,23 @@ export default function OurStory() {
         </div>
       </section>
 
-      {/* ================= FOOD FOR EVERY STAGE OF LIFE (premium) ================= */}
-      <section className="section-py relative overflow-hidden bg-cream">
-        <div className="pointer-events-none absolute -left-24 top-0 h-80 w-80 rounded-full bg-orange-200/30 blur-3xl" />
-        <div className="pointer-events-none absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-orange-300/20 blur-3xl" />
-
-        <div className="container-px relative mx-auto max-w-7xl">
+      {/* ================= FOOD FOR EVERY STAGE OF LIFE (expanding panels) ================= */}
+      <section className="section-py overflow-hidden bg-white">
+        <div className="container-px mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="mx-auto max-w-4xl text-center"
+            className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end"
           >
-            <span className="inline-flex items-center justify-center gap-4 text-xl font-bold uppercase tracking-[0.18em] text-orange-500 sm:text-2xl sm:tracking-[0.2em]">
-              <span className="hidden h-[2px] w-10 bg-orange-500 sm:block" />
-              Food for Every Stage of Life
-              <span className="hidden h-[2px] w-10 bg-orange-500 sm:block" />
-            </span>
+            <h2 className={`max-w-2xl ${h2Big}`}>
+              Food for Every{" "}
+              <span className="text-orange-500">Stage of Life</span>
+            </h2>
+            <p className="hidden text-sm font-medium text-charcoal-400 lg:block">
+              Hover over a panel to explore
+            </p>
           </motion.div>
 
           <motion.div
@@ -453,49 +522,73 @@ export default function OurStory() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
-            className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
+            className="mt-12 flex flex-col gap-4 lg:h-[560px] lg:flex-row"
           >
-            {lifeStages.map((stage) => (
-              <motion.div
-                key={stage.title}
-                variants={premiumCardItem}
-                whileHover={{ y: -8 }}
-                transition={{ type: "spring", stiffness: 260, damping: 22 }}
-                className="group relative flex flex-col overflow-hidden rounded-[2rem] bg-white shadow-[0_15px_50px_-20px_rgba(36,18,9,0.25)] transition-shadow duration-500 hover:shadow-[0_30px_70px_-25px_rgba(239,127,26,0.45)]"
-              >
-                {/* image */}
-                <div className="relative h-72 overflow-hidden bg-gradient-to-br from-orange-400 to-orange-600">
+            {lifeStages.map((stage, i) => {
+              const active = activeStage === i;
+              return (
+                <motion.div
+                  key={stage.title}
+                  variants={premiumCardItem}
+                  role="button"
+                  tabIndex={0}
+                  aria-pressed={active}
+                  aria-label={stage.title}
+                  onMouseEnter={() => setActiveStage(i)}
+                  onFocus={() => setActiveStage(i)}
+                  onClick={() => setActiveStage(i)}
+                  className={`group relative h-80 min-w-0 cursor-pointer overflow-hidden rounded-[2rem] bg-gradient-to-br from-orange-400 to-orange-600 outline-none transition-[flex-grow] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:ring-4 focus-visible:ring-orange-500 focus-visible:ring-offset-2 lg:h-auto lg:basis-0 ${
+                    active ? "lg:grow-[3.4]" : "lg:grow-[1]"
+                  }`}
+                >
                   <img
                     src={stage.img}
-                    alt={stage.title}
+                    alt=""
                     loading="lazy"
                     onError={(e) => {
                       e.currentTarget.style.display = "none";
                     }}
-                    className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-110"
+                    className={`absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-out ${
+                      active ? "lg:scale-100" : "lg:scale-110"
+                    }`}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#241209]/80 via-[#241209]/10 to-transparent" />
 
-                  {/* title over image */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <h3 className="font-display text-3xl font-bold text-white">
+                  {/* shade */}
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-t from-[#241209]/85 via-[#241209]/20 to-transparent transition-opacity duration-500 ${
+                      active ? "lg:opacity-100" : "lg:opacity-90"
+                    }`}
+                  />
+
+                  {/* collapsed label (desktop only): vertical title */}
+                  <span
+                    aria-hidden="true"
+                    className={`absolute bottom-8 left-1/2 hidden -translate-x-1/2 rotate-180 whitespace-nowrap font-display text-2xl font-bold text-white transition-opacity duration-300 [writing-mode:vertical-rl] lg:block ${
+                      active ? "opacity-0" : "opacity-100"
+                    }`}
+                  >
+                    {stage.title}
+                  </span>
+
+                  {/* expanded content (always visible on mobile) */}
+                  <div
+                    className={`absolute inset-x-0 bottom-0 p-7 transition-all duration-500 sm:p-9 ${
+                      active
+                        ? "opacity-100 lg:translate-y-0 lg:delay-200"
+                        : "opacity-100 lg:translate-y-4 lg:opacity-0"
+                    }`}
+                  >
+                    <div className="h-[3px] w-12 rounded-full bg-orange-400" />
+                    <h3 className="mt-4 font-display text-3xl font-bold text-white sm:text-4xl">
                       {stage.title}
                     </h3>
-                    <div className="mt-3 h-[3px] w-10 rounded-full bg-orange-400 transition-all duration-500 group-hover:w-20" />
+                    <p className="mt-3 max-w-xs text-[0.95rem] leading-relaxed text-white/85">
+                      {stage.desc}
+                    </p>
                   </div>
-                </div>
-
-                {/* description */}
-                <div className="flex flex-1 p-6">
-                  <p className="text-[0.95rem] leading-relaxed text-charcoal-400">
-                    {stage.desc}
-                  </p>
-                </div>
-
-                {/* bottom accent sweep */}
-                <span className="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-orange-500 via-orange-400 to-orange-200 transition-all duration-700 group-hover:w-full" />
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </motion.div>
         </div>
       </section>
@@ -513,14 +606,14 @@ export default function OurStory() {
           >
             <div className="absolute left-4 top-0 h-56 w-56 overflow-hidden rounded-3xl shadow-soft sm:h-64 sm:w-64">
               <img
-                src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80"
+                src={traditionalSpices}
                 alt="Traditional Indian spices"
                 className="h-full w-full object-cover"
               />
             </div>
             <div className="absolute bottom-0 left-0 h-48 w-48 overflow-hidden rounded-3xl border-4 border-white shadow-soft sm:h-56 sm:w-56">
               <img
-                src="https://images.unsplash.com/photo-1615937691194-97dbd3f3dc29?auto=format&fit=crop&w=800&q=80"
+                src={packagedFood}
                 alt="Modern packaged food products"
                 className="h-full w-full object-cover"
               />

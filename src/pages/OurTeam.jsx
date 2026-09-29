@@ -1,144 +1,173 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { LinkedinIcon } from "../components/SocialIcons";
 import Seo from "../components/Seo";
-import PageHero from "../components/PageHero";
 import CTASection from "../components/CTASection";
 import team from "../data/team";
 
 const ORANGE = "#EF7F1A";
 const CHARCOAL = "#2B2A29";
 
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 20 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.6, delay },
-});
+const designationOf = (m) => m.designation || m.role || "";
+
+// Arch shape: fully rounded top, softly rounded bottom
+const ARCH = "rounded-t-[999px] rounded-b-3xl";
 
 export default function OurTeam() {
+  const reduce = useReducedMotion();
+  const members = team.slice(0, 6); // total 6 members
+
+  const list = {
+    hidden: {},
+    show: { transition: { staggerChildren: reduce ? 0 : 0.12 } },
+  };
+  const item = {
+    hidden: { opacity: reduce ? 1 : 0, y: reduce ? 0 : 40 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+  };
+
   return (
     <>
       <Seo
         title="Our Team | Sadguru Food Processing Pvt. Ltd."
         description="Meet the team behind Sadguru Food Processing Pvt. Ltd. and our four food brands."
       />
-      <PageHero
-        eyebrow="Our Team"
-        title="The People Behind Every Brand"
-        description="A team of food scientists, operators and brand builders working together across all four brands."
-        image="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1600&q=80"
-      />
 
-      <section className="section-py relative overflow-hidden bg-[#FAF9F7]">
-        {/* Background decoration */}
-        <div
-          className="pointer-events-none absolute -left-24 top-10 h-72 w-72 rounded-full opacity-[0.07] blur-2xl"
-          style={{ backgroundColor: ORANGE }}
-        />
-        <div
-          className="pointer-events-none absolute -right-24 top-40 h-80 w-80 rounded-full opacity-[0.06] blur-2xl"
-          style={{ backgroundColor: ORANGE }}
-        />
-        <div
-          className="pointer-events-none absolute inset-x-0 top-0 h-72 opacity-[0.35]"
-          style={{
-            backgroundImage: "radial-gradient(#d9d6d1 1px, transparent 1px)",
-            backgroundSize: "22px 22px",
-            maskImage: "linear-gradient(to bottom, black, transparent)",
-            WebkitMaskImage: "linear-gradient(to bottom, black, transparent)",
-          }}
-        />
+      <section className="bg-white pb-24 pt-28 sm:pb-32 sm:pt-36">
+        <div className="container-px mx-auto max-w-6xl">
+          <h2
+            className="text-5xl font-extrabold leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl"
+            style={{ color: CHARCOAL }}
+          >
+            {/* Line 1: "Team" + pill with overlapping member photos */}
+            <span className="flex flex-wrap items-center gap-x-5">
+              <span className="block overflow-hidden pb-2">
+                <motion.span
+                  className="block"
+                  initial={{ y: reduce ? 0 : "105%" }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  Team
+                </motion.span>
+              </span>
 
-        <div className="container-px relative mx-auto max-w-5xl">
-          {/* ── PREMIUM HEADER ── */}
-          <div className="mx-auto mb-16 max-w-3xl text-center">
-            <motion.p
-              {...fadeUp(0)}
-              className="inline-flex items-center gap-4 text-base font-extrabold uppercase tracking-[0.3em] sm:text-lg"
-              style={{ color: ORANGE }}
-            >
-              <span className="h-[2px] w-10 rounded-full" style={{ backgroundColor: ORANGE }} />
-              Leadership
-              <span className="h-[2px] w-10 rounded-full" style={{ backgroundColor: ORANGE }} />
-            </motion.p>
+              <motion.span
+                aria-hidden="true"
+                initial={{ opacity: reduce ? 1 : 0, scale: reduce ? 1 : 0.6 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="inline-flex h-[0.7em] items-center rounded-full pl-[0.1em] pr-[0.14em]"
+                style={{ backgroundColor: ORANGE }}
+              >
+                {members.slice(0, 3).map((m, idx) => (
+                  <img
+                    key={m.name}
+                    src={m.image}
+                    alt=""
+                    className={`h-[0.5em] w-[0.5em] rounded-full border-[3px] border-white object-cover ${
+                      idx ? "-ml-[0.14em]" : ""
+                    }`}
+                  />
+                ))}
+              </motion.span>
+            </span>
 
-            <motion.h2
-              {...fadeUp(0.1)}
-              className="mt-6 text-5xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl"
-              style={{ color: CHARCOAL }}
-            >
-              Meet the <span style={{ color: ORANGE }}>Team</span>
-            </motion.h2>
+            {/* Line 2: outlined "Members" with a hand-drawn orange underline */}
+            <span className="relative mt-1 inline-block">
+              <span className="block overflow-hidden pb-2">
+                <motion.span
+                  className="block"
+                  initial={{ y: reduce ? 0 : "105%" }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+                  style={{ WebkitTextStroke: `2px ${CHARCOAL}`, color: "transparent" }}
+                >
+                  Members
+                </motion.span>
+              </span>
 
-            {/* divider */}
-            <motion.div
-              {...fadeUp(0.2)}
-              className="mt-6 flex items-center justify-center gap-2"
-            >
-              <span className="h-[3px] w-12 rounded-full" style={{ backgroundColor: ORANGE }} />
-              <span className="h-2 w-2 rotate-45" style={{ backgroundColor: ORANGE }} />
-              <span className="h-[3px] w-12 rounded-full" style={{ backgroundColor: ORANGE }} />
-            </motion.div>
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 300 20"
+                preserveAspectRatio="none"
+                className="absolute -bottom-3 left-0 h-[0.16em] min-h-[10px] w-full"
+                fill="none"
+              >
+                <motion.path
+                  d="M2 12 Q 20 2 38 12 T 74 12 T 110 12 T 146 12 T 182 12 T 218 12 T 254 12 T 298 12"
+                  stroke={ORANGE}
+                  strokeWidth="5"
+                  strokeLinecap="round"
+                  vectorEffect="non-scaling-stroke"
+                  initial={{ pathLength: reduce ? 1 : 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 1, delay: 0.9, ease: "easeInOut" }}
+                />
+              </svg>
+            </span>
+          </h2>
 
-            <motion.p
-              {...fadeUp(0.3)}
-              className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-slate-500 sm:text-lg"
-            >
-              A group united by one goal food that families can trust, made without shortcuts.
-            </motion.p>
-          </div>
-
-          {/* ── TEAM CARDS ── */}
-          <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3">
-            {team.map((member, i) => (
+          <motion.div
+            variants={list}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-80px" }}
+            className="mt-16 grid grid-cols-1 items-start gap-x-10 gap-y-16 sm:mt-24 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {members.map((member, i) => (
               <motion.article
                 key={member.name}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                whileHover={{ y: -8 }}
-                transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
-                className="group flex h-full flex-col"
+                variants={item}
+                className={`group mx-auto w-full max-w-[340px] ${
+                  i % 2 === 1 ? "sm:mt-14" : ""
+                } ${i % 3 === 1 ? "lg:mt-20" : "lg:mt-0"}`}
               >
-                {/* Image */}
-                <div className="relative aspect-[4/4.2] overflow-hidden rounded-3xl bg-slate-100">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    loading="lazy"
-                    className="h-full w-full object-cover saturate-[0.85] transition-all duration-700 group-hover:scale-105 group-hover:saturate-100"
+                <div className="relative">
+                  {/* offset outline that snaps into place on hover */}
+                  <span
+                    aria-hidden="true"
+                    className={`absolute inset-0 translate-x-3 translate-y-3 border-2 transition-transform duration-300 group-hover:translate-x-0 group-hover:translate-y-0 ${ARCH}`}
+                    style={{ borderColor: CHARCOAL }}
                   />
-                  <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/30 to-transparent" />
+                  <div className={`relative aspect-[3/4] overflow-hidden bg-slate-200 ${ARCH}`}>
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      loading="lazy"
+                      className="h-full w-full object-cover grayscale transition duration-500 group-hover:scale-105 group-hover:grayscale-0"
+                    />
+                  </div>
+
+                  {member.linkedin && (
+                    <a
+                      href={member.linkedin}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={`${member.name} on LinkedIn`}
+                      className="absolute bottom-4 right-4 flex h-11 w-11 items-center justify-center rounded-full bg-white shadow-md transition-colors duration-200 hover:bg-[#2B2A29] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#EF7F1A] focus-visible:ring-offset-2"
+                      style={{ color: CHARCOAL }}
+                    >
+                      <LinkedinIcon size={17} />
+                    </a>
+                  )}
                 </div>
 
-                {/* Floating info panel */}
-                <div className="relative z-10 -mt-10 mx-3 flex flex-1 flex-col rounded-2xl border border-slate-100 bg-white px-6 pb-6 pt-7 shadow-[0_10px_30px_-12px_rgba(43,42,41,0.25)] transition-shadow duration-300 group-hover:shadow-[0_24px_50px_-16px_rgba(43,42,41,0.35)]">
-                  {/* LinkedIn button */}
-                  <a
-                    href={member.linkedin || "#"}
-                    target={member.linkedin ? "_blank" : undefined}
-                    rel="noreferrer"
-                    aria-label={`${member.name} on LinkedIn`}
-                    className="absolute -top-5 right-5 flex h-10 w-10 items-center justify-center rounded-full text-white shadow-lg ring-4 ring-white transition-transform duration-300 hover:scale-110"
-                    style={{ backgroundColor: ORANGE }}
-                  >
-                    <LinkedinIcon size={16} />
-                  </a>
-
-                  <h3 className="pr-8 text-lg font-bold leading-snug" style={{ color: CHARCOAL }}>
+                <div className="mt-8 text-center">
+                  <h3 className="text-xl font-bold leading-snug" style={{ color: CHARCOAL }}>
                     {member.name}
                   </h3>
-                  <div
-                    className="mt-3 h-[3px] w-9 rounded-full transition-all duration-300 group-hover:w-16"
-                    style={{ backgroundColor: ORANGE }}
-                  />
-                  <p className="mt-4 flex-1 text-sm leading-relaxed text-slate-500">
-                    {member.bio}
-                  </p>
+                  {designationOf(member) && (
+                    <p
+                      className="mt-2 inline-block rounded-full px-4 py-1 text-sm font-semibold"
+                      style={{ backgroundColor: "rgba(239,127,26,0.12)", color: "#B85E08" }}
+                    >
+                      {designationOf(member)}
+                    </p>
+                  )}
                 </div>
               </motion.article>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 

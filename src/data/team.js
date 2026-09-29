@@ -1,39 +1,42 @@
+// Put your photos in: src/assets/team/
+// (use the same file names below, or change the import paths to match yours)
+import monika from "../assets/team/team1.png";
+import tulsidas from "../assets/team/team2.png";
+import mahesh from "../assets/team/team3.png";
+import raghu from "../assets/team/team4.png";
+import akshitha from "../assets/team/team5.png";
+import priyanka from "../assets/team/team6.png";
+
 const team = [
   {
-    name: "Rajeev Sharma",
-    role: "Founder & Managing Director",
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80",
-    bio: "Leads the company's long-term vision across all four brands, with a background in food-process engineering.",
+    name: "Monika Yadav",
+    role: "CEO & Founder",
+    image: monika,
   },
   {
-    name: "Ananya Verma",
+    name: "Tulsidas Alapati",
     role: "Chief Operating Officer",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&q=80",
-    bio: "Oversees manufacturing, supply chain and quality assurance across every facility.",
+    image: tulsidas,
   },
   {
-    name: "Karan Mehta",
-    role: "Head of Product Development",
-    image: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&w=600&q=80",
-    bio: "Leads the food-science team translating traditional recipes into modern, shelf-ready products.",
+    name: "G. Mahesh Varma ",
+    role: "Director",
+    image: mahesh,
   },
   {
-    name: "Priya Nair",
-    role: "Head of Brand & Marketing",
-    image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=600&q=80",
-    bio: "Shapes the identity and voice of each of our four brands in the market.",
+    name: "G. Raghu Teja",
+    role: "Director",
+    image: raghu,
   },
   {
-    name: "Vikram Rao",
-    role: "Head of Sourcing & Sustainability",
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=600&q=80",
-    bio: "Manages relationships with farmer collectives and sustainable sourcing partners.",
+    name: "Akshitha Vatsavai",
+    role: "CXO",
+    image: akshitha,
   },
   {
-    name: "Sneha Kulkarni",
-    role: "Head of Quality Assurance",
-    image: "https://images.unsplash.com/photo-1614644147798-f8c0fc9da7f6?auto=format&fit=crop&w=600&q=80",
-    bio: "Runs the multi-stage testing process that every product passes before release.",
+    name: "Priyanka Kanumuri",
+    role: "CMO",
+    image: priyanka,
   },
 ];
 

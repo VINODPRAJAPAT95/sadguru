@@ -1,4 +1,4 @@
-# Sadguru Food Processing Pvt. Ltd. — Corporate Website
+# Sadguru Foods Processing Pvt. Ltd. — Corporate Website
 
 A premium, multi-brand corporate website built with React, Vite, Tailwind CSS,
 React Router, Framer Motion and Lucide React.
@@ -71,7 +71,6 @@ src/
 /brands/brand-2
 /brands/brand-3
 /brands/brand-4
-/services
 /career
 /contact
 * (404)

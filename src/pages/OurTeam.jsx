@@ -28,8 +28,8 @@ export default function OurTeam() {
   return (
     <>
       <Seo
-        title="Our Team | Sadguru Food Processing Pvt. Ltd."
-        description="Meet the team behind Sadguru Food Processing Pvt. Ltd. and our four food brands."
+        title="Our Team | Sadguru Foods Processing Pvt. Ltd."
+        description="Meet the team behind Sadguru Foods Processing Pvt. Ltd. and our four food brands."
       />
 
       <section className="bg-white pb-24 pt-28 sm:pb-32 sm:pt-36">

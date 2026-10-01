@@ -279,8 +279,8 @@ export default function Contact() {
   return (
     <>
       <Seo
-        title="Contact Us | Sadguru Food Processing Pvt. Ltd."
-        description="Get in touch with Sadguru Food Processing Pvt. Ltd. phone, email, address and contact form."
+        title="Contact Us | Sadguru Foods Processing Pvt. Ltd."
+        description="Get in touch with Sadguru Foods Processing Pvt. Ltd. phone, email, address and contact form."
       />
 
       {/* ================= HERO ================= */}
@@ -431,18 +431,6 @@ export default function Contact() {
               className="mt-4 flex items-end gap-3 text-orange-500"
               style={script}
             >
-              <p className="-rotate-6 text-2xl leading-[1.05]">
-                Healthy Food
-                <br />
-                <span className="pl-4">Happy Lives</span>
-
-                <span className="mt-1 block h-[2px] w-16 -rotate-6 rounded-full bg-orange-400/70" />
-              </p>
-
-              <Leaf
-                size={16}
-                className="mb-1 rotate-12 opacity-70"
-              />
             </motion.div>
           </motion.div>
 
@@ -762,7 +750,7 @@ export default function Contact() {
             </div>
 
             <iframe
-              title="Sadguru Food Processing location map"
+              title="Sadguru Foods Processing location map"
               src={mapsEmbed}
               className="block h-[320px] w-full border-0 sm:h-[420px]"
               loading="lazy"

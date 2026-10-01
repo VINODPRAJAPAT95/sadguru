@@ -23,7 +23,6 @@ import kidsImg from "../assets/ourstory/life-kids.jpg";
 import childrenImg from "../assets/ourstory/life-children.jpg";
 import adultsImg from "../assets/ourstory/life-adults.jpg";
 import elderlyImg from "../assets/ourstory/life-elderly.jpg";
-import traditionalSpices from "../assets/ourstory/traditional-spices.jpg";
 import packagedFood from "../assets/ourstory/packaged-food.jpg";
 
 
@@ -195,13 +194,9 @@ export default function OurStory() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
             >
-              {/* Clearly visible label: solid pill instead of thin orange text */}
+              {/* Label pill (dot removed) */}
               <div className="flex flex-wrap items-center gap-3">
-                <span className="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-orange-500 to-orange-400 px-5 py-2.5 text-sm font-semibold tracking-wide text-white shadow-lg shadow-orange-500/30 sm:text-base">
-                  <span className="relative flex h-2.5 w-2.5">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-70 motion-reduce:animate-none" />
-                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-white" />
-                  </span>
+                <span className="inline-flex items-center rounded-full bg-gradient-to-r from-orange-500 to-orange-400 px-5 py-2.5 text-sm font-semibold tracking-wide text-white shadow-lg shadow-orange-500/30 sm:text-base">
                   About Sadguru Foods
                 </span>
 
@@ -600,40 +595,21 @@ export default function OurStory() {
       <section className="section-py bg-white overflow-hidden">
         <div className="container-px mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
 
+          {/* Single large image: packaged food */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="relative order-2 mx-auto h-[380px] w-full max-w-md lg:order-1"
+            className="relative order-2 mx-auto w-full max-w-xl lg:order-1"
           >
-            <div className="absolute left-4 top-0 h-56 w-56 overflow-hidden rounded-3xl shadow-soft sm:h-64 sm:w-64">
-              <img
-                src={traditionalSpices}
-                alt="Traditional Indian spices"
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <div className="absolute bottom-0 left-0 h-48 w-48 overflow-hidden rounded-3xl border-4 border-white shadow-soft sm:h-56 sm:w-56">
+            <div className="overflow-hidden rounded-3xl shadow-soft">
               <img
                 src={packagedFood}
                 alt="Modern packaged food products"
-                className="h-full w-full object-cover"
+                className="h-[320px] w-full object-cover sm:h-[420px] lg:h-[500px]"
               />
             </div>
-            {/* connecting curved line */}
-            <svg
-              className="pointer-events-none absolute -bottom-6 left-24 h-24 w-24 text-orange-400/60"
-              viewBox="0 0 100 100"
-              fill="none"
-            >
-              <path
-                d="M10 10 Q 50 90 90 50"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeDasharray="4 4"
-              />
-            </svg>
           </motion.div>
 
           <motion.div

@@ -17,7 +17,7 @@ const EFFECTIVE_DATE = "September 2026";
 const WEBSITE = "www.sadgurufoods.com";
 const JURISDICTION = "Hyderabad, Telangana, India"; // legal advisor se confirm kar lena
 const OFFICE_ADDRESS = CONTACT.address;
-const OFFICE_EMAIL = CONTACT.email;
+const OFFICE_EMAIL = "admin@sadgurufoods.com";
 const OFFICE_PHONE = CONTACT.phone;
 const LEGAL_EMAIL = CONTACT.email; // legal/compliance ka alag email ho to yaha likho
 /* ───────────────────────────── */

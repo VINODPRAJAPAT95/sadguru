@@ -33,10 +33,31 @@ const legalLinks = [
 ];
 
 const socials = [
-  { Icon: FacebookIcon, href: SOCIAL.facebook, label: "Facebook" },
-  { Icon: TwitterIcon, href: SOCIAL.twitter, label: "Twitter" },
-  { Icon: YoutubeIcon, href: SOCIAL.youtube, label: "YouTube" },
-  { Icon: InstagramIcon, href: SOCIAL.instagram, label: "Instagram" },
+  {
+    Icon: FacebookIcon,
+    href: "https://www.facebook.com/sadgurufoodsglobal",
+    label: "Facebook",
+  },
+  {
+    Icon: TwitterIcon,
+    href: "https://x.com/sadgurufoodsglobal",
+    label: "X (Twitter)",
+  },
+  {
+    Icon: YoutubeIcon,
+    href: "https://www.youtube.com/@sadgurufoodsglobal",
+    label: "YouTube",
+  },
+  {
+    Icon: InstagramIcon,
+    href: "https://www.instagram.com/sadgurufoodsglobal/",
+    label: "Instagram",
+  },
+  // {
+  //   Icon: LinkedinIcon,
+  //   href: "https://www.linkedin.com/company/sadguru-food-processing-private-limited",
+  //   label: "LinkedIn",
+  // },
 ];
 
 const fadeUp = {

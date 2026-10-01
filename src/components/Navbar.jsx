@@ -125,9 +125,6 @@ export default function Navbar() {
           </NavLink>
           <DesktopDropdown label="About" items={aboutLinks} />
           <DesktopDropdown label="Brands" items={brandLinks} isBrands />
-          <NavLink to="/services" className={navLinkClass}>
-            Services
-          </NavLink>
           <NavLink to="/career" className={navLinkClass}>
             Career
           </NavLink>

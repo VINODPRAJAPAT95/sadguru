@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
   Gem,
@@ -25,13 +25,79 @@ import aboutImg from "../assets/images/about-food.jpg";
 import valuesImg from "../assets/images/values-snacks.jpg";
 import Seo from "../components/Seo";
 import Button from "../components/Button";
-import SectionTitle from "../components/SectionTitle";
 import ValueCard from "../components/ValueCard";
 import BrandHorizontalScroll from "../components/BrandHorizontalScroll";
 import FAQ from "../components/FAQ";
 import CTASection from "../components/CTASection";
 import values from "../data/values";
 import faqs from "../data/faqs";
+
+/* ------------------------------------------------------------------
+   SectionHeading: bigger + modern heading used across the Home page.
+   - label     : pill badge above the title (big, with pulsing dot)
+   - title     : main heading
+   - highlight : part of the title shown in orange (optional)
+   - compact   : for long sentence-style labels (e.g. FAQ), no pill
+------------------------------------------------------------------- */
+function SectionHeading({
+  label,
+  title,
+  highlight,
+  description,
+  align = "left",
+  compact = false,
+  className = "",
+}) {
+  const center = align === "center";
+  const parts = highlight && title.includes(highlight) ? title.split(highlight) : null;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      className={`${center ? "mx-auto text-center" : "text-left"} ${className}`}
+    >
+      {label &&
+        (compact ? (
+          <span className="block text-base font-semibold text-orange-600 sm:text-lg">
+            {label}
+          </span>
+        ) : (
+          <span className="inline-flex items-center gap-3 rounded-full border border-orange-200 bg-gradient-to-r from-orange-50 to-amber-50 px-5 py-2.5 text-sm font-extrabold uppercase tracking-[0.28em] text-orange-600 shadow-sm sm:px-6 sm:text-base">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-orange-400 opacity-75" />
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-orange-500" />
+            </span>
+            {label}
+          </span>
+        ))}
+
+      <h2 className="font-baloo mt-5 text-4xl font-bold leading-[1.1] tracking-tight text-[#241209] sm:text-5xl">
+        {parts ? (
+          <>
+            {parts[0]}
+            <span className="text-orange-500">{highlight}</span>
+            {parts.slice(1).join(highlight)}
+          </>
+        ) : (
+          title
+        )}
+      </h2>
+
+      {description && (
+        <p
+          className={`mt-6 text-base leading-relaxed text-charcoal-400 sm:text-lg ${
+            center ? "mx-auto max-w-4xl" : ""
+          }`}
+        >
+          {description}
+        </p>
+      )}
+    </motion.div>
+  );
+}
 
 const whyChooseUs = [
   { icon: Leaf, title: "Clean Ingredients", desc: "Carefully selected, clean ingredients in every formulation." },
@@ -135,6 +201,7 @@ const stackedCardVariant = {
 };
 
 export default function Home() {
+  const reduce = useReducedMotion();
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -179,7 +246,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="inline-flex max-w-full flex-wrap items-center justify-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-orange-400 sm:text-sm sm:tracking-[0.35em]"
           >
-            Premium Food Processing
+         
           </motion.span>
 
           <h1 className="mx-auto mt-6 max-w-5xl text-balance break-words font-display text-4xl font-black uppercase leading-[1.1] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
@@ -225,64 +292,61 @@ export default function Home() {
       {/* SHORT ABOUT / WHO WE ARE */}
       <section className="section-py overflow-hidden">
         <div className="container-px mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 lg:grid-cols-2 lg:gap-20">
-          {/* Polaroid-style tilted photo stack */}
+          {/* Simple modern image layout */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="relative order-2 mx-auto w-full max-w-md px-4 pb-16 pt-6 sm:max-w-lg sm:px-8 lg:order-1 lg:max-w-none"
+            className="relative order-2 mx-auto w-full max-w-md pb-10 pt-4 sm:max-w-lg lg:order-1 lg:max-w-none"
           >
-            {/* Tilted orange backing card */}
-            <div className="absolute inset-x-6 inset-y-2 rotate-[5deg] rounded-3xl bg-orange-500 sm:inset-x-10" />
+            {/* offset orange block behind the photo */}
+            <div className="absolute bottom-0 left-0 right-6 top-8 rounded-[2rem] bg-gradient-to-br from-orange-400 to-orange-600 sm:right-10" />
 
-            {/* Tilted cream backing card */}
-            <div className="absolute inset-x-4 inset-y-4 -rotate-[4deg] rounded-3xl bg-[#FFF1D6] sm:inset-x-8" />
+            {/* dotted accent */}
+            <div
+              aria-hidden="true"
+              className="absolute right-0 top-0 h-24 w-24 opacity-60 sm:h-32 sm:w-32"
+              style={{
+                backgroundImage: "radial-gradient(#f97316 1.6px, transparent 1.6px)",
+                backgroundSize: "14px 14px",
+              }}
+            />
 
-            {/* Main polaroid */}
-            <motion.figure
-              whileHover={{ rotate: 0, scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 200, damping: 18 }}
-              className="relative z-10 -rotate-2 rounded-md bg-white p-3 pb-14 shadow-2xl sm:p-4 sm:pb-16"
-            >
-              {/* Tape strip */}
-              <span className="absolute -top-3 left-1/2 h-6 w-24 -translate-x-1/2 rotate-3 bg-orange-200/80 shadow-sm" />
-
+            {/* main photo */}
+            <div className="group relative ml-6 overflow-hidden rounded-[2rem] shadow-2xl ring-8 ring-white sm:ml-10">
               <img
                 src={aboutImg}
                 alt="Preparing wholesome food"
-                className="h-[300px] w-full object-cover sm:h-[400px] lg:h-[440px]"
+                className="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-105 sm:aspect-[5/4] lg:aspect-[4/4.2]"
                 loading="lazy"
               />
-              <figcaption className="absolute bottom-4 left-0 right-0 text-center font-baloo text-lg font-bold text-[#241209] sm:text-xl">
-                Made with care, every day
-              </figcaption>
-            </motion.figure>
-
-            {/* Small close-up polaroid */}
-            <motion.figure
-              initial={{ opacity: 0, y: 30, rotate: 0 }}
-              whileInView={{ opacity: 1, y: 0, rotate: 8 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.3 }}
-              className="absolute -bottom-2 right-0 z-20 w-32 rounded-md bg-white p-2 pb-6 shadow-xl sm:right-2 sm:w-44 sm:p-2.5 sm:pb-8"
-            >
-              <div className="h-24 w-full overflow-hidden sm:h-32">
-                <img
-                  src={aboutImg}
-                  alt=""
-                  aria-hidden="true"
-                  className="h-full w-full scale-[1.8] object-cover object-center"
-                  loading="lazy"
-                />
-              </div>
-            </motion.figure>
-
-            {/* Round badge */}
-            <div className="absolute -left-1 top-2 z-20 flex h-20 w-20 -rotate-12 flex-col items-center justify-center rounded-full border-4 border-white bg-orange-500 text-center text-white shadow-xl sm:-left-3 sm:h-24 sm:w-24">
-              <span className="font-baloo text-2xl font-bold leading-none sm:text-3xl">4</span>
-              <span className="text-[10px] font-bold uppercase tracking-wider sm:text-xs">Brands</span>
+              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/35 via-transparent to-transparent" />
             </div>
+
+            {/* floating pill (top right) */}
+            <motion.div
+              animate={reduce ? undefined : { y: [0, -6, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute right-3 top-0 z-10 flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-xs font-semibold text-[#241209] shadow-lg backdrop-blur sm:right-6 sm:text-sm"
+            >
+        
+            </motion.div>
+
+            {/* floating stat card (bottom left) */}
+            <motion.div
+              animate={reduce ? undefined : { y: [0, 8, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute bottom-2 left-2 z-10 flex items-center gap-4 rounded-2xl bg-white px-5 py-4 shadow-xl sm:left-0"
+            >
+              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-500 font-baloo text-2xl font-bold text-white">
+                4
+              </span>
+              <div className="leading-tight">
+                <p className="font-baloo text-lg font-bold text-[#241209]">Food Brands</p>
+                <p className="text-xs text-charcoal-400">One promise of trust</p>
+              </div>
+            </motion.div>
           </motion.div>
 
           <motion.div
@@ -292,9 +356,10 @@ export default function Home() {
             transition={{ duration: 0.7 }}
             className="order-1 lg:order-2"
           >
-            <SectionTitle
+            <SectionHeading
               label="Who We Are"
               title="A Family of Food Brands Built on Trust"
+              highlight="Built on Trust"
               description="Sadguru Food Processing Pvt. Ltd. produces wholesome, minimally processed foods rooted in tradition and aligned with modern nutritional needs. We believe food should nourish the body, be made with care, and maintain its flavor without extra processing or shortcuts."
             />
 
@@ -323,27 +388,14 @@ export default function Home() {
         <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-orange-400/10 blur-3xl" />
 
         <div className="container-px relative mx-auto max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="mx-auto max-w-3xl text-center"
-          >
-            <span className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.35em] text-orange-500">
-              What We Do
-            </span>
-            <h2 className="font-baloo mt-4 text-4xl font-bold leading-tight text-[#241209] sm:text-5xl">
-              Simple, Nourishing Food{" "}
-              <span className="text-orange-500">for Everyday Life</span>
-            </h2>
-            <p className="mt-6 leading-relaxed text-charcoal-400">
-              We prepare a broad selection of food products designed to fit today's lifestyle
-              while keeping traditional values in mind. Our foods support everyday nourishment,
-              are suitable for the entire family, and are made with careful attention to
-              quality, taste, and consistency.
-            </p>
-          </motion.div>
+          <SectionHeading
+            align="center"
+            label="What We Do"
+            title="Simple, Nourishing Food for Everyday Life"
+            highlight="for Everyday Life"
+            description="We prepare a broad selection of food products designed to fit today's lifestyle while keeping traditional values in mind. Our foods support everyday nourishment, are suitable for the entire family, and are made with careful attention to quality, taste, and consistency."
+            className="max-w-3xl"
+          />
 
           <motion.div
             variants={whatWeDoContainer}
@@ -375,14 +427,15 @@ export default function Home() {
       </section>
 
       {/* VALUES / VISION / MISSION */}
-      <section className="section-py bg-orange-50/40 overflow-hidden">
+      <section className="section-py overflow-hidden bg-orange-50/40">
         <div className="container-px mx-auto max-w-7xl">
-          <SectionTitle
+          <SectionHeading
             label="What Drives Us"
             title="Values, Vision & Mission"
+            highlight="Vision & Mission"
             description="These principles shape every decision from sourcing an ingredient to sealing a pack."
             align="center"
-            className="mb-14"
+            className="mb-14 [&_p]:whitespace-nowrap max-md:[&_p]:whitespace-normal"
           />
 
           <motion.div
@@ -491,12 +544,12 @@ export default function Home() {
       {/* BRANDS HORIZONTAL SCROLL */}
       <section className="bg-white">
         <div className="section-py container-px mx-auto max-w-7xl">
-          <SectionTitle
+          <SectionHeading
             label="Our Brands"
             title="Four Brands, Every Kitchen Covered"
+            highlight="Every Kitchen Covered"
             description="Scroll to explore each brand and the story behind it."
             align="center"
-            className="mx-auto"
           />
         </div>
 
@@ -514,9 +567,10 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.7 }}
               >
-                <SectionTitle
+                <SectionHeading
                   label="Why Choose Us"
                   title="Why Choose Sadguru Food Processing Pvt. Ltd."
+                  highlight="Sadguru Food Processing Pvt. Ltd."
                   description="Every product from Sadguru Food Processing Pvt. Ltd. follows a transparent and disciplined process. From sourcing quality ingredients to delivering consistent products, we focus on trust, care, and excellence at every stage."
                 />
 
@@ -578,11 +632,13 @@ export default function Home() {
       {/* FAQ */}
       <section className="section-py bg-white overflow-hidden">
         <div className="container-px mx-auto max-w-4xl">
-          <SectionTitle
+          <SectionHeading
+            compact
             label="At Sadguru Food Processing Pvt. Ltd., consistency and care guide every step:"
             title="Our Approach to Quality Food Production"
+            highlight="Quality Food Production"
             align="center"
-            className="mb-14 mx-auto"
+            className="mb-14"
           />
           <FAQ items={faqs} />
         </div>

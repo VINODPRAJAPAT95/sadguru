@@ -86,13 +86,12 @@ const formatSize = (bytes) =>
     ? `${(bytes / 1024).toFixed(0)} KB`
     : `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
 
-/* Big eyebrow label with accent line */
+/* Big eyebrow label (orange line removed) */
 const Eyebrow = ({ children }) => (
   <p
-    className="inline-flex items-center gap-3 text-base font-extrabold uppercase tracking-[0.25em] sm:text-lg"
+    className="text-base font-extrabold uppercase tracking-[0.25em] sm:text-lg"
     style={{ color: ORANGE }}
   >
-    <span className="h-[3px] w-10 rounded-full" style={{ backgroundColor: ORANGE }} />
     {children}
   </p>
 );
@@ -301,10 +300,9 @@ export default function Career() {
                 className="max-w-2xl"
               >
                 <p
-                  className="inline-flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.25em] sm:text-sm"
+                  className="text-xs font-extrabold uppercase tracking-[0.25em] sm:text-sm"
                   style={{ color: ORANGE }}
                 >
-                  <span className="h-[3px] w-8 rounded-full" style={{ backgroundColor: ORANGE }} />
                   Behind every product is a team
                 </p>
                 <h2
@@ -390,7 +388,7 @@ export default function Career() {
                         transition={{ duration: 0.5, delay: reduce ? 0 : 0.15 + i * 0.22 }}
                         className="group flex items-center gap-5 lg:flex-col lg:gap-5 lg:text-center"
                       >
-                        {/* node */}
+                        {/* node (number badge removed) */}
                         <div className="relative shrink-0">
                           {isLast && !reduce && (
                             <motion.span
@@ -417,12 +415,6 @@ export default function Career() {
                           >
                             <Icon size={26} strokeWidth={1.8} />
                           </motion.span>
-                          <span
-                            className="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-extrabold text-white ring-2 ring-[#FFF6E9]"
-                            style={{ backgroundColor: CHARCOAL }}
-                          >
-                            {i + 1}
-                          </span>
                         </div>
 
                         {/* label */}

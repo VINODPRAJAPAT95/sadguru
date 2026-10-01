@@ -13,9 +13,6 @@ import {
   HeartHandshake,
 } from "lucide-react";
 import Seo from "../components/Seo";
-import Button from "../components/Button";
-import SectionTitle from "../components/SectionTitle";
-import CTASection from "../components/CTASection";
 
 /* Images: put files in src/assets/ourstory/ (change names/paths/extensions if yours differ) */
 import heroMeal from "../assets/ourstory/hero-meal.jpg";
@@ -28,9 +25,6 @@ import elderlyImg from "../assets/ourstory/life-elderly.jpg";
 import traditionalSpices from "../assets/ourstory/traditional-spices.jpg";
 import packagedFood from "../assets/ourstory/packaged-food.jpg";
 
-/* -----------------------------------------
-   DATA
------------------------------------------ */
 
 const differentiators = [
   {
@@ -119,6 +113,10 @@ const eyebrow =
 // Main section headings (now larger)
 const h2Big =
   "font-display text-4xl font-bold leading-[1.12] tracking-tight text-charcoal sm:text-5xl lg:text-[3.4rem]";
+
+// Outlined pill button (used in hero + final CTA)
+const outlineBtn =
+  "rounded-full border-2 border-charcoal px-6 py-3 text-sm font-semibold text-charcoal transition-colors duration-200 hover:bg-charcoal hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2";
 
 /* -----------------------------------------
    MOTION VARIANTS
@@ -217,15 +215,9 @@ export default function OurStory() {
               </p>
 
               <div className="mt-9 flex flex-wrap items-center gap-4">
-                <Button to="/brands" variant="primary" className="bg-orange-500 hover:bg-orange-600">
+                <Link to="/brands" className={outlineBtn}>
                   Explore Our Brands
-                </Button>
-                <a
-                  href="#our-story"
-                  className="rounded-full border-2 border-charcoal px-6 py-3 text-sm font-semibold text-charcoal transition-colors duration-200 hover:bg-charcoal hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
-                >
-                  Read Our Story
-                </a>
+                </Link>
               </div>
             </motion.div>
 
@@ -781,12 +773,9 @@ export default function OurStory() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-9 flex flex-wrap items-center justify-center gap-4"
           >
-            <Button to="/brands" variant="primary" className="bg-orange-500 hover:bg-orange-600">
-              Explore Our Brands
-            </Button>
-            <Button to="/contact" variant="outline" icon={false}>
+            <Link to="/contact" className={outlineBtn}>
               Get in Touch
-            </Button>
+            </Link>
           </motion.div>
         </div>
       </section>

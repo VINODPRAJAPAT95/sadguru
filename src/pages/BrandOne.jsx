@@ -290,65 +290,6 @@ export default function BrandOne() {
         </div>
       </section>
 
-      {/* SECTION 5: HOW WE MAKE IT */}
-      <section className="py-14 sm:py-20" style={{ backgroundColor: `${PRIMARY}0A` }}>
-        <div className="mx-auto max-w-7xl px-6 lg:px-12">
-          <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-12">
-            {/* Left */}
-            <div>
-              <p className={eyebrow} style={{ color: PRIMARY }}>
-                HOW WE MAKE IT
-              </p>
-              <h2
-                className="mt-4 text-3xl font-extrabold leading-[1.15] sm:text-5xl sm:leading-[1.05]"
-                style={{ color: DARK }}
-              >
-                Small Batches.
-                <br />
-                Real Ingredients. No Shortcuts.
-              </h2>
-              <p className="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg">
-                Because when kids eat well, they dream bigger, learn better and grow stronger.
-              </p>
-            </div>
-
-            {/* Right process flow */}
-            <div>
-              <p
-                className="mb-4 text-sm font-extrabold uppercase tracking-[0.25em] sm:text-base"
-                style={{ color: PRIMARY }}
-              >
-                OUR PROCESS
-              </p>
-              <div className="flex flex-col gap-2">
-                {brand.values.map((step, i) => (
-                  <motion.div
-                    key={step.title}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    className="flex flex-col items-start"
-                  >
-                    <div
-                      className="w-full rounded-full px-4 py-3 text-center text-sm font-extrabold tracking-widest text-white sm:px-6 sm:py-4 sm:text-base"
-                      style={{ backgroundColor: PRIMARY }}
-                    >
-                      {step.title.toUpperCase()}
-                    </div>
-                    {i < brand.values.length - 1 && (
-                      <div className="flex w-full justify-center py-1">
-                        <span className="text-2xl font-extrabold" style={{ color: YELLOW }}>↓</span>
-                      </div>
-                    )}
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* SECTION 6: OUR DIFFERENCE */}
       <section className="py-14 sm:py-20" style={{ backgroundColor: PRIMARY }}>
         <div className="mx-auto max-w-7xl px-6 lg:px-12">

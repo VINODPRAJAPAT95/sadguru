@@ -211,7 +211,7 @@ export default function Home() {
   return (
     <>
       <Seo
-        title="Sadguru Food Processing Pvt. Ltd. | Wholesome Food, Thoughtfully Prepared"
+        title="Sadguru Foods Processing Pvt. Ltd. | Wholesome Food, Thoughtfully Prepared"
         description="A multi-brand food company crafting wholesome, minimally processed food rooted in tradition and modern nutrition."
       />
 
@@ -356,7 +356,7 @@ export default function Home() {
               label="Who We Are"
               title="A Family of Food Brands Built on Trust"
               highlight="Built on Trust"
-              description="Sadguru Food Processing Pvt. Ltd. produces wholesome, minimally processed foods rooted in tradition and aligned with modern nutritional needs. We believe food should nourish the body, be made with care, and maintain its flavor without extra processing or shortcuts."
+              description="Sadguru Foods Processing Pvt. Ltd. produces wholesome, minimally processed foods rooted in tradition and aligned with modern nutritional needs. We believe food should nourish the body, be made with care, and maintain its flavor without extra processing or shortcuts."
             />
 
             <motion.div
@@ -570,9 +570,9 @@ Scroll down to explore their stories."
               >
                 <SectionHeading
                   label="Why Choose Us"
-                  title="Why Choose Sadguru Food Processing Pvt. Ltd."
-                  highlight="Sadguru Food Processing Pvt. Ltd."
-                  description="Every product from Sadguru Food Processing Pvt. Ltd. follows a transparent and disciplined process. From sourcing quality ingredients to delivering consistent products, we focus on trust, care, and excellence at every stage."
+                  title="Why Choose Sadguru Foods Processing Pvt. Ltd."
+                  highlight="Sadguru Foods Processing Pvt. Ltd."
+                  description="Every product from Sadguru Foods Processing Pvt. Ltd. follows a transparent and disciplined process. From sourcing quality ingredients to delivering consistent products, we focus on trust, care, and excellence at every stage."
                 />
 
                 <div className="mt-10 flex items-center justify-center gap-4 lg:justify-start">
@@ -635,7 +635,7 @@ Scroll down to explore their stories."
         <div className="container-px mx-auto max-w-4xl">
           <SectionHeading
             compact
-            label="At Sadguru Food Processing Pvt. Ltd., consistency and care guide every step:"
+            label="At Sadguru Foods Processing Pvt. Ltd., consistency and care guide every step:"
             title="Our Approach to Quality Food Production"
             highlight="Quality Food Production"
             align="center"

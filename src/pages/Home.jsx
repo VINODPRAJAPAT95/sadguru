@@ -34,7 +34,7 @@ import faqs from "../data/faqs";
 
 /* ------------------------------------------------------------------
    SectionHeading: bigger + modern heading used across the Home page.
-   - label     : pill badge above the title (big, with pulsing dot)
+   - label     : pill badge above the title
    - title     : main heading
    - highlight : part of the title shown in orange (optional)
    - compact   : for long sentence-style labels (e.g. FAQ), no pill
@@ -65,11 +65,7 @@ function SectionHeading({
             {label}
           </span>
         ) : (
-          <span className="inline-flex items-center gap-3 rounded-full border border-orange-200 bg-gradient-to-r from-orange-50 to-amber-50 px-5 py-2.5 text-sm font-extrabold uppercase tracking-[0.28em] text-orange-600 shadow-sm sm:px-6 sm:text-base">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-orange-400 opacity-75" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-orange-500" />
-            </span>
+          <span className="inline-flex items-center rounded-full border border-orange-200 bg-gradient-to-r from-orange-50 to-amber-50 px-5 py-2.5 text-sm font-extrabold uppercase tracking-[0.28em] text-orange-600 shadow-sm sm:px-6 sm:text-base">
             {label}
           </span>
         ))}
@@ -546,9 +542,14 @@ export default function Home() {
         <div className="section-py container-px mx-auto max-w-7xl">
           <SectionHeading
             label="Our Brands"
-            title="Four Brands, Every Kitchen Covered"
-            highlight="Every Kitchen Covered"
-            description="Scroll to explore each brand and the story behind it."
+            title="Four Brands – Different Consumers, Different Needs, Different Journeys."
+            highlight="Different Consumers, Different Needs, Different Journeys."
+            description="At Sadguru Foods, we believe that nutrition is not one size fits all.
+
+That’s why we’ve created four distinctive brands. Every consumer has a unique nutritional journey.
+
+Four brands, each created with distinct purpose, audience and story.
+Scroll down to explore their stories."
             align="center"
           />
         </div>

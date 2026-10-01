@@ -8,35 +8,35 @@ import akshitha from "../assets/team/team5.png";
 import priyanka from "../assets/team/team6.png";
 
 const team = [
-  {
-    name: "Monika Yadav",
-    role: "CEO & Founder",
-    image: monika,
-  },
-  {
-    name: "Tulsidas Alapati",
-    role: "Chief Operating Officer",
-    image: tulsidas,
-  },
-  {
-    name: "G. Mahesh Varma ",
-    role: "Director",
+ {
+    name: "Mr. Mahesh Varma ",
+    role: "Managing Director",
     image: mahesh,
   },
   {
     name: "G. Raghu Teja",
-    role: "Director",
+    role: "Managing Director",
     image: raghu,
   },
-  {
+ {
+    name: "Ms. Monika Yadav",
+    role: "Chief Executive Officer",
+    image: monika,
+  },
+ {
+    name: "Priyanka Kanumuri",
+    role: "CMO",
+    image: priyanka,
+  },
+ {
     name: "Akshitha Vatsavai",
     role: "CXO",
     image: akshitha,
   },
   {
-    name: "Priyanka Kanumuri",
-    role: "CMO",
-    image: priyanka,
+    name: "Tulsidas Alapati",
+    role: "Chief Operating Officer",
+    image: tulsidas,
   },
 ];
 

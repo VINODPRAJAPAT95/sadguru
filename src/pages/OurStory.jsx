@@ -11,6 +11,7 @@ import {
   Leaf,
   Sparkles,
   HeartHandshake,
+  CalendarDays,
 } from "lucide-react";
 import Seo from "../components/Seo";
 
@@ -195,10 +196,20 @@ export default function OurStory() {
               transition={{ duration: 0.7 }}
             >
               {/* Clearly visible label: solid pill instead of thin orange text */}
-              <span className="inline-flex items-center gap-3 rounded-full bg-charcoal px-5 py-2.5 text-sm font-semibold tracking-wide text-white shadow-md sm:text-base">
-                <span className="h-2.5 w-2.5 rounded-full bg-orange-500" />
-                About Sadguru Foods
-              </span>
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-orange-500 to-orange-400 px-5 py-2.5 text-sm font-semibold tracking-wide text-white shadow-lg shadow-orange-500/30 sm:text-base">
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-70 motion-reduce:animate-none" />
+                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-white" />
+                  </span>
+                  About Sadguru Foods
+                </span>
+
+                <span className="inline-flex items-center gap-2 rounded-full border-2 border-orange-500 bg-orange-50 px-4 py-2 text-sm font-semibold text-orange-600 sm:text-base">
+                  <CalendarDays size={17} strokeWidth={2} />
+                  Established 5th August 2025
+                </span>
+              </div>
 
               <h1 className="mt-8 font-display text-4xl font-bold leading-[1.08] tracking-tight text-charcoal sm:text-5xl lg:text-[3.6rem]">
                 <span className="block">Big Dreams.</span>

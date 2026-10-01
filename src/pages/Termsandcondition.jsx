@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   CalendarDays, Scale, CheckCircle2, ChevronDown,
   ArrowUp, List, Mail, Phone, MapPin, Globe, Info,
@@ -387,10 +387,7 @@ function SectionBlock({ s }) {
         </div>
 
         <div className="min-w-0 flex-1 pb-10 sm:pb-12">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-orange-500">
-            Section {pad(s.n)}
-          </p>
-          <h2 className="font-baloo mt-1 text-2xl font-bold leading-tight text-[#241209] sm:text-3xl">
+          <h2 className="font-baloo pt-1 text-2xl font-bold leading-tight text-[#241209] sm:text-3xl">
             {s.title}
           </h2>
 
@@ -425,26 +422,26 @@ function SectionBlock({ s }) {
           ) : isNotice ? (
             <div className="relative mt-4 overflow-hidden rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 p-6 text-white shadow-xl shadow-orange-500/25 sm:p-8">
               <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/15 blur-2xl" />
-              <div className="relative space-y-4 leading-relaxed">
+              <div className="relative space-y-4 leading-7">
                 {s.blocks.map((b) => (
-                  <p key={b} className="text-sm sm:text-base">{b}</p>
+                  <p key={b} className="text-[15px] sm:text-base">{b}</p>
                 ))}
               </div>
             </div>
           ) : (
-            <div className="mt-4 space-y-4 rounded-2xl border border-orange-100 bg-white p-5 shadow-[0_2px_16px_-8px_rgba(239,127,26,0.2)] transition-shadow duration-300 hover:shadow-[0_18px_40px_-20px_rgba(239,127,26,0.35)] sm:p-7">
+            <div className="mt-4 space-y-5 rounded-2xl border border-orange-100 bg-white p-5 shadow-[0_2px_16px_-8px_rgba(239,127,26,0.2)] transition-shadow duration-300 hover:shadow-[0_18px_40px_-20px_rgba(239,127,26,0.35)] sm:p-7">
               {s.blocks.map((b, i) =>
                 Array.isArray(b) ? (
-                  <ul key={i} className="space-y-2.5">
+                  <ul key={i} className="space-y-3 rounded-xl bg-[#FFF9EF] p-4 sm:p-5">
                     {b.map((item) => (
-                      <li key={item} className="flex gap-3 text-sm leading-relaxed text-charcoal-400 sm:text-[15px]">
-                        <CheckCircle2 size={17} className="mt-0.5 shrink-0 text-orange-500" />
+                      <li key={item} className="flex gap-3 text-[15px] leading-7 text-charcoal-400 sm:text-base">
+                        <CheckCircle2 size={18} className="mt-1.5 shrink-0 text-orange-500" />
                         <span>{item}</span>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <p key={i} className="text-sm leading-relaxed text-charcoal-400 sm:text-[15px]">{b}</p>
+                  <p key={i} className="text-[15px] leading-7 text-charcoal-400 sm:text-base">{b}</p>
                 )
               )}
             </div>
@@ -456,9 +453,6 @@ function SectionBlock({ s }) {
 }
 
 export default function TermsAndConditions() {
-  const { scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 24, mass: 0.3 });
-
   const [active, setActive] = useState(1);
   const [showTop, setShowTop] = useState(false);
   const [tocOpen, setTocOpen] = useState(false);
@@ -509,13 +503,6 @@ export default function TermsAndConditions() {
       <Seo
         title="Terms & Conditions | Sadguru Foods Processing Pvt. Ltd."
         description="Read the website Terms & Conditions of Sadguru Foods Processing Pvt. Ltd."
-      />
-
-      {/* reading progress */}
-      <motion.div
-        aria-hidden
-        style={{ scaleX: progress }}
-        className="fixed left-0 right-0 top-0 z-[60] h-1 origin-left bg-gradient-to-r from-orange-400 to-orange-600"
       />
 
       {/* ───────── HERO ───────── */}
@@ -704,7 +691,7 @@ export default function TermsAndConditions() {
               transition={{ duration: 0.6 }}
               className="mb-12"
             >
-              <p className="text-base leading-relaxed text-charcoal-400 sm:text-lg">
+              <p className="text-base leading-7 text-charcoal-400 sm:text-lg sm:leading-8">
                 Welcome to the official website of Sadguru Foods Processing Pvt. Ltd. (“Sadguru
                 Foods”, “Company”, “we”, “us” or “our”). These Website Terms &amp; Conditions
                 (“Terms”) govern your access to and use of the website{" "}
@@ -717,7 +704,7 @@ export default function TermsAndConditions() {
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-orange-500 text-white">
                   <CheckCircle2 size={22} />
                 </span>
-                <p className="text-sm leading-relaxed text-charcoal-400 sm:text-[15px]">
+                <p className="text-[15px] leading-7 text-charcoal-400 sm:text-base">
                   <b className="text-[#241209]">By accessing, browsing or using the Website,</b> you
                   acknowledge that you have read, understood and agreed to these Terms. If you do
                   not agree with any part of these Terms, please discontinue use of the Website.

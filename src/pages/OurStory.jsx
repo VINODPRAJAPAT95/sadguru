@@ -511,7 +511,8 @@ export default function OurStory() {
             transition={{ duration: 0.6 }}
             className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end"
           >
-            <h2 className={`max-w-2xl ${h2Big}`}>
+            {/* Heading stays on ONE line from sm and up */}
+            <h2 className="font-display text-2xl font-bold leading-[1.12] tracking-tight text-charcoal sm:whitespace-nowrap sm:text-4xl lg:text-5xl">
               Food for Every{" "}
               <span className="text-orange-500">Stage of Life</span>
             </h2>

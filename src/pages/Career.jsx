@@ -186,14 +186,23 @@ export default function Career() {
             VIEW OPEN POSITIONS
             <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
           </button>
+
+          {/* FIXED: no inline color / JS hover. Fill slides in, text turns white. */}
           <button
             onClick={scrollToEnquiry}
-            className="inline-flex items-center justify-center gap-3 rounded-full border-2 px-9 py-4 text-sm font-extrabold tracking-[0.12em] transition-all duration-300 hover:-translate-y-0.5 hover:text-white hover:shadow-[0_14px_30px_-10px_rgba(43,42,41,0.5)]"
-            style={{ borderColor: CHARCOAL, color: CHARCOAL }}
-            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = CHARCOAL)}
-            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
+            className="group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full border-2 border-[#2B2A29] bg-transparent px-9 py-4 text-sm font-extrabold tracking-[0.12em] text-[#2B2A29] transition-all duration-300 hover:-translate-y-0.5 hover:text-white hover:shadow-[0_14px_30px_-10px_rgba(43,42,41,0.5)]"
           >
-            SUBMIT YOUR RESUME
+            <span
+              aria-hidden
+              className="absolute inset-0 origin-left scale-x-0 rounded-full bg-[#2B2A29] transition-transform duration-500 ease-out group-hover:scale-x-100"
+            />
+            <span className="relative z-10 inline-flex items-center gap-3">
+              <UploadCloud
+                size={18}
+                className="transition-transform duration-300 group-hover:-translate-y-0.5"
+              />
+              SUBMIT YOUR RESUME
+            </span>
           </button>
         </motion.div>
       </section>

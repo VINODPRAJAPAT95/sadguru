@@ -9,32 +9,32 @@ import priyanka from "../assets/team/team6.png";
 
 const team = [
  {
-    name: "Mr. Mahesh Varma ",
+    name: "Mr. G. Mahesh Varma ",
     role: "Managing Director",
     image: mahesh,
   },
   {
-    name: "G. Raghu Teja",
+    name: "Mr. G. Raghu Teja",
     role: "Managing Director",
     image: raghu,
   },
  {
-    name: "Ms. Monika Yadav",
+    name: "Ms. Monica Yadav",
     role: "Chief Executive Officer",
     image: monika,
   },
  {
-    name: "Priyanka Kanumuri",
+    name: "Ms. Priyanka Kanumuri",
     role: "CMO",
     image: priyanka,
   },
  {
-    name: "Akshitha Vatsavai",
+    name: "Ms. Akshitha Vatsavai",
     role: "CXO",
     image: akshitha,
   },
   {
-    name: "Tulsidas Alapati",
+    name: "Mr. Tulsidas Alapati",
     role: "Chief Operating Officer",
     image: tulsidas,
   },

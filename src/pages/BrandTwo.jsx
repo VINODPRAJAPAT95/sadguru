@@ -161,11 +161,7 @@ export default function BrandTwo() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <p className="text-xs font-extrabold uppercase tracking-[0.25em] text-white opacity-70">
-              {brand.number}. {brand.name.toUpperCase()}
-            </p>
-
-            <h1 className="mt-4 text-3xl font-extrabold leading-[1.1] text-white sm:text-5xl lg:text-6xl lg:leading-[1.05]">
+            <h1 className="text-3xl font-extrabold leading-[1.1] text-white sm:text-5xl lg:text-6xl lg:leading-[1.05]">
               {taglineParts.map((part, i) => (
                 <span key={i}>
                   <span

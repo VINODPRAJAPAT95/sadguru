@@ -11,7 +11,7 @@ const brands = [
     slug: "brand-1",
     number: "01",
     name: "Mumma",
-    tagline: "The Brand Parents Trust. The Nutrition Kids Deserve.",
+    tagline: "The Brand Parents Trust.The Nutrition Kids Deserve.",
     logo: mummaLogo,
     colors: {
       primary: "#DF1C51",

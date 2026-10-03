@@ -415,9 +415,8 @@ export default function OurStory() {
               Different journeys.
             </motion.p>
 
-            {/* Line 3 */}
-            <motion.div variants={quoteLine} className="mt-7 flex items-center gap-4">
-              <span className="hidden h-[3px] w-10 shrink-0 rounded-full bg-orange-500 sm:block" />
+            {/* Line 3 (orange line removed) */}
+            <motion.div variants={quoteLine} className="mt-7">
               <p className="bg-gradient-to-r from-orange-600 via-orange-500 to-orange-400 bg-clip-text font-display text-xl font-bold leading-snug text-transparent sm:whitespace-nowrap sm:text-2xl lg:text-[1.4rem] xl:text-[1.65rem]">
                 One purpose Better Food for Better Living.
               </p>
@@ -709,10 +708,13 @@ export default function OurStory() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-lg font-bold uppercase tracking-[0.2em] text-white/90 sm:text-xl">
+            <span className="block font-display text-3xl font-bold uppercase tracking-[0.12em] text-white sm:text-4xl lg:text-5xl">
               Our Big Dream
             </span>
-            <p className="mt-6 max-w-sm text-sm leading-relaxed text-white/85">
+
+            <div className="mt-5 h-[3px] w-14 rounded-full bg-white/70" />
+
+            <p className="mt-6 max-w-md text-base leading-8 text-white/95 sm:text-lg">
               We aspire to grow beyond the brands we have today, continuously
               exploring new ideas, new categories, new products, and new
               possibilities through thoughtful innovation. Our ambition is not

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   motion,
   useMotionValue,
@@ -19,7 +19,7 @@ import {
   Users2,
   Leaf,
   Target,
-  ShowerHead,
+  Cog,
   Sprout,
   ThumbsUp,
   ChefHat,
@@ -30,6 +30,8 @@ import {
 import heroBg from "../assets/images/hero-bg.png";
 import aboutImg from "../assets/images/about-food.jpg";
 import valuesImg from "../assets/images/values-snacks.jpg";
+import visionImg from "../assets/images/vision-bg.jpg";
+import missionImg from "../assets/images/mission-bg.jpg";
 import Seo from "../components/Seo";
 import Button from "../components/Button";
 import ValueCard from "../components/ValueCard";
@@ -114,7 +116,7 @@ const whatWeDoItems = [
   {
     icon: Salad,
     title: "Balanced Nutrition",
-    desc: "Every recipe is built around wholesome ingredients that support everyday energy and wellbeing for the whole family.",
+    desc: "Every formulation is built around wholesome ingredients that support everyday energy and wellbeing for the whole family.",
   },
   {
     icon: BadgeCheck,
@@ -124,13 +126,13 @@ const whatWeDoItems = [
   {
     icon: Zap,
     title: "Smart Convenience",
-    desc: "Ready when you are food that fits modern routines without compromising on freshness or nutrition.",
+    desc: "Ready when you are. Thoughtfully crafted food that fits seamlessly into modern routines while keeping freshness and nutrition at the forefront",
   },
 ];
 
 const philosophyItems = [
   {
-    Icon: ShowerHead,
+    Icon: Cog,
     title: "Minimal Processing",
     desc: "We use traditional methods to limit over-processing and retain nutrients, keeping our food wholesome, balanced, and nourishing.",
   },
@@ -148,6 +150,28 @@ const philosophyItems = [
     Icon: ChefHat,
     title: "Natural Tastes",
     desc: "We use careful methods to bring out full flavors, ensuring every bite is balanced, satisfying, and enjoyable.",
+  },
+];
+
+/* Values / Vision / Mission panels (background images top par import hain) */
+const driveItems = [
+  {
+    title: "Values",
+    icon: Gem,
+    img: valuesImg,
+    desc: "We believe in making food with integrity, attention, and consistency. By combining time-tested techniques with mindful processing, we deliver products that nourish, delight, and earn family trust.",
+  },
+  {
+    title: "Vision",
+    icon: Eye,
+    img: visionImg,
+    desc: "To inspire better everyday eating by making nourishing, thoughtfully made food accessible to families, while preserving the wisdom of traditional food practices for today’s way of life.",
+  },
+  {
+    title: "Mission",
+    icon: Crosshair,
+    img: missionImg,
+    desc: "We create food that brings together honest ingredients, great taste, and thoughtful nutrition. Every product is developed to fit effortlessly into everyday routines and support healthier choices for the whole family.",
   },
 ];
 
@@ -216,35 +240,25 @@ const whatWeDoCardVariant = {
   },
 };
 
-const stackContainer = {
+/* Expanding panels (Values / Vision / Mission) */
+const panelContainer = {
   hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.22, delayChildren: 0.1 },
-  },
+  visible: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
 };
 
-const valuesCardVariant = {
-  hidden: { opacity: 0, scale: 0.94, y: 20 },
+const panelItem = {
+  hidden: { opacity: 0, y: 40, scale: 0.97 },
   visible: {
     opacity: 1,
-    scale: 1,
     y: 0,
-    transition: { duration: 0.6, ease: "easeOut" },
-  },
-};
-
-const stackedCardVariant = {
-  hidden: { opacity: 0, x: -100, scale: 0.85 },
-  visible: {
-    opacity: 1,
-    x: 0,
     scale: 1,
-    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
 export default function Home() {
   const reduce = useReducedMotion();
+  const [activeDrive, setActiveDrive] = useState(0);
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -499,21 +513,8 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-charcoal/35 via-transparent to-transparent" />
             </div>
 
-            {/* floating pill (top right) */}
-            <motion.div
-              animate={reduce ? undefined : { y: [0, -6, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute right-3 top-0 z-10 flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-xs font-semibold text-[#241209] shadow-lg backdrop-blur sm:right-6 sm:text-sm"
-            >
-        
-            </motion.div>
-
-            {/* floating stat card (bottom left) */}
-            <motion.div
-              animate={reduce ? undefined : { y: [0, 8, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute bottom-2 left-2 z-10 flex items-center gap-4 rounded-2xl bg-white px-5 py-4 shadow-xl sm:left-0"
-            >
+            {/* stat card (bottom left) - stable, no motion */}
+            <div className="absolute bottom-2 left-2 z-10 flex items-center gap-4 rounded-2xl bg-white px-5 py-4 shadow-xl sm:left-0">
               <span className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-500 font-baloo text-2xl font-bold text-white">
                 4
               </span>
@@ -521,7 +522,7 @@ export default function Home() {
                 <p className="font-baloo text-lg font-bold text-[#241209]">Food Brands</p>
                 <p className="text-xs text-charcoal-400">One promise of trust</p>
               </div>
-            </motion.div>
+            </div>
           </motion.div>
 
           <motion.div
@@ -601,7 +602,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* VALUES / VISION / MISSION */}
+      {/* VALUES / VISION / MISSION (expanding panels) */}
       <section className="section-py overflow-hidden bg-orange-50/40">
         <div className="container-px mx-auto max-w-7xl">
           <SectionHeading
@@ -614,67 +615,82 @@ export default function Home() {
           />
 
           <motion.div
-            variants={stackContainer}
+            variants={panelContainer}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, amount: 0.35, margin: "0px 0px -10% 0px" }}
-            className="grid grid-cols-1 gap-8 lg:grid-cols-5 lg:items-stretch"
+            viewport={{ once: true, amount: 0.2 }}
+            className="flex flex-col gap-4 lg:h-[560px] lg:flex-row"
           >
-            <motion.div
-              variants={valuesCardVariant}
-              className="relative z-30 min-h-[300px] overflow-hidden rounded-3xl shadow-soft lg:col-span-3"
-            >
-              <img
-                src={valuesImg}
-                alt="Freshly made snacks and chips"
-                className="absolute inset-0 h-full w-full object-cover"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/45 to-charcoal/15" />
-              <div className="relative flex h-full flex-col justify-between p-8">
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm">
-                  <Gem size={26} strokeWidth={1.75} />
-                </div>
-                <div>
-                  <h3 className="font-baloo text-4xl font-bold text-white">Values</h3>
-                  <p className="mt-3 max-w-sm leading-relaxed text-white/90">
-                    We believe in making food with integrity, attention, and consistency. By
-                    combining time-tested techniques with mindful processing, we deliver
-                    products that nourish, delight, and earn family trust.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
+            {driveItems.map((item, i) => {
+              const active = activeDrive === i;
+              return (
+                <motion.div
+                  key={item.title}
+                  variants={panelItem}
+                  role="button"
+                  tabIndex={0}
+                  aria-pressed={active}
+                  aria-label={item.title}
+                  onMouseEnter={() => setActiveDrive(i)}
+                  onFocus={() => setActiveDrive(i)}
+                  onClick={() => setActiveDrive(i)}
+                  className={`group relative min-h-[380px] min-w-0 cursor-pointer overflow-hidden rounded-[2rem] bg-gradient-to-br from-orange-400 to-orange-600 outline-none transition-[flex-grow] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:ring-4 focus-visible:ring-orange-500 focus-visible:ring-offset-2 lg:min-h-0 lg:basis-0 ${
+                    active ? "lg:grow-[3.4]" : "lg:grow-[1]"
+                  }`}
+                >
+                  <img
+                    src={item.img}
+                    alt=""
+                    loading="lazy"
+                    onError={(e) => {
+                      e.currentTarget.style.display = "none";
+                    }}
+                    className={`absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-out ${
+                      active ? "lg:scale-100" : "lg:scale-110"
+                    }`}
+                  />
 
-            <motion.div
-              variants={stackedCardVariant}
-              whileHover={{ y: -6 }}
-              className="relative z-20 min-h-[300px] rounded-3xl bg-gradient-to-br from-[#3a2418] to-[#241209] p-6 shadow-soft lg:col-span-1"
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/25 text-white">
-                <Eye size={22} strokeWidth={1.75} />
-              </div>
-              <h3 className="font-baloo mt-5 text-2xl font-bold text-white">Vision</h3>
-              <p className="mt-3 text-sm leading-relaxed text-white/85">
-                Our goal is to make clean, wholesome food an easy choice for every household
-                while bringing the goodness of tradition into modern life.
-              </p>
-            </motion.div>
+                  {/* shade */}
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-t from-[#241209]/90 via-[#241209]/35 to-[#241209]/10 transition-opacity duration-500 ${
+                      active ? "lg:opacity-100" : "lg:opacity-90"
+                    }`}
+                  />
 
-            <motion.div
-              variants={stackedCardVariant}
-              whileHover={{ y: -6 }}
-              className="relative z-10 min-h-[300px] rounded-3xl bg-gradient-to-br from-[#3a2418] to-[#241209] p-6 shadow-soft lg:col-span-1"
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/25 text-white">
-                <Crosshair size={22} strokeWidth={1.75} />
-              </div>
-              <h3 className="font-baloo mt-5 text-2xl font-bold text-white">Mission</h3>
-              <p className="mt-3 text-sm leading-relaxed text-white/85">
-                To make wholesome, carefully crafted foods part of your daily life. We focus on
-                quality, taste, and your family's health in every bite.
-              </p>
-            </motion.div>
+                  {/* icon (top) */}
+                  <div className="absolute left-7 top-7 flex h-14 w-14 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm sm:left-9 sm:top-9">
+                    <item.icon size={26} strokeWidth={1.75} />
+                  </div>
+
+                  {/* collapsed vertical title (desktop only) */}
+                  <span
+                    aria-hidden="true"
+                    className={`absolute bottom-8 left-1/2 hidden -translate-x-1/2 rotate-180 whitespace-nowrap font-baloo text-3xl font-bold text-white transition-opacity duration-300 [writing-mode:vertical-rl] lg:block ${
+                      active ? "opacity-0" : "opacity-100"
+                    }`}
+                  >
+                    {item.title}
+                  </span>
+
+                  {/* expanded content (always visible on mobile) */}
+                  <div
+                    className={`absolute inset-x-0 bottom-0 p-7 transition-all duration-500 sm:p-9 ${
+                      active
+                        ? "opacity-100 lg:translate-y-0 lg:delay-200"
+                        : "opacity-100 lg:translate-y-4 lg:opacity-0"
+                    }`}
+                  >
+                    <div className="h-[3px] w-12 rounded-full bg-orange-400" />
+                    <h3 className="font-baloo mt-4 text-4xl font-bold text-white sm:text-5xl">
+                      {item.title}
+                    </h3>
+                    <p className="mt-3 max-w-md text-[0.95rem] leading-relaxed text-white/90">
+                      {item.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </motion.div>
         </div>
       </section>
@@ -718,19 +734,47 @@ export default function Home() {
 
       {/* BRANDS HORIZONTAL SCROLL */}
       <section className="bg-white">
-        <div className="section-py container-px mx-auto max-w-7xl">
-          <SectionHeading
-            label="Our Brands"
-            title="Four Brands – Different Consumers, Different Needs, Different Journeys."
-            highlight="Different Consumers, Different Needs, Different Journeys."
-            description="At Sadguru Foods, we believe that nutrition is not one size fits all.
+        <div className="container-px mx-auto max-w-7xl pb-2 pt-16 lg:pb-4 lg:pt-24">
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+            {/* LEFT: heading in 4 lines */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+            >
+              <span className="inline-flex items-center rounded-full border border-orange-200 bg-gradient-to-r from-orange-50 to-amber-50 px-5 py-2.5 text-sm font-extrabold uppercase tracking-[0.28em] text-orange-600 shadow-sm sm:px-6 sm:text-base">
+                Our Brands
+              </span>
 
-That’s why we’ve created four distinctive brands. Every consumer has a unique nutritional journey.
+              <h2 className="font-baloo mt-5 text-4xl font-bold leading-[1.15] tracking-tight sm:text-5xl">
+                <span className="block text-[#241209] sm:whitespace-nowrap">Four Brands</span>
+                <span className="block text-orange-500 sm:whitespace-nowrap">Different Consumers,</span>
+                <span className="block text-orange-500 sm:whitespace-nowrap">Different Needs,</span>
+                <span className="block text-orange-500 sm:whitespace-nowrap">Different Journeys.</span>
+              </h2>
+            </motion.div>
 
-Four brands, each created with distinct purpose, audience and story.
-Scroll down to explore their stories."
-            align="center"
-          />
+            {/* RIGHT: description */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="border-l-4 border-orange-500 pl-6 sm:pl-8"
+            >
+              <p className="text-base leading-relaxed text-charcoal-400 sm:text-lg">
+                At Sadguru Foods, we believe that nutrition is not one size fits all.
+              </p>
+              <p className="mt-5 text-base leading-relaxed text-charcoal-400 sm:text-lg">
+                That’s why we’ve created four distinctive brands. Every consumer has a unique
+                nutritional journey.
+              </p>
+              <p className="mt-5 text-base leading-relaxed text-charcoal-400 sm:text-lg">
+                Four brands, each created with distinct purpose, audience and story.
+              </p>
+            </motion.div>
+          </div>
         </div>
 
         <BrandHorizontalScroll />
@@ -754,12 +798,14 @@ Scroll down to explore their stories."
                   description="Every product from Sadguru Foods Processing Pvt. Ltd. follows a transparent and disciplined process. From sourcing quality ingredients to delivering consistent products, we focus on trust, care, and excellence at every stage."
                 />
 
-                <div className="mt-10 flex items-center justify-center gap-4 lg:justify-start">
-                  <div className="h-[2px] w-12 bg-orange-500" />
-                  <span className="whitespace-nowrap text-sm font-medium tracking-wide text-charcoal-400">
-                    Quality • Trust • Care
+                <div className="mt-10 flex justify-center lg:justify-start">
+                  <span className="inline-flex items-center gap-3 rounded-full border border-orange-200 bg-orange-50 px-6 py-3 text-sm font-semibold tracking-wide text-orange-600 sm:text-base">
+                    <span>Quality</span>
+                    <span className="h-1.5 w-1.5 rounded-full bg-orange-400" />
+                    <span>Trust</span>
+                    <span className="h-1.5 w-1.5 rounded-full bg-orange-400" />
+                    <span>Care</span>
                   </span>
-                  <div className="h-[2px] w-12 bg-orange-500" />
                 </div>
               </motion.div>
             </div>

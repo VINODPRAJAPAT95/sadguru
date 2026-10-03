@@ -374,12 +374,8 @@ export default function PrivacyPolicy() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-3 rounded-full border border-orange-200 bg-white/80 px-5 py-2 text-sm font-extrabold uppercase tracking-[0.25em] text-orange-600 shadow-sm backdrop-blur"
+              className="inline-flex items-center rounded-full border border-orange-200 bg-white/80 px-5 py-2 text-sm font-extrabold uppercase tracking-[0.25em] text-orange-600 shadow-sm backdrop-blur"
             >
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-orange-400 opacity-75" />
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-orange-500" />
-              </span>
               Legal
             </motion.span>
 

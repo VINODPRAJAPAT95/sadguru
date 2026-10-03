@@ -13,6 +13,17 @@ import brands from "../data/brands";
 // Change the folder and file name to your real image path.
 import aboutImage from "../assets/miletveda/about.jpg";
 
+// Product images
+// Put your product photos in src/assets/miletveda/ and change the file names here.
+// Image 1 goes to the 1st product, image 2 to the 2nd, and so on (same order as brand.products).
+// If you have more than 4 products, import more images and add them to PRODUCT_IMAGES below.
+import product1 from "../assets/miletveda/product1.png";
+import product2 from "../assets/miletveda/product2.png";
+import product3 from "../assets/miletveda/product3.png";
+import product4 from "../assets/miletveda/product4.png";
+
+const PRODUCT_IMAGES = [product1, product2, product3, product4];
+
 const brand = brands[2];
 
 const clean = (text = "") => text.replace(/\s*[\u2014\u2013]\s*/g, ", ");
@@ -47,6 +58,12 @@ const CurveDivider = ({ fromColor, toColor }) => (
 export default function BrandThree() {
   const aboutParagraphs = clean(brand.about).split("\n\n");
   const philosophyParagraphs = clean(brand.philosophy).split("\n\n");
+
+  // Use the imported image for each product, fall back to the data file image if missing
+  const products = brand.products.map((p, i) => ({
+    ...p,
+    image: PRODUCT_IMAGES[i] || p.image,
+  }));
 
   return (
     <>
@@ -358,7 +375,7 @@ export default function BrandThree() {
           </h2>
 
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {brand.products.map((p, i) => (
+            {products.map((p, i) => (
               <motion.div
                 key={p.name}
                 initial={{ opacity: 0, y: 16 }}
@@ -374,19 +391,24 @@ export default function BrandThree() {
                   stiffness: 220,
                   damping: 20,
                 }}
-                className="overflow-hidden rounded-[1.75rem] shadow-md"
+                className="flex flex-col overflow-hidden rounded-[1.75rem] shadow-md"
+                style={{ backgroundColor: WHITE }}
               >
-                <div className="overflow-hidden">
+                {/* Image area: full product visible, never cropped */}
+                <div
+                  className="flex aspect-square w-full items-center justify-center overflow-hidden p-4"
+                  style={{ backgroundColor: CREAM }}
+                >
                   <motion.img
                     src={p.image}
                     alt={p.name}
-                    className="h-48 w-full object-cover"
-                    whileHover={{ scale: 1.08 }}
+                    className="h-full w-full object-contain"
+                    whileHover={{ scale: 1.06 }}
                     transition={{ duration: 0.4, ease: "easeOut" }}
                   />
                 </div>
 
-                <div className="p-5">
+                <div className="flex flex-1 flex-col p-5">
                   <p
                     className="text-xs font-extrabold uppercase tracking-widest"
                     style={{ color: GOLD }}
@@ -449,49 +471,8 @@ export default function BrandThree() {
         </div>
       </section>
 
-      {/* SECTION 8: GALLERY */}
-      <section className="py-16 sm:py-20" style={{ backgroundColor: `${GREEN}0D` }}>
-        <div className="mx-auto max-w-7xl px-6 lg:px-12">
-          <p className={eyebrow} style={{ color: PRIMARY }}>
-            GALLERY
-          </p>
-
-          <h2
-            className="mt-4 text-4xl font-extrabold leading-[1.1] sm:text-5xl"
-            style={{ color: DARK }}
-          >
-            A Closer Look at {brand.name}.
-          </h2>
-
-          <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
-            {brand.gallery.map((src, i) => (
-              <motion.div
-                key={src}
-                initial={{ opacity: 0, scale: 0.94 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.05 }}
-                transition={{
-                  delay: i * 0.08,
-                  type: "spring",
-                  stiffness: 220,
-                  damping: 18,
-                }}
-                className="overflow-hidden rounded-2xl shadow-sm"
-              >
-                <img
-                  src={src}
-                  alt={`${brand.name} gallery ${i + 1}`}
-                  className="h-40 w-full object-cover sm:h-48"
-                />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 9: PROMISE */}
-      <section className="bg-white py-10 sm:py-14">
+      {/* SECTION 8: PROMISE */}
+      <section className="bg-white py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-6 text-center lg:px-12">
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -524,7 +505,7 @@ export default function BrandThree() {
               stiffness: 200,
               damping: 16,
             }}
-            className="mx-auto mt-6 flex h-32 w-32 items-center justify-center rounded-full bg-white shadow-lg sm:h-36 sm:w-36"
+            className="mx-auto mt-8 flex h-32 w-32 items-center justify-center rounded-full bg-white shadow-lg sm:h-36 sm:w-36"
             style={{ border: `3px solid ${PRIMARY}` }}
           >
             <img

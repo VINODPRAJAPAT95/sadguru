@@ -95,6 +95,12 @@ export default function BrandOne() {
   const whoWeServeParagraphs = clean(brand.whoWeServe).split("\n\n");
   const taglineParts = brand.tagline.split(". ").map((s) => s.replace(/\.$/, ""));
 
+  // Hero tagline:
+  // White part: everything except the last 2 words (e.g. "Love.")
+  const taglineWhite = taglineParts.slice(0, -2).map((s) => s + ".");
+  // Yellow part: the last 2 words, each on its own line (e.g. "Care." / "Nourishment.")
+  const taglineYellow = taglineParts.slice(-2).map((s) => s + ".");
+
   return (
     <>
       <Seo title={`${brand.name} | ${brand.tagline}`} description={clean(brand.description)} />
@@ -102,25 +108,27 @@ export default function BrandOne() {
       {/* SECTION 1: HERO */}
       <section
         className="relative overflow-hidden"
-        style={{ backgroundColor: PRIMARY, minHeight: "62vh" }}
+        style={{ backgroundColor: PRIMARY, minHeight: "60vh" }}
       >
-        <div className="relative mx-auto grid max-w-7xl items-center gap-8 px-6 py-16 lg:grid-cols-2 lg:px-12 lg:py-20">
+        <div className="relative mx-auto grid min-h-[60vh] max-w-7xl items-center gap-8 px-6 pb-10 pt-10 lg:grid-cols-2 lg:px-12 lg:pb-12 lg:pt-14">
           {/* Left text */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7 }}
+            className="flex flex-col justify-center"
           >
-            <p className="text-xs font-extrabold uppercase tracking-[0.25em] text-white opacity-70">
-              {brand.number}. {brand.name.toUpperCase()}
-            </p>
-            <h1 className="mt-4 text-3xl font-extrabold leading-[1.1] text-white sm:text-5xl lg:text-6xl lg:leading-[1.05]">
-              {taglineParts.map((part, i) => (
-                <span key={i}>
-                  <span style={{ color: i === taglineParts.length - 1 ? YELLOW : WHITE }}>
-                    {part}.
-                  </span>
-                  {i < taglineParts.length - 1 && <br />}
+            <h1 className="text-2xl font-extrabold leading-[1.15] text-white sm:text-4xl lg:text-5xl lg:leading-[1.1]">
+              {taglineWhite.map((line) => (
+                <span key={line}>
+                  <span style={{ color: WHITE }}>{line}</span>
+                  <br />
+                </span>
+              ))}
+              {taglineYellow.map((line, i) => (
+                <span key={line}>
+                  <span style={{ color: YELLOW }}>{line}</span>
+                  {i < taglineYellow.length - 1 && <br />}
                 </span>
               ))}
             </h1>

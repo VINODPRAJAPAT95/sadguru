@@ -266,8 +266,14 @@ export default function OurStory() {
                     </textPath>
                   </text>
                 </svg>
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-orange-500 text-white">
-                  <Leaf size={20} strokeWidth={1.75} />
+
+                {/* favicon from /public (stays still in the center) */}
+                <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-orange-500 bg-white shadow-sm">
+                  <img
+                    src="/favicon.svg"
+                    alt="Sadguru Foods logo"
+                    className="h-7 w-7 object-contain"
+                  />
                 </div>
               </div>
 

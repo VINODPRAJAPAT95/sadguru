@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 import brands from "../data/brands";
 import { COMPANY_SHORT_NAME } from "../config";
 import logo from "../assets/logo.svg";
@@ -11,6 +11,44 @@ const aboutLinks = [
   { label: "Our Team", to: "/about/our-team" },
   { label: "Privacy Policy", to: "/about/privacy-policy" },
 ];
+
+/* =====================================================
+   GET IN TOUCH BUTTON
+   - Gradient pill with a white circle + arrow on the right
+   - Hover: arrow rotates to point up-right, text rolls up
+     and the same text slides in from below
+   - Colours: bg-primary (your orange) and text-black (arrow)
+===================================================== */
+function GetInTouchButton({ className = "", label = "Get in Touch" }) {
+  return (
+    <Link
+      to="/contact"
+      className={`group inline-flex items-center gap-4 rounded-full bg-primary py-2 pl-7 pr-2 text-sm font-bold text-white shadow-md transition-shadow duration-300 hover:shadow-xl ${className}`}
+    >
+      {/* Rolling text */}
+      <span className="relative block h-5 overflow-hidden leading-5">
+        <span className="block transition-transform duration-300 ease-out group-hover:-translate-y-full">
+          {label}
+        </span>
+        <span
+          aria-hidden="true"
+          className="absolute left-0 top-full block transition-transform duration-300 ease-out group-hover:-translate-y-full"
+        >
+          {label}
+        </span>
+      </span>
+
+      {/* Arrow circle */}
+      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-black">
+        <ArrowRight
+          size={20}
+          strokeWidth={2.5}
+          className="transition-transform duration-300 ease-out group-hover:-rotate-45"
+        />
+      </span>
+    </Link>
+  );
+}
 
 function DesktopDropdown({ label, items, isBrands = false }) {
   const [open, setOpen] = useState(false);
@@ -134,12 +172,7 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden lg:block">
-          <Link
-            to="/contact"
-            className="rounded-full bg-primary px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-primary-600"
-          >
-            Get in Touch
-          </Link>
+          <GetInTouchButton />
         </div>
 
         <button
@@ -231,12 +264,7 @@ export default function Navbar() {
                 Contact
               </Link>
 
-              <Link
-                to="/contact"
-                className="mt-2 rounded-full bg-primary px-6 py-3.5 text-center text-sm font-bold text-white hover:bg-primary-600"
-              >
-                Get in Touch
-              </Link>
+              <GetInTouchButton className="mt-2 w-full justify-between" />
             </div>
           </motion.div>
         )}

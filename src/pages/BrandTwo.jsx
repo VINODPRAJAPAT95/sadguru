@@ -22,6 +22,10 @@ import brands from "../data/brands";
 // Change the file name to your real image. Put it in src/assets/t2m/
 import aboutImage from "../assets/t2m/about.png";
 
+// What Makes T2M Different section image
+// Put your image in src/assets/t2m/ and change the file name here
+import differentImage from "../assets/t2m/different.png";
+
 // Product images
 import product1 from "../assets/t2m/product1.png";
 import product2 from "../assets/t2m/product2.png";
@@ -632,12 +636,12 @@ export default function BrandTwo() {
                   stiffness: 200,
                   damping: 20,
                 }}
-                className="relative mt-8 overflow-hidden rounded-[2rem] shadow-2xl"
+                className="relative mt-8"
               >
                 <img
-                  src={brand.cardImage}
+                  src={differentImage}
                   alt={`${brand.name} Snacks`}
-                  className="h-40 w-full object-cover opacity-80 sm:h-52"
+                  className="h-auto w-full object-contain"
                 />
               </motion.div>
             </div>

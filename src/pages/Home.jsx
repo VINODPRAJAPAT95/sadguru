@@ -1,5 +1,12 @@
 import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import { Link } from "react-router-dom";
 import {
   Gem,
@@ -144,13 +151,53 @@ const philosophyItems = [
   },
 ];
 
+/* ------------------------------------------------------------------
+   HERO ANIMATION VARIANTS
+   - Each headline line slides up from behind a mask (overflow-hidden)
+   - Buttons and scroll cue fade in after the headline
+------------------------------------------------------------------- */
+const EASE_OUT = [0.22, 1, 0.36, 1];
+
+// Tiny glowing embers that drift upward in the hero (fixed values, no randomness)
+const PARTICLES = [
+  { left: "6%", size: 6, dur: 12, delay: 0 },
+  { left: "14%", size: 4, dur: 15, delay: 3 },
+  { left: "22%", size: 8, dur: 13, delay: 6 },
+  { left: "31%", size: 5, dur: 16, delay: 1.5 },
+  { left: "40%", size: 4, dur: 14, delay: 8 },
+  { left: "49%", size: 7, dur: 17, delay: 4 },
+  { left: "58%", size: 5, dur: 12, delay: 9 },
+  { left: "66%", size: 6, dur: 15, delay: 2 },
+  { left: "74%", size: 4, dur: 13, delay: 7 },
+  { left: "82%", size: 8, dur: 16, delay: 5 },
+  { left: "90%", size: 5, dur: 14, delay: 10 },
+  { left: "95%", size: 4, dur: 18, delay: 3.5 },
+];
+
 const headlineLine = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { y: "110%", opacity: 0 },
   visible: (i) => ({
+    y: "0%",
+    opacity: 1,
+    transition: { duration: 0.9, delay: 0.5 + i * 0.18, ease: EASE_OUT },
+  }),
+};
+
+const heroButtons = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.15, delayChildren: 1.3 },
+  },
+};
+
+const heroButtonItem = {
+  hidden: { opacity: 0, y: 24, scale: 0.92 },
+  visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, delay: 0.15 + i * 0.13, ease: "easeOut" },
-  }),
+    scale: 1,
+    transition: { duration: 0.6, ease: EASE_OUT },
+  },
 };
 
 const whatWeDoContainer = {
@@ -208,6 +255,24 @@ export default function Home() {
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "35%"]);
   const textOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
+  // Mouse parallax: image drifts opposite to the cursor, text moves slightly with it
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const smoothX = useSpring(mouseX, { stiffness: 50, damping: 18, mass: 0.6 });
+  const smoothY = useSpring(mouseY, { stiffness: 50, damping: 18, mass: 0.6 });
+  const textMouseX = useTransform(smoothX, [-0.5, 0.5], [-10, 10]);
+
+  const handleHeroMove = (e) => {
+    if (reduce) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
+    mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
+  };
+  const handleHeroLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
   return (
     <>
       <Seo
@@ -218,22 +283,121 @@ export default function Home() {
       {/* HERO */}
       <section
         ref={heroRef}
+        onMouseMove={handleHeroMove}
+        onMouseLeave={handleHeroLeave}
         className="relative flex min-h-screen items-center overflow-hidden bg-charcoal"
       >
+        {/* BACKGROUND IMAGE
+            Layers (outside to inside):
+            1. scroll parallax
+            2. mouse parallax (desktop)
+            3. cinematic reveal: image opens from a rounded window to full screen
+            4. slow Ken Burns drift that keeps going after the reveal */}
         <motion.div style={{ y: bgY }} className="absolute inset-0 scale-110">
-          <img
-            src={heroBg}
-            alt="Freshly prepared wholesome snacks and food"
-            className="h-full w-full object-cover"
-            loading="eager"
-            decoding="async"
-            fetchPriority="high"
-          />
-          <div className="absolute inset-0 bg-charcoal/45" />
+          <motion.div className="absolute inset-0">
+            <motion.div
+              className="absolute inset-0"
+              initial={
+                reduce
+                  ? false
+                  : { clipPath: "inset(14% 10% 14% 10% round 40px)", opacity: 0 }
+              }
+              animate={{ clipPath: "inset(0% 0% 0% 0% round 0px)", opacity: 1 }}
+              transition={{
+                clipPath: { duration: 1.7, ease: EASE_OUT },
+                opacity: { duration: 0.8, ease: "easeOut" },
+              }}
+            >
+              <motion.div
+                className="h-full w-full"
+                animate={reduce ? undefined : { scale: [1, 1.08], x: [0, -14] }}
+                transition={{
+                  duration: 20,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  ease: "easeInOut",
+                }}
+              >
+                <motion.img
+                  src={heroBg}
+                  alt="Freshly prepared wholesome snacks and food"
+                  className="h-full w-full object-cover"
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
+                  initial={reduce ? false : { scale: 1.4 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 2.2, ease: EASE_OUT }}
+                />
+              </motion.div>
+
+              {/* dark overlay + bottom fade for text contrast */}
+              <div className="absolute inset-0 bg-charcoal/45" />
+              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-transparent to-charcoal/30" />
+            </motion.div>
+          </motion.div>
         </motion.div>
 
+        {/* Light sweep: a soft diagonal shine glides across the image, then repeats every few seconds */}
+        {!reduce && (
+          <motion.div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-y-0 left-0 w-full"
+            style={{
+              background:
+                "linear-gradient(105deg, transparent 38%, rgba(255,255,255,0.16) 50%, transparent 62%)",
+            }}
+            initial={{ x: "-110%" }}
+            animate={{ x: "110%" }}
+            transition={{
+              duration: 1.6,
+              delay: 1.5,
+              ease: "easeInOut",
+              repeat: Infinity,
+              repeatDelay: 9,
+            }}
+          />
+        )}
+
+        {/* Glowing embers drifting upward */}
+        {!reduce &&
+          PARTICLES.map((p, i) => (
+            <motion.span
+              key={i}
+              aria-hidden="true"
+              className="pointer-events-none absolute bottom-0 rounded-full bg-orange-400/80 blur-[1px]"
+              style={{ left: p.left, width: p.size, height: p.size }}
+              initial={{ y: "0vh", opacity: 0 }}
+              animate={{ y: ["0vh", "-95vh"], opacity: [0, 0.9, 0] }}
+              transition={{
+                duration: p.dur,
+                delay: 1.8 + p.delay,
+                repeat: Infinity,
+                ease: "easeOut",
+              }}
+            />
+          ))}
+
+        {/* Soft orange glows that slowly breathe behind the text */}
+        {!reduce && (
+          <>
+            <motion.div
+              aria-hidden="true"
+              className="pointer-events-none absolute -left-24 top-1/4 h-80 w-80 rounded-full bg-orange-500/25 blur-3xl"
+              animate={{ scale: [1, 1.25, 1], opacity: [0.5, 0.9, 0.5], x: [0, 30, 0] }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              aria-hidden="true"
+              className="pointer-events-none absolute -right-24 bottom-1/4 h-96 w-96 rounded-full bg-amber-400/20 blur-3xl"
+              animate={{ scale: [1.2, 1, 1.2], opacity: [0.4, 0.8, 0.4], x: [0, -30, 0] }}
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </>
+        )}
+
         <motion.div
-          style={{ y: textY, opacity: textOpacity }}
+          style={{ x: textMouseX, y: textY, opacity: textOpacity }}
           className="container-px relative mx-auto w-full max-w-6xl py-28 text-center"
         >
           <motion.span
@@ -247,42 +411,57 @@ export default function Home() {
 
           <h1 className="mx-auto mt-6 max-w-5xl text-balance break-words font-display text-4xl font-black uppercase leading-[1.1] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
             {["Wholesome Food,", "Thoughtfully Prepared", "for Healthier Living"].map((line, i) => (
-              <motion.span
-                key={line}
-                custom={i}
-                initial="hidden"
-                animate="visible"
-                variants={headlineLine}
-                className={`block ${i === 1 ? "text-orange-500" : "text-white"}`}
-              >
-                {line}
-              </motion.span>
+              <span key={line} className="block overflow-hidden pb-[0.12em]">
+                <motion.span
+                  custom={i}
+                  initial={reduce ? false : "hidden"}
+                  animate="visible"
+                  variants={headlineLine}
+                  className={`block ${i === 1 ? "text-orange-500" : "text-white"}`}
+                >
+                  {line}
+                </motion.span>
+              </span>
             ))}
           </h1>
 
+          {/* Accent line that draws itself under the headline */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.55 }}
+            aria-hidden="true"
+            className="mx-auto mt-6 h-1 w-24 origin-center rounded-full bg-orange-500"
+            initial={reduce ? false : { scaleX: 0, opacity: 0 }}
+            animate={{ scaleX: 1, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1.15, ease: EASE_OUT }}
+          />
+
+          <motion.div
+            variants={heroButtons}
+            initial={reduce ? false : "hidden"}
+            animate="visible"
             className="mt-10 flex flex-wrap items-center justify-center gap-4"
           >
-            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-              <Button to="/brands" variant="primary" className="bg-orange-500 hover:bg-orange-600">
-                Explore Our Brands
-              </Button>
+            <motion.div variants={heroButtonItem}>
+              <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+                <Button to="/brands" variant="primary" className="bg-orange-500 hover:bg-orange-600">
+                  Explore Our Brands
+                </Button>
+              </motion.div>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-              <Button
-                to="/about/our-story"
-                variant="outline"
-                icon={false}
-                className="border-white/40 text-white hover:border-orange-400 hover:text-orange-300"
-              >
-                Discover Our Story
-              </Button>
+            <motion.div variants={heroButtonItem}>
+              <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+                <Button
+                  to="/about/our-story"
+                  variant="outline"
+                  icon={false}
+                  className="border-white/40 text-white hover:border-orange-400 hover:text-orange-300"
+                >
+                  Discover Our Story
+                </Button>
+              </motion.div>
             </motion.div>
           </motion.div>
         </motion.div>
+
       </section>
 
       {/* SHORT ABOUT / WHO WE ARE */}

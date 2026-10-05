@@ -372,9 +372,6 @@ export default function OurStory() {
             transition={{ duration: 0.7 }}
           >
             <span className={eyebrow}>Our Vision</span>
-            <h2 className={`mt-4 ${h2Big}`}>
-              Better Food for Better Living.
-            </h2>
 
             <p className="mt-6 max-w-lg text-base leading-relaxed text-charcoal-400">
               Our vision is to build a trusted and diversified food company that

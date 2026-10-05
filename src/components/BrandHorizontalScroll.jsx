@@ -113,10 +113,6 @@ function LogoStage({ brand, index, children }) {
 
         {children}
       </div>
-
-      {/* floating accents */}
-      <span className="pointer-events-none absolute -right-3 top-10 h-5 w-5 rounded-full bg-[#E2903F] shadow-lg shadow-[#E2903F]/40" />
-      <span className="pointer-events-none absolute -left-4 bottom-12 h-3 w-3 rounded-full bg-[#E2903F]/60" />
     </div>
   );
 }

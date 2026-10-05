@@ -755,7 +755,7 @@ export default function Home() {
               </h2>
             </motion.div>
 
-            {/* RIGHT: description */}
+            {/* RIGHT: description (single paragraph) */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -765,13 +765,9 @@ export default function Home() {
             >
               <p className="text-base leading-relaxed text-charcoal-400 sm:text-lg">
                 At Sadguru Foods, we believe that nutrition is not one size fits all.
-              </p>
-              <p className="mt-5 text-base leading-relaxed text-charcoal-400 sm:text-lg">
-                That’s why we’ve created four distinctive brands. Every consumer has a unique
-                nutritional journey.
-              </p>
-              <p className="mt-5 text-base leading-relaxed text-charcoal-400 sm:text-lg">
-                Four brands, each created with distinct purpose, audience and story.
+                That’s why we’ve created four distinctive brands. Every consumer has a
+                unique nutritional journey. Four brands, each created with distinct
+                purpose, audience and story.
               </p>
             </motion.div>
           </div>

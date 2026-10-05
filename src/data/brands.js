@@ -75,10 +75,10 @@ const brands = [
     cardImage:
       "https://images.unsplash.com/photo-1599490659213-e0b2757c5a91?auto=format&fit=crop&w=1200&q=80",
     description:
-      "T2M is Sadguru Foods' everyday healthy snacking brand bringing familiar Indian flavours to consumers in convenient, affordable and hygienically processed formats.",
+      "T2M is Sadguru Foods' everyday snacking brand bringing familiar Indian flavours to consumers in convenient, affordable and hygienically processed formats.",
 
     about:
-      "T2M is Sadguru Foods' everyday healthy snacking brand created to bring familiar Indian flavours to consumers in convenient, affordable, and hygienically processed formats.\n\nIndia has a rich snacking culture. From a simple handful of peanuts to crunchy millets, superfoods, murukkus, chikkis, mixtures, popcorn, potato chips and a wide variety of snacks are part of everyday life across generations. T2M builds on this cultural connection by bringing traditional favourites together with modern food processing, packaging, quality control, and distribution.\n\nThe brand is designed to make good quality snacking accessible to a broad consumer base, particularly across Tier-2, Tier-3, and Tier-4 markets, where consumers value familiar taste, affordability, availability, and dependable quality.",
+      "T2M is Sadguru Foods' everyday snacking brand created to bring familiar Indian flavours to consumers in convenient, affordable, and hygienically processed formats.\n\nIndia has a rich snacking culture. From a simple handful of peanuts to crunchy millets, superfoods, murukkus, chikkis, mixtures, popcorn, potato chips and a wide variety of snacks are part of everyday life across generations. T2M builds on this cultural connection by bringing traditional favourites together with modern food processing, packaging, quality control, and distribution.\n\nThe brand is designed to make good quality snacking accessible to a broad consumer base, particularly across Tier-2, Tier-3, and Tier-4 markets, where consumers value familiar taste, affordability, availability, and dependable quality.",
 
     purpose:
       "T2M exists to make everyday snacking accessible, enjoyable, hygienic, and reliable. The brand focuses on delivering the flavours consumers already know and love while maintaining consistency in quality, packaging, portion sizes, and food safety giving consumers a dependable snacking experience every time they pick up a T2M product.",

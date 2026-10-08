@@ -25,12 +25,12 @@ const team = [
   },
  {
     name: "Ms. Priyanka Kanumuri",
-    role: "CMO",
+    role: "Chief Marketing Officer",
     image: priyanka,
   },
  {
     name: "Ms. Akshitha Vatsavai",
-    role: "CXO",
+    role: "Chief Experience Officer",
     image: akshitha,
   },
   {

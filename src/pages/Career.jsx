@@ -20,6 +20,11 @@ const CREAM = "#FFF6E9";
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
 const ALLOWED_EXT = ["pdf", "doc", "docx"];
 
+/* FormSubmit endpoint (normal POST, hidden iframe me submit hota hai).
+   Activation ke baad FormSubmit jo random alias deta hai, wo yahan daal dena
+   (e.g. "https://formsubmit.co/a1b2c3d4e5...") taaki email public na dikhe. */
+const FORMSUBMIT_URL = "https://formsubmit.co/hr@sadgurufoods.com";
+
 /* ── WHY SADGURU FOODS ── */
 const whySadguru = [
   { icon: Lightbulb, title: "Innovation", desc: "Encouraging new ideas, better processes, and continuous improvement." },
@@ -98,11 +103,14 @@ const Eyebrow = ({ children }) => (
 
 export default function Career() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const [selectedJob, setSelectedJob] = useState(null);
   const [resume, setResume] = useState(null);
   const [resumeError, setResumeError] = useState("");
   const [dragging, setDragging] = useState(false);
   const fileRef = useRef(null);
+  const awaitingRef = useRef(false);
   const reduce = useReducedMotion();
 
   const validateAndSetFile = (file) => {
@@ -120,6 +128,14 @@ export default function Career() {
     }
     setResumeError("");
     setResume(file);
+    // drag & drop wali file ko real <input type="file"> me bhi daalo
+    if (fileRef.current) {
+      try {
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        fileRef.current.files = dt.files;
+      } catch (_) {}
+    }
   };
 
   const removeFile = () => {
@@ -134,15 +150,23 @@ export default function Career() {
     validateAndSetFile(e.dataTransfer.files?.[0]);
   };
 
+  // Validate karo, phir browser form ko hidden iframe me submit kar dega (page redirect nahi hoga)
   const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!resume) {
+    if (!resume || !fileRef.current?.files?.length) {
+      e.preventDefault();
       setResumeError("Please upload your resume to continue.");
       return;
     }
-    // TODO: send to your backend / email service:
-    // const fd = new FormData(e.target); fd.set("resume", resume);
-    // await fetch("/api/career", { method: "POST", body: fd });
+    setSubmitError("");
+    setSubmitting(true);
+    awaitingRef.current = true;
+  };
+
+  // Iframe me response load hone par chalta hai
+  const handleIframeLoad = () => {
+    if (!awaitingRef.current) return;
+    awaitingRef.current = false;
+    setSubmitting(false);
     setSubmitted(true);
   };
 
@@ -408,19 +432,17 @@ export default function Career() {
                               transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut" }}
                             />
                           )}
+
+                          {/* FIXED: colours are classes (no inline style), so
+                              group-hover:text-white now works -> icon turns white on hover */}
                           <motion.span
                             whileHover={{ scale: 1.08, rotate: -4 }}
                             transition={{ type: "spring", stiffness: 300, damping: 16 }}
-                            className={`relative flex h-16 w-16 items-center justify-center rounded-full border-[3px] shadow-[0_10px_24px_-10px_rgba(239,127,26,0.6)] transition-colors duration-300 lg:h-20 lg:w-20 ${
+                            className={`relative flex h-16 w-16 items-center justify-center rounded-full border-[3px] border-[#EF7F1A] shadow-[0_10px_24px_-10px_rgba(239,127,26,0.6)] transition-colors duration-300 lg:h-20 lg:w-20 ${
                               isLast
-                                ? "text-white"
-                                : "bg-white group-hover:bg-[#EF7F1A] group-hover:text-white"
+                                ? "bg-[#EF7F1A] text-white"
+                                : "bg-white text-[#EF7F1A] group-hover:bg-[#EF7F1A] group-hover:text-white"
                             }`}
-                            style={{
-                              borderColor: ORANGE,
-                              backgroundColor: isLast ? ORANGE : undefined,
-                              color: isLast ? WHITE : ORANGE,
-                            }}
                           >
                             <Icon size={26} strokeWidth={1.8} />
                           </motion.span>
@@ -723,18 +745,38 @@ export default function Career() {
                 <CheckCircle2 size={32} />
               </span>
               <p className="mt-5 text-xl font-extrabold" style={{ color: CHARCOAL }}>
-                Thank you for reaching out!
+                Thank you for your submission!
               </p>
               <p className="mt-2 text-sm text-slate-500">
-                Our HR team will review your application and get back to you soon.
+                We will let you know soon.
               </p>
             </motion.div>
           ) : (
             <form
+              action={FORMSUBMIT_URL}
+              method="POST"
+              encType="multipart/form-data"
+              target="formsubmit_iframe"
               onSubmit={handleSubmit}
               className="relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-8 shadow-[0_20px_60px_-20px_rgba(43,42,41,0.2)] sm:p-10"
             >
               <span className="absolute left-0 top-0 h-1.5 w-full" style={{ backgroundColor: ORANGE }} />
+
+              {/* honeypot: bots ke liye, real users ko nahi dikhega */}
+              <input
+                type="text"
+                name="_honey"
+                style={{ display: "none" }}
+                tabIndex={-1}
+                autoComplete="off"
+              />
+              <input
+                type="hidden"
+                name="_subject"
+                value={`New Career Application${selectedJob ? ` - ${selectedJob}` : ""}`}
+              />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
 
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                 <div className="flex flex-col gap-1.5">
@@ -850,12 +892,19 @@ export default function Career() {
                   />
                 </div>
 
+                {submitError && (
+                  <p className="col-span-full flex items-center gap-1.5 text-xs font-medium text-red-500">
+                    <AlertCircle size={14} /> {submitError}
+                  </p>
+                )}
+
                 <button
                   type="submit"
-                  className="col-span-full mt-2 inline-flex items-center justify-center gap-2 rounded-full px-7 py-4 text-sm font-bold tracking-wide text-white shadow-lg transition hover:opacity-90"
+                  disabled={submitting}
+                  className="col-span-full mt-2 inline-flex items-center justify-center gap-2 rounded-full px-7 py-4 text-sm font-bold tracking-wide text-white shadow-lg transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
                   style={{ backgroundColor: ORANGE }}
                 >
-                  Submit Application
+                  {submitting ? "Submitting..." : "Submit Application"}
                   <Send size={16} />
                 </button>
               </div>
@@ -863,6 +912,13 @@ export default function Career() {
           )}
         </div>
       </section>
+      {/* Hidden iframe: form yahin submit hota hai, isliye naya page nahi khulta */}
+      <iframe
+        name="formsubmit_iframe"
+        title="formsubmit"
+        onLoad={handleIframeLoad}
+        style={{ display: "none" }}
+      />
     </>
   );
 }

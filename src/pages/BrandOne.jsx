@@ -116,7 +116,7 @@ export default function BrandOne() {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7 }}
-            className="flex flex-col justify-center"
+            className="relative top-8 flex flex-col justify-center sm:top-10 lg:top-12"
           >
             <h1 className="text-2xl font-extrabold leading-[1.15] text-white sm:text-4xl lg:text-5xl lg:leading-[1.1]">
               {taglineWhite.map((line) => (
@@ -156,7 +156,7 @@ export default function BrandOne() {
             </div>
           </motion.div>
 
-          {/* Right image */}
+          {/* Right image (bada kiya) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -166,7 +166,7 @@ export default function BrandOne() {
             <img
               src={brand.heroImage}
               alt={`${brand.name} mother and child`}
-              className="h-auto w-full max-h-[46vh] object-contain"
+              className="h-auto w-full max-h-[46vh] origin-center scale-110 object-contain sm:scale-125 lg:scale-[1.35]"
             />
           </motion.div>
         </div>

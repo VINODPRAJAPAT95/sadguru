@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Phone,
@@ -24,6 +24,11 @@ import {
 const EASE = [0.22, 1, 0.36, 1];
 
 const COMPANY_NAME = "Sadguru Foods Processing Pvt. Ltd.";
+
+/* FormSubmit endpoint (normal POST). Form hidden iframe me submit hota hai,
+   isliye page redirect nahi hota. Activation ke baad FormSubmit ka random alias
+   mile to yahan daal dena (e.g. "https://formsubmit.co/a1b2c3d4e5...") */
+const FORM_ENDPOINT = "https://formsubmit.co/support@sadgurufoods.com";
 
 const enquiryOptions = [
   "General Enquiry",
@@ -140,13 +145,7 @@ function InfoRow({ icon: Icon, title, children, last = false }) {
 }
 
 /* ---------- Form Field ---------- */
-function Field({
-  id,
-  label,
-  error,
-  children,
-  className = "",
-}) {
+function Field({ id, label, error, children, className = "" }) {
   return (
     <div className={className}>
       <label
@@ -162,21 +161,9 @@ function Field({
         {error && (
           <motion.p
             id={`${id}-error`}
-            initial={{
-              opacity: 0,
-              y: -6,
-              height: 0,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-              height: "auto",
-            }}
-            exit={{
-              opacity: 0,
-              y: -6,
-              height: 0,
-            }}
+            initial={{ opacity: 0, y: -6, height: 0 }}
+            animate={{ opacity: 1, y: 0, height: "auto" }}
+            exit={{ opacity: 0, y: -6, height: 0 }}
             transition={{ duration: 0.2 }}
             className="overflow-hidden pt-1.5 text-xs font-medium text-red-500"
           >
@@ -209,6 +196,8 @@ export default function Contact() {
   const [form, setForm] = useState(emptyForm);
   const [errors, setErrors] = useState({});
   const [sending, setSending] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const awaitingRef = useRef(false);
 
   /* ---------- Validation ---------- */
   const validate = () => {
@@ -239,14 +228,26 @@ export default function Contact() {
     return Object.keys(e).length === 0;
   };
 
-  /* ---------- FormSubmit ---------- */
+  /* ---------- Submit ----------
+     Valid hone par browser form ko hidden iframe me POST kar deta hai,
+     isliye page redirect / naya page nahi khulta. */
   const handleSubmit = (e) => {
     if (!validate()) {
       e.preventDefault();
       return;
     }
-
+    awaitingRef.current = true;
     setSending(true);
+  };
+
+  /* Iframe me response aane par thank-you dikhao */
+  const handleIframeLoad = () => {
+    if (!awaitingRef.current) return;
+    awaitingRef.current = false;
+    setSending(false);
+    setSubmitted(true);
+    setForm(emptyForm);
+    setErrors({});
   };
 
   /* ---------- Input Change ---------- */
@@ -467,216 +468,216 @@ export default function Contact() {
             </p>
 
             <div className="mt-8">
-              <motion.form
-                key="form"
-                action="https://formsubmit.co/support@sadgurufoods.com"
-                method="POST"
-                onSubmit={handleSubmit}
-                noValidate
-                variants={container}
-                initial="hidden"
-                animate="visible"
-                className="grid grid-cols-1 gap-x-5 gap-y-5 sm:grid-cols-2"
-              >
-                {/* FormSubmit Settings */}
-                <input
-                  type="hidden"
-                  name="_subject"
-                  value="New Enquiry - Sadguru Foods Website"
-                />
+              {submitted ? (
+                /* THANK YOU (same page, no redirect) */
+                <motion.div
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, ease: EASE }}
+                  role="status"
+                  className="rounded-2xl border border-orange-100 bg-[#FFF8EE] p-8 text-center sm:p-10"
+                >
+                  <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-orange-500/10 text-orange-500">
+                    <CheckCircle2 size={34} />
+                  </span>
 
-                <input
-                  type="hidden"
-                  name="_captcha"
-                  value="false"
-                />
+                  <p className="mt-5 font-display text-xl font-bold text-charcoal sm:text-2xl">
+                    Thank you for your submission!
+                  </p>
 
-                <input
-                  type="hidden"
-                  name="_template"
-                  value="table"
-                />
+                  <p className="mt-2 text-sm text-charcoal-500">
+                    We will let you know soon.
+                  </p>
 
-                {/* Redirect after submission */}
-                <input
-                  type="hidden"
-                  name="_next"
-                  value="https://sadgurufoods.com/contact"
-                />
-
-                {/* NAME */}
-                <motion.div variants={rise}>
-                  <Field
-                    id="name"
-                    label="Full Name"
-                    error={errors.name}
+                  <button
+                    type="button"
+                    onClick={() => setSubmitted(false)}
+                    className="mt-6 rounded-full border-2 border-orange-500 px-6 py-2.5 text-sm font-bold text-orange-600 transition-colors hover:bg-orange-500 hover:text-white"
                   >
-                    <input
-                      id="name"
-                      name="name"
-                      type="text"
-                      placeholder="Your name"
-                      value={form.name}
-                      onChange={handleChange("name")}
-                      aria-invalid={!!errors.name}
-                      className={inputCls(errors.name)}
-                      required
-                    />
-                  </Field>
+                    Send another message
+                  </button>
                 </motion.div>
+              ) : (
+                <motion.form
+                  key="form"
+                  action={FORM_ENDPOINT}
+                  method="POST"
+                  target="contact_formsubmit_iframe"
+                  onSubmit={handleSubmit}
+                  noValidate
+                  variants={container}
+                  initial="hidden"
+                  animate="visible"
+                  className="grid grid-cols-1 gap-x-5 gap-y-5 sm:grid-cols-2"
+                >
+                  {/* FormSubmit Settings */}
+                  <input
+                    type="hidden"
+                    name="_subject"
+                    value="New Enquiry - Sadguru Foods Website"
+                  />
 
-                {/* EMAIL */}
-                <motion.div variants={rise}>
-                  <Field
-                    id="email"
-                    label="Email Address"
-                    error={errors.email}
-                  >
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="you@example.com"
-                      value={form.email}
-                      onChange={handleChange("email")}
-                      aria-invalid={!!errors.email}
-                      className={inputCls(errors.email)}
-                      required
-                    />
-                  </Field>
-                </motion.div>
+                  <input type="hidden" name="_captcha" value="false" />
 
-                {/* PHONE */}
-                <motion.div variants={rise}>
-                  <Field
-                    id="phone"
-                    label="Phone Number"
-                    error={errors.phone}
-                  >
-                    <input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      placeholder="+91 98765 43210"
-                      value={form.phone}
-                      onChange={handleChange("phone")}
-                      aria-invalid={!!errors.phone}
-                      className={inputCls(errors.phone)}
-                      required
-                    />
-                  </Field>
-                </motion.div>
+                  <input type="hidden" name="_template" value="table" />
 
-                {/* SUBJECT */}
-                <motion.div variants={rise}>
-                  <Field
-                    id="subject"
-                    label="Subject / Enquiry Type"
-                    error={errors.subject}
-                  >
-                    <div className="relative">
-                      <select
-                        id="subject"
-                        name="subject"
-                        value={form.subject}
-                        onChange={handleChange("subject")}
-                        aria-invalid={!!errors.subject}
-                        className={`${inputCls(
-                          errors.subject
-                        )} appearance-none pr-10 ${
-                          form.subject
-                            ? ""
-                            : "text-charcoal-300"
-                        }`}
+                  {/* honeypot: bots ke liye, real users ko nahi dikhega */}
+                  <input
+                    type="text"
+                    name="_honey"
+                    style={{ display: "none" }}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+
+                  {/* NAME */}
+                  <motion.div variants={rise}>
+                    <Field id="name" label="Full Name" error={errors.name}>
+                      <input
+                        id="name"
+                        name="name"
+                        type="text"
+                        placeholder="Your name"
+                        value={form.name}
+                        onChange={handleChange("name")}
+                        aria-invalid={!!errors.name}
+                        className={inputCls(errors.name)}
                         required
-                      >
-                        <option value="" disabled>
-                          Select an option
-                        </option>
-
-                        {enquiryOptions.map((option) => (
-                          <option
-                            key={option}
-                            value={option}
-                            className="text-charcoal"
-                          >
-                            {option}
-                          </option>
-                        ))}
-                      </select>
-
-                      <ChevronDown
-                        size={17}
-                        className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-charcoal-500"
                       />
-                    </div>
-                  </Field>
-                </motion.div>
+                    </Field>
+                  </motion.div>
 
-                {/* MESSAGE */}
-                <motion.div
-                  variants={rise}
-                  className="sm:col-span-2"
-                >
-                  <Field
-                    id="message"
-                    label="Message"
-                    error={errors.message}
+                  {/* EMAIL */}
+                  <motion.div variants={rise}>
+                    <Field id="email" label="Email Address" error={errors.email}>
+                      <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="you@example.com"
+                        value={form.email}
+                        onChange={handleChange("email")}
+                        aria-invalid={!!errors.email}
+                        className={inputCls(errors.email)}
+                        required
+                      />
+                    </Field>
+                  </motion.div>
+
+                  {/* PHONE */}
+                  <motion.div variants={rise}>
+                    <Field id="phone" label="Phone Number" error={errors.phone}>
+                      <input
+                        id="phone"
+                        name="phone"
+                        type="tel"
+                        placeholder="+91 98765 43210"
+                        value={form.phone}
+                        onChange={handleChange("phone")}
+                        aria-invalid={!!errors.phone}
+                        className={inputCls(errors.phone)}
+                        required
+                      />
+                    </Field>
+                  </motion.div>
+
+                  {/* SUBJECT */}
+                  <motion.div variants={rise}>
+                    <Field
+                      id="subject"
+                      label="Subject / Enquiry Type"
+                      error={errors.subject}
+                    >
+                      <div className="relative">
+                        <select
+                          id="subject"
+                          name="subject"
+                          value={form.subject}
+                          onChange={handleChange("subject")}
+                          aria-invalid={!!errors.subject}
+                          className={`${inputCls(
+                            errors.subject
+                          )} appearance-none pr-10 ${
+                            form.subject ? "" : "text-charcoal-300"
+                          }`}
+                          required
+                        >
+                          <option value="" disabled>
+                            Select an option
+                          </option>
+
+                          {enquiryOptions.map((option) => (
+                            <option
+                              key={option}
+                              value={option}
+                              className="text-charcoal"
+                            >
+                              {option}
+                            </option>
+                          ))}
+                        </select>
+
+                        <ChevronDown
+                          size={17}
+                          className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-charcoal-500"
+                        />
+                      </div>
+                    </Field>
+                  </motion.div>
+
+                  {/* MESSAGE */}
+                  <motion.div variants={rise} className="sm:col-span-2">
+                    <Field id="message" label="Message" error={errors.message}>
+                      <textarea
+                        id="message"
+                        name="message"
+                        rows={5}
+                        placeholder="How can we help you?"
+                        value={form.message}
+                        onChange={handleChange("message")}
+                        aria-invalid={!!errors.message}
+                        className={`${inputCls(
+                          errors.message
+                        )} min-h-[140px] resize-y`}
+                        required
+                      />
+                    </Field>
+                  </motion.div>
+
+                  {/* SUBMIT */}
+                  <motion.div
+                    variants={rise}
+                    className="flex flex-wrap items-center gap-4 sm:col-span-2"
                   >
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows={5}
-                      placeholder="How can we help you?"
-                      value={form.message}
-                      onChange={handleChange("message")}
-                      aria-invalid={!!errors.message}
-                      className={`${inputCls(
-                        errors.message
-                      )} min-h-[140px] resize-y`}
-                      required
-                    />
-                  </Field>
-                </motion.div>
+                    <motion.button
+                      type="submit"
+                      disabled={sending}
+                      whileTap={{ scale: 0.97 }}
+                      className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-orange-500 px-8 py-3.5 text-sm font-bold text-white shadow-md shadow-orange-500/25 transition-shadow duration-300 hover:shadow-[0_14px_30px_-10px] hover:shadow-orange-500 disabled:cursor-not-allowed disabled:opacity-80"
+                    >
+                      <span className="absolute inset-0 -translate-x-full bg-orange-600 transition-transform duration-500 ease-out group-hover:translate-x-0" />
 
-                {/* SUBMIT */}
-                <motion.div
-                  variants={rise}
-                  className="flex flex-wrap items-center gap-4 sm:col-span-2"
-                >
-                  <motion.button
-                    type="submit"
-                    disabled={sending}
-                    whileTap={{
-                      scale: 0.97,
-                    }}
-                    className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-orange-500 px-8 py-3.5 text-sm font-bold text-white shadow-md shadow-orange-500/25 transition-shadow duration-300 hover:shadow-[0_14px_30px_-10px] hover:shadow-orange-500 disabled:cursor-not-allowed disabled:opacity-80"
-                  >
-                    <span className="absolute inset-0 -translate-x-full bg-orange-600 transition-transform duration-500 ease-out group-hover:translate-x-0" />
+                      <span className="relative z-10 inline-flex items-center gap-2">
+                        {sending ? (
+                          <>
+                            <Loader2 size={17} className="animate-spin" />
+                            Sending...
+                          </>
+                        ) : (
+                          <>
+                            Send Message
 
-                    <span className="relative z-10 inline-flex items-center gap-2">
-                      {sending ? (
-                        <>
-                          <Loader2
-                            size={17}
-                            className="animate-spin"
-                          />
-                          Sending...
-                        </>
-                      ) : (
-                        <>
-                          Send Message
-
-                          <Send
-                            size={16}
-                            className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-1"
-                          />
-                        </>
-                      )}
-                    </span>
-                  </motion.button>
-                </motion.div>
-              </motion.form>
+                            <Send
+                              size={16}
+                              className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-1"
+                            />
+                          </>
+                        )}
+                      </span>
+                    </motion.button>
+                  </motion.div>
+                </motion.form>
+              )}
 
               {/* WHATSAPP */}
               <a
@@ -806,9 +807,7 @@ export default function Contact() {
                 key={point.label}
                 variants={rise}
                 className={`flex items-center justify-center gap-3 sm:px-8 ${
-                  index > 0
-                    ? "sm:border-l sm:border-orange-200"
-                    : ""
+                  index > 0 ? "sm:border-l sm:border-orange-200" : ""
                 }`}
               >
                 <point.icon
@@ -825,6 +824,14 @@ export default function Contact() {
           </motion.div>
         </div>
       </section>
+
+      {/* Hidden iframe: contact form yahin submit hota hai, isliye naya page nahi khulta */}
+      <iframe
+        name="contact_formsubmit_iframe"
+        title="contact-formsubmit"
+        onLoad={handleIframeLoad}
+        style={{ display: "none" }}
+      />
     </>
   );
 }

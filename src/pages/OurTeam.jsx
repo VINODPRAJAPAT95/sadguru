@@ -9,9 +9,6 @@ const CHARCOAL = "#2B2A29";
 
 const designationOf = (m) => m.designation || m.role || "";
 
-// Arch shape: fully rounded top, softly rounded bottom
-const ARCH = "rounded-t-[999px] rounded-b-3xl";
-
 export default function OurTeam() {
   const reduce = useReducedMotion();
   const members = team.slice(0, 6); // total 6 members
@@ -32,8 +29,20 @@ export default function OurTeam() {
         description="Meet the team behind Sadguru Foods Processing Pvt. Ltd. and our four food brands."
       />
 
-      <section className="bg-white pb-24 pt-28 sm:pb-32 sm:pt-36">
-        <div className="container-px mx-auto max-w-6xl">
+      <section className="relative overflow-hidden bg-white pb-24 pt-28 sm:pb-32 sm:pt-36">
+        {/* soft background glows */}
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-32 top-40 h-96 w-96 rounded-full opacity-[0.10] blur-3xl"
+          style={{ backgroundColor: ORANGE }}
+        />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -left-32 bottom-20 h-96 w-96 rounded-full opacity-[0.08] blur-3xl"
+          style={{ backgroundColor: ORANGE }}
+        />
+
+        <div className="container-px relative mx-auto max-w-6xl">
           <h2
             className="text-5xl font-extrabold leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl"
             style={{ color: CHARCOAL }}
@@ -112,58 +121,67 @@ export default function OurTeam() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-80px" }}
-            className="mt-16 grid grid-cols-1 items-start gap-x-10 gap-y-16 sm:mt-24 sm:grid-cols-2 lg:grid-cols-3"
+            className="mt-16 grid grid-cols-1 items-start gap-x-8 gap-y-14 sm:mt-24 sm:grid-cols-2 lg:grid-cols-3"
           >
-            {members.map((member, i) => (
+            {members.map((member) => (
               <motion.article
                 key={member.name}
                 variants={item}
-                className={`group mx-auto w-full max-w-[340px] ${
-                  i % 2 === 1 ? "sm:mt-14" : ""
-                } ${i % 3 === 1 ? "lg:mt-20" : "lg:mt-0"}`}
+                className="group relative mx-auto w-full max-w-[360px]"
               >
-                <div className="relative">
-                  {/* offset outline that snaps into place on hover */}
-                  <span
-                    aria-hidden="true"
-                    className={`absolute inset-0 translate-x-3 translate-y-3 border-2 transition-transform duration-300 group-hover:translate-x-0 group-hover:translate-y-0 ${ARCH}`}
-                    style={{ borderColor: CHARCOAL }}
+                {/* tilted orange backdrop that straightens + grows on hover */}
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-0 origin-bottom-left rotate-[5deg] rounded-[2rem] opacity-90 transition-all duration-500 ease-out group-hover:rotate-[9deg] group-hover:scale-[1.02]"
+                  style={{ background: `linear-gradient(135deg, ${ORANGE}, #F5A04C)` }}
+                />
+
+                {/* card */}
+                <div className="relative aspect-[3/4] overflow-hidden rounded-[2rem] bg-slate-200 shadow-[0_24px_50px_-22px_rgba(43,42,41,0.55)] transition-transform duration-500 ease-out group-hover:-translate-y-2">
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    loading="lazy"
+                    className="h-full w-full object-cover grayscale-[35%] transition duration-700 ease-out group-hover:scale-110 group-hover:grayscale-0"
                   />
-                  <div className={`relative aspect-[3/4] overflow-hidden bg-slate-200 ${ARCH}`}>
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      loading="lazy"
-                      className="h-full w-full object-cover grayscale transition duration-500 group-hover:scale-105 group-hover:grayscale-0"
-                    />
+
+                  {/* bottom gradient for text legibility */}
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 bg-gradient-to-t from-[#2B2A29]/85 via-[#2B2A29]/10 to-transparent"
+                  />
+
+                  {/* glass info panel */}
+                  <div className="absolute inset-x-3 bottom-3 flex items-center justify-between gap-3 rounded-2xl border border-white/25 bg-white/15 p-4 backdrop-blur-md transition-colors duration-300 group-hover:bg-white/25">
+                    <div className="min-w-0">
+                      <h3 className="truncate text-lg font-bold leading-snug text-white">
+                        {member.name}
+                      </h3>
+                      {designationOf(member) && (
+                        <p className="mt-0.5 flex items-center gap-2 text-xs font-semibold text-white/85 sm:text-sm">
+                          <span
+                            aria-hidden="true"
+                            className="h-1.5 w-1.5 shrink-0 rounded-full"
+                            style={{ backgroundColor: ORANGE }}
+                          />
+                          <span className="truncate">{designationOf(member)}</span>
+                        </p>
+                      )}
+                    </div>
+
+                    {member.linkedin && (
+                      <a
+                        href={member.linkedin}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`${member.name} on LinkedIn`}
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white shadow-md transition-all duration-300 hover:scale-110 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#2B2A29] group-hover:bg-[#EF7F1A] group-hover:text-white"
+                        style={{ color: CHARCOAL }}
+                      >
+                        <LinkedinIcon size={16} />
+                      </a>
+                    )}
                   </div>
-
-                  {member.linkedin && (
-                    <a
-                      href={member.linkedin}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label={`${member.name} on LinkedIn`}
-                      className="absolute bottom-4 right-4 flex h-11 w-11 items-center justify-center rounded-full bg-white shadow-md transition-colors duration-200 hover:bg-[#2B2A29] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#EF7F1A] focus-visible:ring-offset-2"
-                      style={{ color: CHARCOAL }}
-                    >
-                      <LinkedinIcon size={17} />
-                    </a>
-                  )}
-                </div>
-
-                <div className="mt-8 text-center">
-                  <h3 className="text-xl font-bold leading-snug" style={{ color: CHARCOAL }}>
-                    {member.name}
-                  </h3>
-                  {designationOf(member) && (
-                    <p
-                      className="mt-2 inline-block rounded-full px-4 py-1 text-sm font-semibold"
-                      style={{ backgroundColor: "rgba(239,127,26,0.12)", color: "#B85E08" }}
-                    >
-                      {designationOf(member)}
-                    </p>
-                  )}
                 </div>
               </motion.article>
             ))}

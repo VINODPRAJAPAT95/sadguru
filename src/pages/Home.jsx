@@ -26,6 +26,7 @@ import {
   Salad,
   BadgeCheck,
   Zap,
+  Star,
 } from "lucide-react";
 import heroBg from "../assets/images/hero-bg.png";
 import aboutImg from "../assets/images/about-food.jpg";
@@ -138,8 +139,8 @@ const philosophyItems = [
   },
   {
     Icon: Sprout,
-    title: "Clean Ingredients",
-    desc: "We source ingredients responsibly and avoid additives or preservatives, making sure every product is pure, balanced, and trustworthy.",
+    title: "Wholesome Ingredients",
+    desc: "We source ingredients responsibly and avoid additives or preservatives, making sure every product is balanced and trustworthy.",
   },
   {
     Icon: ThumbsUp,
@@ -181,6 +182,16 @@ const driveItems = [
    - Buttons and scroll cue fade in after the headline
 ------------------------------------------------------------------- */
 const EASE_OUT = [0.22, 1, 0.36, 1];
+
+// Hero headline: accent = orange, otherwise white
+const HERO_LINES = [
+  [{ text: "Wholesome Food,", accent: true }],
+  [{ text: "Thoughtfully Prepared", accent: false }],
+  [
+    { text: "for ", accent: false },
+    { text: "Healthier Living", accent: true },
+  ],
+];
 
 // Tiny glowing embers that drift upward in the hero (fixed values, no randomness)
 const PARTICLES = [
@@ -423,17 +434,24 @@ export default function Home() {
          
           </motion.span>
 
-          <h1 className="mx-auto mt-6 max-w-5xl text-balance break-words font-display text-4xl font-black uppercase leading-[1.1] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-            {["Wholesome Food,", "Thoughtfully Prepared", "for Healthier Living"].map((line, i) => (
-              <span key={line} className="block overflow-hidden pb-[0.12em]">
+          <h1 className="mx-auto mt-6 max-w-5xl text-balance break-words font-display text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+            {HERO_LINES.map((segments, i) => (
+              <span key={i} className="block overflow-hidden pb-[0.12em]">
                 <motion.span
                   custom={i}
                   initial={reduce ? false : "hidden"}
                   animate="visible"
                   variants={headlineLine}
-                  className={`block ${i === 1 ? "text-orange-500" : "text-white"}`}
+                  className="block"
                 >
-                  {line}
+                  {segments.map((seg) => (
+                    <span
+                      key={seg.text}
+                      className={seg.accent ? "text-orange-500" : "text-white"}
+                    >
+                      {seg.text}
+                    </span>
+                  ))}
                 </motion.span>
               </span>
             ))}
@@ -513,16 +531,33 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-charcoal/35 via-transparent to-transparent" />
             </div>
 
-            {/* stat card (bottom left) - stable, no motion */}
-            <div className="absolute bottom-2 left-2 z-10 flex items-center gap-4 rounded-2xl bg-white px-5 py-4 shadow-xl sm:left-0">
-              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-500 font-baloo text-2xl font-bold text-white">
-                4
-              </span>
-              <div className="leading-tight">
-                <p className="font-baloo text-lg font-bold text-[#241209]">Food Brands</p>
-                <p className="text-xs text-charcoal-400">One promise of trust</p>
+            {/* Star badge (bottom left) */}
+            <motion.div
+              aria-hidden="true"
+              className="absolute -bottom-2 left-0 z-10 h-28 w-28 sm:h-32 sm:w-32"
+              initial={reduce ? false : { scale: 0, rotate: -90, opacity: 0 }}
+              whileInView={{ scale: 1, rotate: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.3, ease: EASE_OUT }}
+            >
+              {/* 12-point starburst seal, slowly rotating */}
+              <motion.svg
+                viewBox="0 0 100 100"
+                className="absolute inset-0 h-full w-full drop-shadow-xl"
+                animate={reduce ? undefined : { rotate: 360 }}
+                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+              >
+                <polygon
+                  fill="#f97316"
+                  points="50,2 58,15 72,7 74,23 90,22 85,37 99,43 88,55 97,68 82,72 82,88 67,84 61,98 50,89 39,98 33,84 18,88 18,72 3,68 12,55 1,43 15,37 10,22 26,23 28,7 42,15"
+                />
+              </motion.svg>
+
+              {/* Inner ring + 5-point star */}
+              <div className="absolute inset-[22%] flex items-center justify-center rounded-full border-2 border-dashed border-white/70">
+                <Star size={34} strokeWidth={1.5} className="fill-white text-white" />
               </div>
-            </div>
+            </motion.div>
           </motion.div>
 
           <motion.div
@@ -720,7 +755,7 @@ export default function Home() {
                 className="flex flex-col rounded-2xl border-2 border-orange-400/70 bg-white p-7 shadow-sm transition-colors duration-300"
               >
                 <item.Icon size={40} strokeWidth={1.5} className="text-orange-500" />
-                <h3 className="font-baloo mt-5 text-xl font-bold leading-snug text-charcoal">
+                <h3 className="font-baloo mt-5 whitespace-nowrap text-xl font-bold leading-snug text-charcoal lg:text-lg xl:text-xl">
                   {item.title}
                 </h3>
                 <p className="mt-4 flex-1 text-sm leading-relaxed text-charcoal-400">

@@ -40,18 +40,18 @@ const clean = (text = "") => text.replace(/\s*[\u2014\u2013]\s*/g, ", ");
 
 // All 12 Mumma products
 const PRODUCTS = [
-  { name: "Ragi Cookies", image: product1 },
-  { name: "Multigrain Puffs", image: product2 },
-  { name: "Fruit & Nut Bars", image: product3 },
-  { name: "Veggie Crackers", image: product4 },
-  { name: "Millet Bites", image: product5 },
-  { name: "Protein Balls", image: product6 },
-  { name: "Oats Cookies", image: product7 },
-  { name: "Banana Chips", image: product8 },
-  { name: "Quinoa Puffs", image: product9 },
-  { name: "Almond Bars", image: product10 },
-  { name: "Sprouted Mix", image: product11 },
-  { name: "Wholegrain Rusks", image: product12 },
+  { name: "Banana", image: product1 },
+  { name: "Chocolate", image: product2 },
+  { name: "Kesar Badam", image: product3 },
+  { name: "Cruncy Grind", image: product4 },
+  { name: "Smooth Grind", image: product5 },
+  { name: "Chocolate", image: product6 },
+  { name: "Nuts", image: product7 },
+  { name: "Chocolate", image: product8 },
+  { name: "Almond", image: product9 },
+  { name: "Oat & Millet", image: product10 },
+  { name: "Fruit & Nut", image: product11 },
+  { name: "Seeds", image: product12 },
 ];
 
 // Mumma brand palette, pulled from data
